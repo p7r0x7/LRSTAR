@@ -1,0 +1,75 @@
+
+/* JSON lexical grammar */
+
+/* Token Rules */
+
+<eof>                -> \z
+
+<integer>            -> '-' '0'
+                     -> '0'
+                     -> '-' digit1_9 digit*
+                     -> digit1_9 digit*
+
+<fraction>           -> <integer> '.' digit*
+
+<exponent>           -> <fraction> exp
+
+exp                  -> 'e' digit+
+                     -> 'E' digit+
+                     -> 'e' '-' digit+
+                     -> 'E' '-' digit+
+                     -> 'e' '+' digit+
+                     -> 'E' '+' digit+
+
+<string>             -> '"' schar* '"'
+
+schar                -> sany
+                     -> '\' '\'
+                     -> '\' '''
+                     -> '\' '"'
+                     -> '\' 'n'
+                     -> '\' 't'
+                     -> '\' 'a'
+                     -> '\' 'b'
+                     -> '\' 'f'
+                     -> '\' 'r'
+                     -> '\' 'v'
+                     -> '\' '0'
+
+{whitespace}         -> whitechar+
+
+{commentline}        -> '/' '/' neol*
+
+{commentblock}       -> '/' '*' na* '*'+ (nans na* '*'+)* '/'
+
+/* Character Sets */
+
+any                  = 0..255 - \z
+lany                 = any - ''' - '\' - \n
+sany                 = any - '"' - '\' - \n
+
+letter               = 'a'..'z' | 'A'..'Z' | '_'
+digit                = '0'..'9'
+digit1_9             = '1'..'9'
+
+whitechar            = \t | \n | \v | ' '
+
+na                   = any - '*'          // not asterisk
+nans                 = any - '*' - '/'    // not asterisk not slash
+neol                 = any - \n           // not end of line
+
+\t                   =  9                 // tab
+\n                   = 10                 // newline
+\v                   = 11                 // vertical feed?
+\f                   = 12                 // form feed
+\r                   = 13                 // return
+\z                   = 26                 // end of file
+\b                   = 32                 // blank/space
+
+/* End */
+/* Local Variables:      */
+/* mode: c               */
+/* c-basic-offset: 3     */
+/* tab-width: 3          */
+/* indent-tabs-mode: nil */
+/* End:                  */

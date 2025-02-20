@@ -1,0 +1,76 @@
+
+/* JSON grammar */
+
+<error>        => error();
+<string>       => lookup();
+<integer>      => lookup();
+<fraction>     => lookup();
+<exponent>     => lookup();
+
+
+Goal
+   : Value/','+ <eof>                      +> goal_
+   ;
+
+Array
+   :  '[' Value/','+ ']'                   +> array_
+   ;
+
+Object
+   :  '{' Member/','+'}'                   +> object_
+   ;
+
+
+Member
+   : <string> ':' Value                    +> member_
+   ;
+
+
+String
+   : <string>                              +> string_
+   ;
+
+
+Integer
+   : <integer>                            +> integer_
+   ;
+
+
+Fraction
+   : <fraction>                           +> fraction_
+   ;
+
+
+Exponent
+   : <exponent>                           +> exponent_
+   ;
+
+
+Null
+   : 'null'                                +> null_
+   ;
+
+
+True
+   : 'true'                                +> true_
+   ;
+
+
+False
+   : 'false'                               +> false_
+   ;
+
+
+Value
+   : Array      |
+     Object     |
+     String     |
+     Integer    |
+     Fraction   |
+     Exponent   |
+     Null       |
+     False      |
+     True                                 +> value_
+   ;
+
+
