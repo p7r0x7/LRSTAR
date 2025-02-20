@@ -10,15 +10,15 @@
 		{
 			ZERO,
 			GBEG,    // (
-			GEND,    // )                
-			OBEG,    // [              
+			GEND,    // )
+			OBEG,    // [
 			OEND,    // ]
 			ORSYM,   // |
-			PLUS,		// +    
-			ASTER,	// *    
+			PLUS,		// +
+			ASTER,	// *
 			QUEST,   // ?
-			DOTS,	   // ...    
-			NOTHING    
+			DOTS,	   // ...
+			NOTHING
 		};
 
 		static int    n_cells;
@@ -65,8 +65,8 @@ int   LG_ParseActions::init ()
 
       n_symbs      =   0;
       n_constants  =   0;
-      n_strings    =   1;  // Start with one, because cannot return a zero. 
-		n_actioncodes=   1;	// Start with one, because cannot return a zero. 
+      n_strings    =   1;  // Start with one, because cannot return a zero.
+		n_actioncodes=   1;	// Start with one, because cannot return a zero.
       n_tails      =   0;
       N_terms      =   0;
       n_heads      =   0;
@@ -111,12 +111,12 @@ int   LG_ParseActions::init ()
       FASTINI ( 0, sym_line,  max_symbs);
       FASTINI ( 0, sym_type,  max_symbs);
       FASTINI (-1, sym_numb,  max_symbs);
-      FASTINI ( 0, sym_prod1, max_symbs); 
-      FASTINI ( 0, sym_prod2, max_symbs); 
+      FASTINI ( 0, sym_prod1, max_symbs);
+      FASTINI ( 0, sym_prod2, max_symbs);
       FASTINI (-1, sym_vect,  n_cells);
       FASTINI ( 0, ret_numb,  max_prods);
 
-      for (i = 0; i < max_char_set; i++) char_set[i] = 0; 
+      for (i = 0; i < max_char_set; i++) char_set[i] = 0;
 
       ebnfspace     = ebnfspace_start;
       ebnfspace_end = ebnfspace_start + max_space;
@@ -132,19 +132,19 @@ int   LG_ParseActions::init ()
 
       MAKE_TERMINALS ();
 		START_GRM ();
-      return 1;		
+      return 1;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 //																										//
-  
+
 int   LG_ParseActions::MAKE_TERMINALS ()
 {
-      int i; 
+      int i;
       char token[16];
-      for (i = 0; i < max_char_set; i++) 
+      for (i = 0; i < max_char_set; i++)
       {
-         if (i >= 32 && i <= 126) 
+         if (i >= 32 && i <= 126)
          {
 				token[0] = '\'';
 				token[1] = i;
@@ -152,7 +152,7 @@ int   LG_ParseActions::MAKE_TERMINALS ()
 				T_start = token;
 				T_end = token + 3;
          }
-         else 
+         else
          {
 				sprintf (token, "%d\0", i);
 				T_start = token;
@@ -161,7 +161,7 @@ int   LG_ParseActions::MAKE_TERMINALS ()
 				else if (i <  1000) T_end = T_start + 3;
 				else if (i < 10000) T_end = T_start + 4;
 				else           T_end = T_start + 5;
-         }    
+         }
          ADD_TERMINAL();
       }
 		T_start = "$end";
@@ -189,7 +189,7 @@ int   LG_ParseActions::SET_DEBUG (int p)
 ////////////////////////////////////////////////////////////////////////////////
 //                                                                            //
 
-int   LG_ParseActions::ADD_SYMBOL (char* name, int& symnumb) 
+int   LG_ParseActions::ADD_SYMBOL (char* name, int& symnumb)
 {
 		T_start  = name;
 		T_end    = T_start + (int)strlen(name);
@@ -200,11 +200,11 @@ int   LG_ParseActions::ADD_SYMBOL (char* name, int& symnumb)
 ////////////////////////////////////////////////////////////////////////////////
 //                                                                            //
 
-int   LG_ParseActions::ADD_TERMINAL () 
+int   LG_ParseActions::ADD_TERMINAL ()
 {
 		int rc = 0;
       curr_terminal = SYMNUMB ();
-		sym_type[curr_terminal] = TOKEN; 
+		sym_type[curr_terminal] = TOKEN;
 		sym_line[curr_terminal] = 0;
 		sym_numb[curr_terminal] = n_tokens++;
       return (rc);
@@ -213,7 +213,7 @@ int   LG_ParseActions::ADD_TERMINAL ()
 ////////////////////////////////////////////////////////////////////////////////
 //                                                                            //
 
-int   LG_ParseActions::ADD_NOTERM (int p) 
+int   LG_ParseActions::ADD_NOTERM (int p)
 {
       ret_numb[n_prods] = MAX_INT; // Ignore this symbol (<spaces>, <comment>, etc.)
       return (0);
@@ -226,7 +226,7 @@ int   LG_ParseActions::ADD_NOTERM (int p)
       #define TERMNO 1
       #define DEFCON 2
 
-int   LG_ParseActions::ADD_TERMNO (int p) 
+int   LG_ParseActions::ADD_TERMNO (int p)
 {
 		int rc = 0, n;
       if (already_exists) return (0);
@@ -238,27 +238,27 @@ int   LG_ParseActions::ADD_TERMNO (int p)
       }
       mode = TERMNO; // Establish terminal number mode.
 		n = atoi (T_start);
-		if (n == 0) 
+		if (n == 0)
 		{
 			prt_error ("Cannot use 0, which is reserved for the <error> symbol", T_start, T_end, T_line);
          return (rc);
 		}
       for (p = 1; p < n_prods; p++)
       {
-         if (ret_numb[p] > 0 && sym_numb[ret_numb[p]] == n) 
+         if (ret_numb[p] > 0 && sym_numb[ret_numb[p]] == n)
          {
 				prt_error ("'%s' has already been used for another token", T_start, T_end, T_line);
             return (rc);
          }
       }
-      ret_numb[n_prods] = n;     
+      ret_numb[n_prods] = n;
       return (rc);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 //                                                                            //
 
-int   LG_ParseActions::ADD_DEFCON (int p) 
+int   LG_ParseActions::ADD_DEFCON (int p)
 {
 		int s, rc = 0;
       if (already_exists) return (0);
@@ -269,7 +269,7 @@ int   LG_ParseActions::ADD_DEFCON (int p)
          return (rc);
       }
       mode = DEFCON; // Establish defined constant mode.
-		s = SYMNUMB ();  
+		s = SYMNUMB ();
 		if (sym_line[s] == 0) // New constant?
 		{
 			ret_numb[n_prods] = -s;    // Set to negative symbol number.
@@ -289,10 +289,10 @@ int   LG_ParseActions::ADD_DEFCON (int p)
 ////////////////////////////////////////////////////////////////////////////////
 //                                                                            //
 
-int   LG_ParseActions::ADD_STRING (int p) 
+int   LG_ParseActions::ADD_STRING (int p)
 {
 		int s, rc = 0;
-		s = ADDSYM (T_start, (int)(T_end-T_start));  
+		s = ADDSYM (T_start, (int)(T_end-T_start));
 		if (sym_line[s] == 0)				// First encounter?
 		{
 			sym_line[s] = T_line;			// Save first encounter of string.
@@ -306,7 +306,7 @@ int   LG_ParseActions::ADD_STRING (int p)
 ////////////////////////////////////////////////////////////////////////////////
 //                                                                            //
 
-int   LG_ParseActions::ADD_CODE (int prod) 
+int   LG_ParseActions::ADD_CODE (int prod)
 {
 		int   s;
 		int   level = 0;
@@ -359,7 +359,7 @@ Scan: while (*p != '{' && *p != '}' && *p != '\n' && *p != 26 && *p != '/' && *p
 Scan2:			while (*p != '\n' && *p != 26 && *p != '*') p++;
 					switch (*p)
 					{
-						case '\n': 
+						case '\n':
 						{
 							p++;
 							line_numb++;
@@ -401,12 +401,12 @@ Scan3:		while (*p != '\n' && *p != 26 && *p != '\\' && *p != '\'') p++;
 						goto Ret;
 					}
 					case '\\':
-					{	
+					{
 						p += 2;
 						goto Scan3;
 					}
 					case '\'':
-					{	
+					{
 						p++;
 						goto Scan;
 					}
@@ -429,12 +429,12 @@ Scan4:		while (*p != '\n' && *p != 26 && *p != '\\' && *p != '"') p++;
 						goto Ret;
 					}
 					case '\\':
-					{	
+					{
 						p += 2;
 						goto Scan4;
 					}
 					case '"':
-					{	
+					{
 						p++;
 						goto Scan;
 					}
@@ -443,7 +443,7 @@ Scan4:		while (*p != '\n' && *p != 26 && *p != '\\' && *p != '"') p++;
 		}
 
 Ret:	T_end = token.end;
-		s = ADDSYM (T_start, (int)(T_end-T_start));  
+		s = ADDSYM (T_start, (int)(T_end-T_start));
 		if (sym_line[s] == 0)				// First encounter?
 		{
 			sym_line[s] = T_line;			// Save first encounter of string.
@@ -458,7 +458,7 @@ Ret:	T_end = token.end;
 ////////////////////////////////////////////////////////////////////////////////
 //                                                                            //
 
-int   LG_ParseActions::START_GRM () 
+int   LG_ParseActions::START_GRM ()
 {
 		int rc = 0;
 		short p = 0, a = 0;
@@ -485,7 +485,7 @@ int   LG_ParseActions::START_GRM ()
 ////////////////////////////////////////////////////////////////////////////////
 //                                                                            //
 
-int   LG_ParseActions::ADD_IGNORE (int p) 
+int   LG_ParseActions::ADD_IGNORE (int p)
 {
 		ADD_TOKEN (p);
       ret_numb[n_prods] = MAX_INT; // Ignore this symbol (<spaces>, <comment>, etc.)
@@ -495,23 +495,23 @@ int   LG_ParseActions::ADD_IGNORE (int p)
 ////////////////////////////////////////////////////////////////////////////////
 //                                                                            //
 
-int   LG_ParseActions::ADD_TOKEN (int p) 
+int   LG_ParseActions::ADD_TOKEN (int p)
 {
-      if (already_readlex) 
+      if (already_readlex)
       {
          already_exists = 1; // Ignore this token.
          return 0;
       }
-		curr_symb = SYMNUMB ();  
+		curr_symb = SYMNUMB ();
 		if (sym_line[curr_symb] == 0) // New symbol?
 		{
 	      ADD_PROD(p);
 	      ADD_TAIL(p);
-	      sym_type[curr_symb] |= OUTPUTSYM;	
+	      sym_type[curr_symb] |= OUTPUTSYM;
          sym_line[curr_symb] = T_line;
          already_exists = 0;
       }
-      else 
+      else
       {
          prt_warning ("Ignoring this token, already defined", T_start, T_end, T_line);
          already_exists = 1; // Ignore this token.
@@ -522,26 +522,26 @@ int   LG_ParseActions::ADD_TOKEN (int p)
 ////////////////////////////////////////////////////////////////////////////////
 //                                                                            //
 
-int   LG_ParseActions::ADD_TOKEN2 (int p) 
+int   LG_ParseActions::ADD_TOKEN2 (int p)
 {
-      if (already_readlex) 
+      if (already_readlex)
       {
          already_exists = 1; // Ignore this token.
          return 0;
       }
-		curr_symb = SYMNUMB ();  
+		curr_symb = SYMNUMB ();
 		if (sym_line[curr_symb] == 0) // New symbol?
 		{
 		   if (optn [LG_INSENSITIVE])
 		   {
 			   for (char* p = T_start+1; p < T_end-1; p++)
 			   {
-				   *p = lower[*p]; // Set each character to lower case and later add upper case. 
+				   *p = lower[*p]; // Set each character to lower case and later add upper case.
 			   }
 		   }
 	      ADD_PROD(p);
 	      ADD_TAIL(p);
-	      sym_type[curr_symb] |= OUTPUTSYM;	
+	      sym_type[curr_symb] |= OUTPUTSYM;
          sym_line[curr_symb] = T_line;
          already_exists = 0;
       }
@@ -576,7 +576,7 @@ int   LG_ParseActions::ADD_GOAL (int p)
       sym_numb [goal_symb] = n_heads;
 		sym_indx [n_heads]   = goal_symb;
       sym_prod1[goal_symb] = n_prods+1;
-      n_heads++; 
+      n_heads++;
       return (rc);
 }
 
@@ -626,7 +626,7 @@ int   LG_ParseActions::ADD_HEAD (int p)
       sym_numb [curr_head] = n_heads;
 		sym_indx [n_heads]   = curr_head;
       sym_prod1[curr_head] = n_prods + 1;
-      n_heads++; 
+      n_heads++;
       return (rc);
 }
 
@@ -644,8 +644,8 @@ int   LG_ParseActions::CHECK_PROD (int p)
 
 int   LG_ParseActions::ADD_PROD (int p)
 {
-      if (++n_prods >= max_prods) 
-			MemCrash ("Number of productions", max_prods); 
+      if (++n_prods >= max_prods)
+			MemCrash ("Number of productions", max_prods);
       F_tail   [n_prods] = n_tails;
 		prod_line[n_prods] = line_numb;
 		prod_type[n_prods] = PRODARROW;
@@ -657,8 +657,8 @@ int   LG_ParseActions::ADD_PROD (int p)
 
 int   LG_ParseActions::ADD_PRODADD ()
 {
-      if (++n_prods >= max_prods) 
-			MemCrash ("Number of productions", max_prods); 
+      if (++n_prods >= max_prods)
+			MemCrash ("Number of productions", max_prods);
       F_tail   [n_prods] = n_tails;
 		prod_line[n_prods] = line_numb;
 		prod_type[n_prods] = PRODADD;
@@ -670,8 +670,8 @@ int   LG_ParseActions::ADD_PRODADD ()
 
 int   LG_ParseActions::ADD_PRODSUB ()
 {
-      if (++n_prods >= max_prods) 
-			MemCrash ("Number of productions", max_prods); 
+      if (++n_prods >= max_prods)
+			MemCrash ("Number of productions", max_prods);
       F_tail   [n_prods] = n_tails;
 		prod_line[n_prods] = line_numb;
 		prod_type[n_prods] = PRODSUB;
@@ -683,8 +683,8 @@ int   LG_ParseActions::ADD_PRODSUB ()
 
 int   LG_ParseActions::ADD_PRODTO ()
 {
-      if (++n_prods >= max_prods) 
-			MemCrash ("Number of productions", max_prods); 
+      if (++n_prods >= max_prods)
+			MemCrash ("Number of productions", max_prods);
       F_tail   [n_prods] = n_tails;
 		prod_line[n_prods] = line_numb;
 		prod_type[n_prods] = PRODTO;
@@ -699,7 +699,7 @@ int   LG_ParseActions::ADD_TAIL (int p)
 		int rc = 0;
       DEF_TAIL();
 		Tail[n_tails++] = curr_symb;
-		if (n_tails >= max_tails) 
+		if (n_tails >= max_tails)
 			MemCrash ("Number of tail symbols", max_tails);
       return (rc);
 }
@@ -714,7 +714,7 @@ int   LG_ParseActions::DEF_TAIL ()
 	//	printf ("curr_symb = %s\n", sym_start[curr_symb]);
 		if (sym_line[curr_symb] == 0) sym_line[curr_symb] = T_line;
 		if (gft[3] == 'x') sym_type[curr_symb] |= LEXFILE; // We are in .lex file!
-      sym_type[curr_symb] |= TERMINAL;	  
+      sym_type[curr_symb] |= TERMINAL;
 		if (sym_type[curr_symb] & CONSTANT) // Defined constant?
 		{
 			prt_error ("at '%s', defined constants cannot be used in grammar rules", T_start, T_end, T_line);
@@ -739,11 +739,11 @@ int   LG_ParseActions::ADD_SETNAME (int p)
       {
 			prt_error ("Character set '%s' was previously defined", T_start, T_end, T_line);
       }
-      sym_type [curr_head] |= (SETNAME|NONTERMINAL); 
+      sym_type [curr_head] |= (SETNAME|NONTERMINAL);
       sym_numb [curr_head] = n_heads;
 		sym_indx [n_heads] = curr_head;
       sym_prod1[curr_head] = n_prods + 1;
-      n_heads++; 
+      n_heads++;
       return (rc);
 }
 
@@ -756,7 +756,7 @@ int   LG_ParseActions::FIRST_CHAR(int p)
 		ch = get_char();
 		if (ch == -1) return (1);
 		Tail[n_tails++] = ch;
-      sym_type [curr_head] |= SETNAME; 
+      sym_type [curr_head] |= SETNAME;
       return (0);
 }
 
@@ -789,7 +789,7 @@ int   LG_ParseActions::RANGE_START(int p)
 		ch = get_char();
 		if (ch == -1) return (1);
 	   range_start = ch;
-      sym_type [curr_head] |= SETNAME; 
+      sym_type [curr_head] |= SETNAME;
       return (0);
 }
 
@@ -819,10 +819,10 @@ int   LG_ParseActions::RANGE_TOP(int p) // ? operator
 
 int   LG_ParseActions::get_char()
 {
-      if (*T_start == '\'' || *T_start == '"') 
+      if (*T_start == '\'' || *T_start == '"')
 		{
 			if (T_end - T_start > 3)
-			{	
+			{
 				prt_error ("at %s, literal is more than one character in length", T_start, T_end, T_line);
 				return (-1);
 			}
@@ -881,8 +881,8 @@ int   LG_ParseActions::FIRST_SET(int p)
 {
       int rc = 0;
       curr_symb = SYMNUMB ();
-	   sym_type[curr_symb] |= SETNAMEREF; 
-		if (sym_line[curr_symb] == 0) 
+	   sym_type[curr_symb] |= SETNAMEREF;
+		if (sym_line[curr_symb] == 0)
 		{
 			sym_line[curr_symb] = T_line;
 		}
@@ -902,8 +902,8 @@ int   LG_ParseActions::ADD_SET(int p)
 {
       int rc = 0;
       curr_symb = SYMNUMB ();
-      sym_type [curr_symb] |= SETNAMEREF; 
-		if (sym_line[curr_symb] == 0) 
+      sym_type [curr_symb] |= SETNAMEREF;
+		if (sym_line[curr_symb] == 0)
 		{
 			sym_line[curr_symb] = T_line;
 		}
@@ -924,8 +924,8 @@ int   LG_ParseActions::SUB_SET(int p)
 {
       int rc = 0;
       curr_symb = SYMNUMB ();
-      sym_type [curr_symb] |= SETNAMEREF; 
-		if (sym_line[curr_symb] == 0) 
+      sym_type [curr_symb] |= SETNAMEREF;
+		if (sym_line[curr_symb] == 0)
 		{
 			sym_line[curr_symb] = T_line;
 		}
@@ -968,7 +968,7 @@ int   LG_ParseActions::SET_END (int p)
 
 int   LG_ParseActions::MAKE_SETNAME (int p)
 {
-		if (*T_start != '[') 
+		if (*T_start != '[')
 		{
 			T_start = set_start;
 			T_end   = set_end;
@@ -980,7 +980,7 @@ int   LG_ParseActions::MAKE_SETNAME (int p)
 int   LG_ParseActions::PUSH_TAIL (int p)
 {
       DEF_TAIL();
-      if (ebnfcode > ebnfcode_end) 
+      if (ebnfcode > ebnfcode_end)
 			MemCrash ("EBNF code size", max_code);
       *ebnfcode++ = curr_symb;
       return (0);
@@ -989,7 +989,7 @@ int   LG_ParseActions::PUSH_TAIL (int p)
 int   LG_ParseActions::PUSH_UNDEF (int p)
 {
       DEF_TAIL();
-      if (ebnfcode > ebnfcode_end) 
+      if (ebnfcode > ebnfcode_end)
 			MemCrash ("EBNF code size", max_code);
       *ebnfcode++ = curr_symb;
       return (0);
@@ -1001,7 +1001,7 @@ int   LG_ParseActions::POP_ALL (int p)
       for (sp = ebnfcode_start; sp < ebnfcode; sp++)
       {
 			curr_symb = Tail [n_tails++] = *sp;
-         if (n_tails >= max_tails) 
+         if (n_tails >= max_tails)
 				MemCrash ("Number of tail symbols", max_tails);
       }
 
@@ -1031,9 +1031,9 @@ int   LG_TermActions::POP_SET (int p)
 */
 int   LG_ParseActions::PUSH_DOTS (int p)
 {
-      if (ebnflevel > ebnflevel_end) 
+      if (ebnflevel > ebnflevel_end)
 			MemCrash ("EBNF nesting levels", max_lev);
-      if (ebnfcode > ebnfcode_end)  
+      if (ebnfcode > ebnfcode_end)
 			MemCrash ("EBNF code size", max_code);
       *ebnflevel++ = ebnfcode - 1;
       *ebnfcode++ = -DOTS;
@@ -1043,9 +1043,9 @@ int   LG_ParseActions::PUSH_DOTS (int p)
 
 int   LG_ParseActions::PUSH_PLUS (int p)
 {
-      if (ebnflevel > ebnflevel_end) 
+      if (ebnflevel > ebnflevel_end)
 			MemCrash ("EBNF nesting levels", max_lev);
-      if (ebnfcode > ebnfcode_end)  
+      if (ebnfcode > ebnfcode_end)
 			MemCrash ("EBNF code size", max_code);
       *ebnflevel++ = ebnfcode - 1;
       *ebnfcode++   = -PLUS;
@@ -1059,7 +1059,7 @@ int   LG_ParseActions::PUSH_ASTER (int p)
       if (ebnfcode  > ebnfcode_end ) MemCrash ("EBNF code size", max_code);
   		*ebnflevel++ = ebnfcode - 1;   // save ptr to last symbol number put on ebnfcode.
 		*ebnfcode++ = -PLUS;				 // put -PLUS on ebnfcode.
-		GEN_SYMB ();						 // generate symbol* text 
+		GEN_SYMB ();						 // generate symbol* text
 
       if (ebnflevel > ebnflevel_end) MemCrash ("EBNF nesting levels", max_lev);
       if (ebnfcode  > ebnfcode_end ) MemCrash ("EBNF code size", max_code);
@@ -1071,9 +1071,9 @@ int   LG_ParseActions::PUSH_ASTER (int p)
 
 int   LG_ParseActions::PUSH_QUEST (int p)
 {
-      if (ebnflevel > ebnflevel_end) 
+      if (ebnflevel > ebnflevel_end)
 			MemCrash ("EBNF nesting levels", max_lev);
-      if (ebnfcode > ebnfcode_end)  
+      if (ebnfcode > ebnfcode_end)
 			MemCrash ("EBNF code size", max_code);
       *ebnflevel++ = ebnfcode - 1;
       *ebnfcode++ = -QUEST;
@@ -1111,16 +1111,16 @@ int   LG_ParseActions::PUSH_GQUEST (int p)
 
 int   LG_ParseActions::PUSH_OBEG (int p)
 {
-      if (ebnflevel > ebnflevel_end) 
+      if (ebnflevel > ebnflevel_end)
 			MemCrash ("EBNF nesting levels", max_lev);
-      if (ebnfcode > ebnfcode_end)  
+      if (ebnfcode > ebnfcode_end)
 			MemCrash ("EBNF code size", max_code);
       *ebnflevel++  =  ebnfcode;
       *ebnfcode++ = -OBEG;
 
-      if (ebnflevel > ebnflevel_end) 
+      if (ebnflevel > ebnflevel_end)
 			MemCrash ("EBNF nesting levels", max_lev);
-      if (ebnfcode > ebnfcode_end)  
+      if (ebnfcode > ebnfcode_end)
 			MemCrash ("EBNF code size", max_code);
       *ebnflevel++  =  ebnfcode;
       *ebnfcode++ = -NOTHING;  /* In case this has to become '(' */
@@ -1131,23 +1131,23 @@ int   LG_ParseActions::PUSH_OEND (int p)
 {
 		if (*(ebnflevel-1) == ebnfcode-2) /* If not a list? */
 		{
-			ebnflevel--; // Drop NOTHING. 
+			ebnflevel--; // Drop NOTHING.
 			*ebnfcode++ = -OEND;
 			GEN_SYMB ();
 		}
 		else  // List of symbols.
 		{
-	      if (ebnfcode > ebnfcode_end) 
+	      if (ebnfcode > ebnfcode_end)
 				MemCrash ("EBNF code size", max_code);
 			**(ebnflevel-1) = -GBEG;	// Replace NOTHING with '('
 			*ebnfcode++ = -GEND;			// Add ')'
 			GEN_SYMB ();
 
-	      if (ebnfcode > ebnfcode_end) 
+	      if (ebnfcode > ebnfcode_end)
 				MemCrash ("EBNF code size", max_code);
 			*ebnfcode++ = -OEND;
 			GEN_SYMB ();
-		}  
+		}
       return (0);
 }
 
@@ -1181,7 +1181,7 @@ int   LG_ParseActions::PUSH_ODOTS (int p)
 			if (ebnfcode  > ebnfcode_end ) MemCrash ("EBNF code size", max_code);
          *ebnfcode++ = -OEND;
          GEN_SYMB ();
-      }  
+      }
       return (0);
 }
 
@@ -1291,12 +1291,12 @@ int   LG_ParseActions::GEN_SYMB ()
 			else
 			{
             leng = sym_leng [*sp];
-		      if (ebnfspace+leng+1 >= ebnfspace_end) 
+		      if (ebnfspace+leng+1 >= ebnfspace_end)
 					MemCrash ("EBNF symbols space", max_space);
             memcpy (ebnfspace, sym_start[*sp], leng);
             ebnfspace += leng;
             *ebnfspace++ = ' ';
-         }  
+         }
 		//	z = *ebnfspace; *ebnfspace = 0; printf ("%s\n", start); *ebnfspace = z;
       }
 
@@ -1310,17 +1310,17 @@ int   LG_ParseActions::GEN_SYMB ()
 	//	printf("curr_symb = %s\n", sym_start[curr_symb]);
       if (n_symbs > ns) /* New symbol? */
       {
-			if (ebnfspace+sizeof(int) > ebnfspace_end) 
+			if (ebnfspace+sizeof(int) > ebnfspace_end)
 				MemCrash ("EBNF symbols space", max_space);
          *(int *)ebnfspace = (int)(ebnfcode - *ebnflevel); /* Store count. */
          ebnfspace += sizeof(int);
          for (sp = *ebnflevel; sp < ebnfcode; sp++)
          {
-				if (ebnfspace+sizeof(int) > ebnfspace_end) 
+				if (ebnfspace+sizeof(int) > ebnfspace_end)
 					MemCrash ("EBNF symbols space", max_space);
             *(int *)ebnfspace = *sp; /* Store symbol numbers. */
             ebnfspace += sizeof(int);
-         }  
+         }
       }
       else ebnfspace = start;
 
@@ -1341,7 +1341,7 @@ int   LG_ParseActions::term ()
       int s, t, h, p, n;
 
 	   GEN_EBNF ();
-		EXP_LITERALS (); 
+		EXP_LITERALS ();
       n_prods++;
 
       sym_prod2[curr_head] = n_prods;
@@ -1367,13 +1367,13 @@ int   LG_ParseActions::term ()
    // Count the number of terminals ...
 		N_terms = n_tokens;
       for (int s = max_char_set+1; s < n_symbs; s++)
-      {  
-         if (!(sym_type[s] & (NONTERMINAL|CONSTANT|STRING|ACTIONCODE))) 
-         {  
+      {
+         if (!(sym_type[s] & (NONTERMINAL|CONSTANT|STRING|ACTIONCODE)))
+         {
 				if (sym_numb[s] == -1) sym_numb[s] = N_terms++;
 				else InternalError(11);
-         }  
-      } 
+         }
+      }
 
      	if (optn[LG_VERBOSE] > 2)
 	  	printf ("Expanding sets ...\n");
@@ -1392,8 +1392,8 @@ int   LG_ParseActions::term ()
       ALLOC (term_type, N_terms);
 
 	// Now we can define the defined constants.
-      GEN_CON (); 
-      GEN_STRINGS (); 
+      GEN_CON ();
+      GEN_STRINGS ();
 
 	  	if (optn[LG_VERBOSE] > 2)
 	  	printf ("Starting terminal numbering ...\n");
@@ -1401,14 +1401,14 @@ int   LG_ParseActions::term ()
    // Define term_name for all terminals ...
       N_terms = 0;
       for (s = 0; s < n_symbs; s++)
-      {  
-         if (!(sym_type[s] & (NONTERMINAL|CONSTANT|STRING|ACTIONCODE))) 
-         {  
+      {
+         if (!(sym_type[s] & (NONTERMINAL|CONSTANT|STRING|ACTIONCODE)))
+         {
 	         term_name[N_terms]   = sym_start[s];
 		      term_line[N_terms]   = sym_line [s];
 		      term_type[N_terms++] = sym_type [s];
-         }  
-      } 
+         }
+      }
 
 	  	if (optn[LG_VERBOSE] > 2)
 	  	printf ("Done with terminal numbering !!!\n");
@@ -1419,23 +1419,23 @@ int   LG_ParseActions::term ()
       ALLOC (l_prod, n_heads);
       ALLOC (f_tail, max_prods);
       ALLOC (l_tail, max_prods);
-      ALLOC (tail,   max_tails);   
+      ALLOC (tail,   max_tails);
 
 	  	if (optn[LG_VERBOSE] > 2)
 	  	printf ("Starting nonterminal numbering ...\n");
 
-   // Define nonterminal symbols. 
+   // Define nonterminal symbols.
       n_prods = n_tails = 0;
       for (h = 0; h < n_heads; h++) // Have to do this in nonterminal order.
       {
          s = sym_indx[h];
-         f_prod [h]    = n_prods; 
+         f_prod [h]    = n_prods;
          head_name [h] = sym_start[s];
          head_type [h] = sym_type [s];
          head_line [h] = sym_line [s];
 
 //			printf ("%s [%d] type = %d\n", head_name[h], s, head_type[h]);
-         for (p = sym_prod1[s]; p < sym_prod2[s]; p++) 
+         for (p = sym_prod1[s]; p < sym_prod2[s]; p++)
          {
             f_tail [n_prods] = n_tails;
             for (t = F_tail[p]; t < L_tail[p]; t++)
@@ -1443,9 +1443,9 @@ int   LG_ParseActions::term ()
                tail [n_tails++] = Tail[t];
             }
             l_tail [n_prods++] = n_tails;
-         }  
+         }
 			l_prod[h] = n_prods;
-      }  
+      }
 
 	  	if (optn[LG_VERBOSE] > 2)
 	  	printf ("Done with nonterminal numbering !!!\n");
@@ -1453,7 +1453,7 @@ int   LG_ParseActions::term ()
       FREE (sym_prod1,     max_symbs);
       FREE (sym_prod2,     max_symbs);
    // FREE (Tail,				max_tails);
-   // FREE (F_tail,			max_prods+1); 
+   // FREE (F_tail,			max_prods+1);
 
    /* Assign Tail numbers. */
       for (t = 0; t < n_tails; t++)
@@ -1470,12 +1470,12 @@ int   LG_ParseActions::term ()
       FREE (ebnfcode_start,  max_code);
       FREE (ebnflevel_start, max_lev);
 
-      FREE (sym_start,     max_symbs);  
+      FREE (sym_start,     max_symbs);
       FREE (sym_numb,      max_symbs);
       FREE (sym_indx,      max_symbs);
       FREE (sym_type,      max_symbs);
       FREE (sym_leng,      max_symbs);
-      FREE (sym_vect,    2*max_symbs);		 
+      FREE (sym_vect,    2*max_symbs);
 	   return 1;
 }
 
@@ -1515,8 +1515,8 @@ void  LG_ParseActions::EXPAND_SETS () /* Expand set productions. */
 				{
 					if (sym_type[s] & NONTERMINAL)
 					{
-						sprintf (string, 
-                  "'%s', has been defined as a nonterminal,\ncannot be used in a character-set expression,\ntry %s = , instead of %s -> \nor remove %s from the character-set exprexxion", 
+						sprintf (string,
+                  "'%s', has been defined as a nonterminal,\ncannot be used in a character-set expression,\ntry %s = , instead of %s -> \nor remove %s from the character-set exprexxion",
                   sym_start[s], sym_start[s], sym_start[s], sym_start[s]);
 						prt_error (string, sym_start[s], 0, sym_line[s]);
 					}
@@ -1588,11 +1588,11 @@ void	LG_ParseActions::MAKE_SET (int s)
 				case PRODTO: // ..
 				if (optn[LG_INSENSITIVE]) // if case-insensitive, shift to lower case
 				{
-					for (i = lastsym+1; i <= sym; i++) hit[lower[i]] = lastcode;		
+					for (i = lastsym+1; i <= sym; i++) hit[lower[i]] = lastcode;
 				}
 				else
 				{
-					for (i = lastsym+1; i <= sym; i++) hit[i] = lastcode;		
+					for (i = lastsym+1; i <= sym; i++) hit[i] = lastcode;
 				}
 				break;
 			}
@@ -1606,9 +1606,9 @@ void	LG_ParseActions::MAKE_SET (int s)
 		{
 			if (hit[i] == 1)
 			{
-			 	if (n_prods >= max_prods) 
+			 	if (n_prods >= max_prods)
 			 		MemCrash ("Number of productions", max_prods);
-				if (n_tails >= max_tails) 
+				if (n_tails >= max_tails)
 					MemCrash ("Number of tail symbols", max_tails);
 				prod_type[n_prods] = 0;
 				F_tail [n_prods]   = n_tails;
@@ -1626,7 +1626,7 @@ void  LG_ParseActions::ADDSETNAME (int s, char* hit)
 {
 		int p;
 		if (!done[s]) MAKE_SET (s);
-		for (p = sym_prod1[s]; p < sym_prod2[s]; p++) 
+		for (p = sym_prod1[s]; p < sym_prod2[s]; p++)
 		{
 			hit [Tail[F_tail[p]]] = 1;
 		}
@@ -1636,7 +1636,7 @@ void  LG_ParseActions::SUBSETNAME (int s, char* hit)
 {
 		int p;
 		if (!done[s]) MAKE_SET (s);
-		for (p = sym_prod1[s]; p < sym_prod2[s]; p++) 
+		for (p = sym_prod1[s]; p < sym_prod2[s]; p++)
 		{
 			hit [Tail[F_tail[p]]] = 0;
 		}
@@ -1647,7 +1647,7 @@ void  LG_ParseActions::CHECK_SET (int s)
   		int p, i, j;
 		for (i = 0; i < n_onstack; i++)
 		{
-			if (onstack[i] == s) 
+			if (onstack[i] == s)
 			{
             if (++n_errors == 1) prt_log ("\n");
 				prt_log ("Cycle detected in character-set definitions:\n\n");
@@ -1665,7 +1665,7 @@ void  LG_ParseActions::CHECK_SET (int s)
 		{
 			int sym = Tail[F_tail[p]];
 			if (sym_type[sym] & SETNAME)
-			{	
+			{
 			//	printf ("-> %s\n", sym_start[sym]);
 				CHECK_SET (sym);
 			}
@@ -1723,7 +1723,7 @@ int   LG_ParseActions::GEN_EBNF () /* Generate EBNF symbols. */
 							case QUEST:
 								n_tails--;
 								GEN_PROD ();
-								GEN_TAIL (t); 
+								GEN_TAIL (t);
 								break;
 							case DOTS:
 								GEN_PROD ();
@@ -1734,12 +1734,12 @@ int   LG_ParseActions::GEN_EBNF () /* Generate EBNF symbols. */
 								break;
 						}
 					}
-					else 
+					else
 					{
 						GEN_TAIL (t = *sp);
 					}
             }
-         }  
+         }
       }
       return (0);
 }
@@ -1755,8 +1755,8 @@ int   LG_ParseActions::GEN_HEAD (int h)
 		sym_indx [n_heads] = h;
       sym_prod1[h] = n_prods+1;
       curr_head = h;
-      n_heads++; 
-      if (++n_prods >= max_prods) 
+      n_heads++;
+      if (++n_prods >= max_prods)
 		   MemCrash ("Number of productions", max_prods);
       F_tail   [n_prods] = n_tails;
 		prod_type[n_prods] = PRODARROW;
@@ -1767,14 +1767,14 @@ int   LG_ParseActions::GEN_HEAD_LITERAL (int h, char* sym, int L)
 {
 		int i;
 		n_genliterals++;
-      sym_prod2[curr_head] = n_prods+1;	 
+      sym_prod2[curr_head] = n_prods+1;
       sym_type [h] = NONTERMINAL;
       sym_numb [h] = n_heads;
 		sym_indx [n_heads] = h;
       sym_prod1[h] = n_prods + 1;
       curr_head    = h;
-      n_heads++; 
-      if (++n_prods >= max_prods) 
+      n_heads++;
+      if (++n_prods >= max_prods)
 		   MemCrash ("Number of productions", max_prods);
       F_tail   [n_prods] = n_tails;
 		prod_type[n_prods] = PRODARROW;
@@ -1798,7 +1798,7 @@ int   LG_ParseActions::GEN_HEAD_LITERAL (int h, char* sym, int L)
 
 int   LG_ParseActions::GEN_PROD ()
 {
-      if (++n_prods >= max_prods) 
+      if (++n_prods >= max_prods)
 			MemCrash ("Number of productions", max_prods);
       F_tail [n_prods] = n_tails;
       prod_line [n_prods] = 0;
@@ -1811,7 +1811,7 @@ int   LG_ParseActions::GEN_PROD ()
 
 int   LG_ParseActions::GEN_TAIL (int t)
 {
-      if (n_tails >= max_tails) 
+      if (n_tails >= max_tails)
 			MemCrash ("Number of tail symbols", max_tails);
       Tail [n_tails++] = t;
       sym_type[t] |= TERMINAL;
@@ -1855,7 +1855,7 @@ int   LG_ParseActions::GEN_CON ()   /* Generate defined constant array. */
 	   		ret_name[p] = "UNDEFINED";          // Assign name to defined constant.
          }
       }
-      if (ndc != n_constants) 
+      if (ndc != n_constants)
          InternalError(13);
       return (0);
 }
@@ -1863,7 +1863,7 @@ int   LG_ParseActions::GEN_CON ()   /* Generate defined constant array. */
 ////////////////////////////////////////////////////////////////////////////////
 //                                                                            //
 
-int   LG_ParseActions::GEN_STRINGS ()   
+int   LG_ParseActions::GEN_STRINGS ()
 {
       int s, i;
 
@@ -1896,11 +1896,11 @@ int   LG_ParseActions::GEN_STRINGS ()
 ////////////////////////////////////////////////////////////////////////////////
 //                                                                            //
 
-void  LG_ParseActions::EXP_LITERALS () // For literals like '==', '<=' ...			 
+void  LG_ParseActions::EXP_LITERALS () // For literals like '==', '<=' ...
 {
       char* sym;
       int   s, L;
-      
+
 		n_genliterals = 0;
 		n_original_prods = n_prods;
       for (s = 0; s < n_symbs; s++)
@@ -1908,21 +1908,21 @@ void  LG_ParseActions::EXP_LITERALS () // For literals like '==', '<=' ...
          if (sym_type [s] & STRING) continue;
          if (sym_type [s] & ACTIONCODE) continue;
          if (sym_type [s] & GENERATED) continue;
-         if (!(sym_type [s] & NONTERMINAL))	
+         if (!(sym_type [s] & NONTERMINAL))
          {
-            sym = sym_start[s];              
-            if (sym[0] == '\'') 
+            sym = sym_start[s];
+            if (sym[0] == '\'')
             {
 					L = sym_leng[s];
-               if (L > 3) GEN_HEAD_LITERAL (s, sym+1, L-2);		
-            }  
-            else if (sym[0] == '"' || sym[0] == '`') 
+               if (L > 3) GEN_HEAD_LITERAL (s, sym+1, L-2);
+            }
+            else if (sym[0] == '"' || sym[0] == '`')
             {
 					L = sym_leng[s];
-               GEN_HEAD_LITERAL (s, sym+1, L-2);		
-            }  
-         }  
-      }  
+               GEN_HEAD_LITERAL (s, sym+1, L-2);
+            }
+         }
+      }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -1938,8 +1938,8 @@ int   LG_ParseActions::SYMNUMB ()
       if (x >= 0) return (x);
 
 	// Add new symbol to table.
-      if (n_symbs >= max_symbs) 
-			MemCrash ("Number of symbols", max_symbs); 
+      if (n_symbs >= max_symbs)
+			MemCrash ("Number of symbols", max_symbs);
 
       sym_vect [cell] = n_symbs;
       sym_leng [n_symbs] = length;
@@ -1954,7 +1954,7 @@ int   LG_ParseActions::SYMNUMB ()
 			*pool_ptr++ = *p++;
 		}
 		*pool_ptr++ = 0;								// Put ending zero byte here.
-      return (n_symbs++);	
+      return (n_symbs++);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -1965,8 +1965,8 @@ int   LG_ParseActions::ADDSYM (char* start, int leng)
 		char *p;
 
 	// Add symbol ...
-      if (n_symbs >= max_symbs) 
-			MemCrash ("Number of symbols", max_symbs); 
+      if (n_symbs >= max_symbs)
+			MemCrash ("Number of symbols", max_symbs);
 
       sym_leng [n_symbs] = leng;
       if (pool_ptr + leng + 1 > pool_end)		// No room left in pool?
@@ -1980,7 +1980,7 @@ int   LG_ParseActions::ADDSYM (char* start, int leng)
 			*pool_ptr++ = *p++;
 		}
 		*pool_ptr++ = 0;								// Put ending zero byte here.
-      return (n_symbs++);	
+      return (n_symbs++);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -1995,7 +1995,7 @@ char* LG_ParseActions::ADDSYMBOL (char* start, int leng)
          pool_end = pool_ptr + 4000;		// Reset end pointer.
       }
       symaddr = pool_ptr;						// Define start of symbol.
-      memcpy (pool_ptr, start, leng);		// Move symbol to pool. 
+      memcpy (pool_ptr, start, leng);		// Move symbol to pool.
 		pool_ptr += leng;							// Add length of symbol name to pool_ptr.
       return (symaddr);							// Return symbol name address.
 }
@@ -2008,12 +2008,12 @@ int   LG_ParseActions::GENSYMNUMB ()
       int x;
       x = EXIST ();
       if (x >= 0) return (x);
-      if (n_symbs >= max_symbs) 
-			MemCrash ("Number of symbols", max_symbs); 
+      if (n_symbs >= max_symbs)
+			MemCrash ("Number of symbols", max_symbs);
       sym_vect [cell]    = n_symbs;
       sym_start[n_symbs] = T_start;
       sym_leng [n_symbs] = length;
-      n_symbs++; 
+      n_symbs++;
       return (n_symbs-1);
 }
 
@@ -2024,23 +2024,23 @@ int   LG_ParseActions::EXIST ()
 {
 		int  i;
 		uint hash;
-      char *p, *q;						
+      char *p, *q;
 
 		i = 0;
-		p = T_start;					
-		q = T_end-1;					
+		p = T_start;
+		q = T_end-1;
 		if (*p == '\"' && *q == '\"')
 		{
 			*p = '\'';
 			*q = '\'';
 		}
-		hash = length = (int)(T_end-T_start); // Set hash to length. 
+		hash = length = (int)(T_end-T_start); // Set hash to length.
 
       do									      // Assume length != 0
       {
          hash += *p << i;
          i += 3;		                  // 3 is optimum.
-         i %= 30; 
+         i %= 30;
       }
       while (++p < T_end);
 
@@ -2053,11 +2053,11 @@ int   LG_ParseActions::EXIST ()
 			{
 				p = T_start;
 				q = sym_start[i];
-				do 
+				do
 				{
-					if (*p++ != *q++) goto Cont;			
+					if (*p++ != *q++) goto Cont;
 				}
-				while (p < T_end); 
+				while (p < T_end);
 				return (i);									// Found it.
 			}
 Cont:    cell = (hash *= 65549) / hash_divide;	// Get new cell number.

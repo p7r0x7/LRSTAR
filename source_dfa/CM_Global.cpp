@@ -4,13 +4,13 @@
 		#include "CM_Global.h"
 		#include "LG_Global.h"
 
-	// 1 = upper, 2 = lower, 4 = '_', 8 = digit, 16 = quote ("|') 
-		uchar charcode[256] = 
+	// 1 = upper, 2 = lower, 4 = '_', 8 = digit, 16 = quote ("|')
+		uchar charcode[256] =
 		{
 			  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 			  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-			  0,  0, 16,  0,  0,  0,  0, 16,  0,  0,  0,  0,  0,  0,  0,  0,			 
-			  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  0,  0,  0,  0,  0,  0,			 
+			  0,  0, 16,  0,  0,  0,  0, 16,  0,  0,  0,  0,  0,  0,  0,  0,
+			  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  0,  0,  0,  0,  0,  0,
 			  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,
 		     1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  0,  0,  0,  4,
     		 16,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,
@@ -26,8 +26,8 @@
 			  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0
 		};
 
-	// numeric[x] gives 1..10 for digits 0..9 
-		uchar numeric[256] = 
+	// numeric[x] gives 1..10 for digits 0..9
+		uchar numeric[256] =
 		{
 			0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 			0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
@@ -47,7 +47,7 @@
 			0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0
 		};
 
-	// 1 = upper, 2 = lower, 4 = '_' 
+	// 1 = upper, 2 = lower, 4 = '_'
 		uchar alpha[256] =
 		{
 			  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
@@ -69,7 +69,7 @@
 			  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0
 		};
 
-	// upper[x] gives the uppercase of x. 
+	// upper[x] gives the uppercase of x.
 		uchar upper[256] =
 		{
 			  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15,
@@ -91,7 +91,7 @@
 			240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255
 		};
 
-	// lower[x] makes lower case of x. 		
+	// lower[x] makes lower case of x.
 		uchar lower[256] =
 		{
 			  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15,
@@ -119,8 +119,8 @@
 int	itsakeyword (char* terminal)
 {
 		char* p;
-	  	if (terminal[0] == '<') return 0;	
-      if (terminal[0] == '{') return 0;	
+	  	if (terminal[0] == '<') return 0;
+      if (terminal[0] == '{') return 0;
 		for (p = terminal; *p != 0; p++)
 		{
 			if (alpha[*p] & 3) // upper or lower case letter?
@@ -345,7 +345,7 @@ int   GetMaxValues (char* dn)
       filesize = _filelength (filedesc) + 2;		// Set amount to read.
       ALLOC (input_start, filesize);
       nb = read (filedesc, input_start, filesize);
-      if (nb <= 0) 
+      if (nb <= 0)
 		{
 			SaveMaxValues ();						      // Create it.
 			goto Ret;
@@ -359,21 +359,21 @@ int   GetMaxValues (char* dn)
 		do
 		{
 Find:		while (*p != '/' && *p != EOF_CHAR && *p != '\n') p++; // Find first "
-			if (*p == '\n') 
+			if (*p == '\n')
 			{
 				p++;
 				linenumb++;
 				goto Find;
 			}
 			if (*p == EOF_CHAR) goto Ret;
-			char* option = p;										// Set option start. 
+			char* option = p;										// Set option start.
     		while (*p != EOF_CHAR && *p != '\n') p++;		// Find end of line.
 			if (*p == '\n') linenumb++;
 			if (*p == EOF_CHAR) goto Ret;
 
 			*p++ = 0;  // skip over \n
-         if (SET_OPTN_MA (option) == 0) 
-			{ 
+         if (SET_OPTN_MA (option) == 0)
+			{
 				printf ("\n   OPTION   DEFAULT  DESCRIPTION\n");
 				for (int i = 0; *MAOption[i].name != 0; i++)
 				{
@@ -381,7 +381,7 @@ Find:		while (*p != '/' && *p != EOF_CHAR && *p != '\n') p++; // Find first "
 				}
 				printf ("\n");
 				rc = 0; // error
-				goto Ret; 
+				goto Ret;
 			}
 		}
 		while (p < input_end);
@@ -395,7 +395,7 @@ Ret:  FREE (input_start, filesize);
 //                                                                           //
 
 void  SaveMaxValues ()
-{			  
+{
 		int i;
       FILE* fp;
 		fp = fopen (exefid, "w");
@@ -674,7 +674,7 @@ int	sqrt (int n) // Not very efficient.
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-//                                                                           // 
+//                                                                           //
 //    number - put commas into number (12,345,002)    							  //
 
 void  number (int x, char* string)
@@ -696,11 +696,11 @@ void  number (int x, char* string)
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
-//    SORT - Sort one vector.   
-      
+//    SORT - Sort one vector.
+
 void  SORT (int *start, int *end) /* Integer bubble sort. */
 {
-	// Sort in place, destroys the original order. 
+	// Sort in place, destroys the original order.
       int *p, *q, x;
 
       end--;
@@ -724,11 +724,11 @@ void  SORT (int *start, int *end) /* Integer bubble sort. */
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
 //    SORT2 - Sort one vector of length n.                                   //
-      
-void  SORT2 (int* value, int* seq, int n) 
+
+void  SORT2 (int* value, int* seq, int n)
 {
-//    Sort in place.  Destroys the original order, but seq contains the original order. 
-  
+//    Sort in place.  Destroys the original order, but seq contains the original order.
+
       int *last;
       int *v1, *v2, vt;
       int *s1, *s2, st;
@@ -736,7 +736,7 @@ void  SORT2 (int* value, int* seq, int n)
       if (n <= 1) return;
 
    // Note:  when using pointers instead of indexes,
-   // we must be careful not to decrement below zero. 
+   // we must be careful not to decrement below zero.
 
       last = value + n - 1;
 		v1 = value;
@@ -754,23 +754,23 @@ void  SORT2 (int* value, int* seq, int n)
                *(v2+1) = *v2;		// switch these two ...
                *(s2+1) = *s2;		//	.
                *v2 = vt;			// .
-               *s2 = st;			// done switching.  
+               *s2 = st;			// done switching.
             }
             else break;
-         }  
+         }
       }
 	/*	for (int i = 0; i < n; i++)
 		{
 			printf ("%5d %5d\n", value[i], seq[i]);
-		}  
+		}
 	*/
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
-//    SORT3 - Sort three vectors of length n, see SORT2 above for explanation. 
-      
-void  SORT3 (int* a, int* b, int* c, int n) 
+//    SORT3 - Sort three vectors of length n, see SORT2 above for explanation.
+
+void  SORT3 (int* a, int* b, int* c, int n)
 {
       int *last;
       int *a1, *a2, at;
@@ -780,7 +780,7 @@ void  SORT3 (int* a, int* b, int* c, int n)
       if (n <= 1) return;
 
    // Note: when using pointers instead of indexes,
-   // we must be careful not to decrement below zero. 
+   // we must be careful not to decrement below zero.
 
 		a1 = a;
 		b1 = b;
@@ -802,11 +802,11 @@ void  SORT3 (int* a, int* b, int* c, int n)
                *(b2+1) = *b2;		//	.
                *(c2+1) = *c2;		//	.
                *a2 = at;			// .
-               *b2 = bt;			// done switching.  
-               *c2 = ct;			// done switching.  
+               *b2 = bt;			// done switching.
+               *c2 = ct;			// done switching.
             }
             else break;
-         }  
+         }
       }
 /*	  	for (int i = 0; i < n; i++)
 		{
@@ -834,7 +834,7 @@ void  SORTNAMES (char** name, int n, int* seq)
 
       ALLOC (P, n);
       ALLOC (L, n);
-      for (i = 0; i < n; i++)                       
+      for (i = 0; i < n; i++)
       {
          P[i]   = name[i];
          L[i]   = (int)strlen (name[i]);
@@ -964,13 +964,13 @@ int   ATTACH (int x, int y) // Attach y to x (add y to x set).
          while (ptr != -1);
          child [pre].link = n_childs;
       }
-      if (n_childs >= max_child) 
+      if (n_childs >= max_child)
 		{
 			MemCrash ("Number of child nodes", max_child);
 		}
       child [n_childs].numb = y;
       child [n_childs++].link = -1;
-		if (n_childs > max_child_usage) 
+		if (n_childs > max_child_usage)
       {
          max_child_usage = n_childs;
       }
@@ -990,7 +990,7 @@ int   ATTACHED (int x, int y)
       return (0);
 }
 
-/*    
+/*
 Original version ...
 ////////////////////////////////////////////////////////////////////////////////
 //                                                                            //
@@ -1013,7 +1013,7 @@ Original version ...
 
 void  T_GRAPH (char **g, int nr) // Traverse graph and do transitive closure.
 {
-      int x;              // Node number. 
+      int x;              // Node number.
    // top   = 0;          // Top of stack. (DeRemer's version)
       depth = 0;          // Depth of tree.
       graph = g;          // Set graph pointer.
@@ -1021,12 +1021,12 @@ void  T_GRAPH (char **g, int nr) // Traverse graph and do transitive closure.
       ALLOC (S, (nr+1));  // Allocate S, number of rows + 1;
 
    // Mark nodes as not traversed.
-      for (x = 0; x < nr; x++) N [x] = 0; 
+      for (x = 0; x < nr; x++) N [x] = 0;
 
    // Traverse all nodes in the graph.
-      for (x = 0; x < nr; x++) 
+      for (x = 0; x < nr; x++)
       {
-         if (N [x] == 0) TRAVERSE (x);  
+         if (N [x] == 0) TRAVERSE (x);
       }
       FREE (S);
       FREE (N);
@@ -1034,7 +1034,7 @@ void  T_GRAPH (char **g, int nr) // Traverse graph and do transitive closure.
 
 void  TRAVERSE (int x) // Traverse node x in a graph.
 {
-      int i;                           // Index of a child node. 
+      int i;                           // Index of a child node.
       int y;                           // Child node number.
       i = f_child [x];                 // Get first child of node x.
       if (i == -1)                     // If no children.
@@ -1050,8 +1050,8 @@ void  TRAVERSE (int x) // Traverse node x in a graph.
       {
          y = child [i].numb;           // Get child node y.
          if (N [y] == 0) TRAVERSE (y); // If node y not traversed.
-         if (N [y] < N [x])            // If depth of y < depth of x,    
-             N [x] = N [y];            // Set depth of x to depth of y.    
+         if (N [y] < N [x])            // If depth of y < depth of x,
+             N [x] = N [y];            // Set depth of x to depth of y.
          FASTOR (graph [y], graph [x], n_words); // Or y set onto x set.
          i = child [i].link;              // Get next child of node x.
       }
@@ -1059,7 +1059,7 @@ void  TRAVERSE (int x) // Traverse node x in a graph.
 
    // prt_lst ("N[x], depth = %d, %d\n", N[x], depth);
    // prt_lst ("S[N[x]],  x = %d, %d\n", S[N[x]],  x);
-   // if (N [x] == depth)                 // Original line from DeRemer's paper.  
+   // if (N [x] == depth)                 // Original line from DeRemer's paper.
       if (S [N [x]] == x)                 // Modification by me, originally done in 1985.
       {
          for (;;)                         // For all nodes in this cycle.
@@ -1100,21 +1100,21 @@ End of Original version.
 
 void  T_GRAPH (char **g, int nr, int nc) // Traverse graph, do transitive closure.
 {
-      int x;            // Node number. 
+      int x;            // Node number.
       top   = 0;        // Top of stack. (DeRemer's version)
       depth = 0;        // Depth of tree.
       graph = g;        // Set graph pointer.
-		nw = (nc + 3)/4;  // Number of 4-byte words. 
+		nw = (nc + 3)/4;  // Number of 4-byte words.
       ALLOC (N, nr);    // Allocate N, number of rows.
       ALLOC (S, nr+1);	// Allocate S, number of rows + 1;
 
    // Mark nodes as not traversed.
-      for (x = 0; x < nr; x++) N [x] = 0; 
+      for (x = 0; x < nr; x++) N [x] = 0;
 
    // Traverse all nodes in the graph.
-      for (x = 0; x < nr; x++) 
+      for (x = 0; x < nr; x++)
       {
-         if (N [x] == 0) TRAVERSE (x);  
+         if (N [x] == 0) TRAVERSE (x);
       }
       FREE (S, nr+1);
       FREE (N, nr);
@@ -1122,7 +1122,7 @@ void  T_GRAPH (char **g, int nr, int nc) // Traverse graph, do transitive closur
 
 void  TRAVERSE (int x) // Traverse node x in a graph.
 {
-      int i;                           // Index of a child node. 
+      int i;                           // Index of a child node.
       int y;                           // Child node number.
       i = f_child [x];                 // Get first child of node x.
       if (i == -1)                     // If no children.
@@ -1138,13 +1138,13 @@ void  TRAVERSE (int x) // Traverse node x in a graph.
       {
          y = child [i].numb;                 // Get child node y.
          if (N [y] == 0) TRAVERSE (y);       // If node y not traversed.
-         if (N [y] < N [x])                  // If depth of y < depth of x,    
-             N [x] = N [y];                  // Set depth of x to depth of y.    
+         if (N [y] < N [x])                  // If depth of y < depth of x,
+             N [x] = N [y];                  // Set depth of x to depth of y.
          FASTOR (graph [y], graph [x], nw);  // Or y set onto x set.
          i = child [i].link;                 // Get next child of node x.
       }
       while (i != -1);
-      if (N [x] == depth)                    // Original line from DeRemer's paper.  
+      if (N [x] == depth)                    // Original line from DeRemer's paper.
    // if (S [N [x]] == x)                    // Modification by me, originally done in 1985.
       {
          for (;;)                            // For all nodes in this cycle.
@@ -1189,7 +1189,7 @@ void  SORTNUMBS (int* numb, int n, int* seq)
 		/* seq - the sorted sequence:
 					numb[seq[0]] gives the first number in the sorted list.
 
-			example: 
+			example:
 					numb[0] = "c", seq[0] = 3
 					numb[1] = "d", seq[1] = 2
 					numb[2] = "b", seq[2] = 0
@@ -1197,12 +1197,12 @@ void  SORTNUMBS (int* numb, int n, int* seq)
 		*/
 		int i, j, numb_temp, seq_temp;
 
-      for (i = 1; i < n; i++)	// Bubble sort algorithm.						
+      for (i = 1; i < n; i++)	// Bubble sort algorithm.
       {
          numb_temp = numb[i];
          seq_temp  = seq[i];
          j = i - 1;
-         do 
+         do
          {
             if (numb_temp < numb[j])
             {
@@ -1225,10 +1225,10 @@ void  SORTNUMBS2 (int* numb, int n, int* seq, int* pos)
    /* seq - the sorted sequence:
 	         numb[seq[0]] gives the first number in the sorted list.
 
-      pos - the position or rank in the sorted order:                     
-				pos[0] gives the position of numb[0] in the sorted list. 
+      pos - the position or rank in the sorted order:
+				pos[0] gives the position of numb[0] in the sorted list.
 
-		example: 
+		example:
 				numb[0] = "c", seq[0] = 3, pos[0] = 2
 				numb[1] = "d", seq[1] = 2, pos[1] = 3
 				numb[2] = "b", seq[2] = 0, pos[2] = 1
@@ -1236,14 +1236,14 @@ void  SORTNUMBS2 (int* numb, int n, int* seq, int* pos)
 	 */
 		int i, j, numb_temp, seq_temp;
 
-      for (i = 0; i < n; i++) { seq[i] = i; pos[i] = i; }														
+      for (i = 0; i < n; i++) { seq[i] = i; pos[i] = i; }
 
-      for (i = 1; i < n; i++)	// Bubble sort algorithm.						
+      for (i = 1; i < n; i++)	// Bubble sort algorithm.
       {
          numb_temp = numb[i];
          seq_temp  = seq[i];
          j = i - 1;
-         do 
+         do
          {
             if (numb_temp < numb[j])
             {
@@ -1262,7 +1262,7 @@ void  SORTNUMBS2 (int* numb, int n, int* seq, int* pos)
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
-      
+
 int   open_log (char* fid)
 {
 		int i = (int)strlen (fid);
@@ -1274,14 +1274,14 @@ int   open_log (char* fid)
 			printf ("Log file %s cannot be created.\n", fid);
 			fid[i] = 0;
 			return (0);
-		}  
+		}
 		fid[i] = 0;
 		return (1);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
-      
+
 int   close_log ()
 {
 		if (logfp != NULL) fclose (logfp);
@@ -1291,7 +1291,7 @@ int   close_log ()
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
-      
+
 void  prt_log (char *format,...) // Print both on screen and to log file (if not quiet option).
 {
       va_list argptr;
@@ -1308,7 +1308,7 @@ void  prt_log (char *format,...) // Print both on screen and to log file (if not
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
-      
+
 void  prt_logonly (char *format,...) // Print only to the log file (not on screen).
 {
       va_list argptr;
@@ -1384,7 +1384,7 @@ int   open_grm (char* fid)
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
-      
+
 int   close_grm ()
 {
 		if (grmfp != NULL) fclose (grmfp);
@@ -1394,7 +1394,7 @@ int   close_grm ()
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
-      
+
 int   prt_grm (char *format,...)
 {
 		if (option_grammar == 0) return 0;
@@ -1411,7 +1411,7 @@ int   prt_grm (char *format,...)
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
-      
+
 int   open_sta (char* fid)
 {
 		int i = (int)strlen (fid);
@@ -1430,7 +1430,7 @@ int   open_sta (char* fid)
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
-      
+
 int   close_sta ()
 {
 		if (stafp != NULL) fclose (stafp);
@@ -1440,7 +1440,7 @@ int   close_sta ()
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
-      
+
 void  prt_sta (char *format,...)
 {
       va_list argptr;
@@ -1478,7 +1478,7 @@ int   open_warn (char* fid)
 
 int   close_warn ()
 {
-		if (lstfp != NULL) 
+		if (lstfp != NULL)
 		{
 			if (n_warnings == 1) prt_warn ("%d warning.\n", n_warnings);
 			else                 prt_warn ("%d warnings.\n", n_warnings);
@@ -1508,7 +1508,7 @@ void  prt_warn (char *format,...)
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
-      
+
 void  prt_num (char* desc, int n, char* name, int max)
 {
       char bar [11] = "**********";
@@ -1536,17 +1536,17 @@ int   inputi (char* Msg)
          if (*Msg != 0)
          {
 		   	n_errors++;
-            prt_log ("%s: %s.\n", Msg, grmfid); 
+            prt_log ("%s: %s.\n", Msg, grmfid);
          }
          return 0;
       }
 		filesize = _filelength (filedesc);
 
 		ALLOC (input_start, filesize + 10);
-		*input_start++ = '\n';                    // Put EOL at the beggining.    
+		*input_start++ = '\n';                    // Put EOL at the beggining.
 
 		nb = read (filedesc, input_start, filesize);
-		if (nb <= 0)                           	// If read error.            
+		if (nb <= 0)                           	// If read error.
 		{
 			n_errors++;
 			prt_log ("Read error on file %s, or it's empty.\n\n", grmfid);
@@ -1558,7 +1558,7 @@ int   inputi (char* Msg)
 		*input_end++ = 26;								// Parser needs 2 EOFs.
 		*input_end++ = 26;
 		*input_end++ = 0;									// ??
-		close (filedesc);									// Close input file.         
+		close (filedesc);									// Close input file.
 
 		n_lines = 0;
 		char* p = input_start;
@@ -1595,12 +1595,12 @@ void  inputt (void)
 void  prt_error (char* msg, char* start, char* end, int linenum)
 {
 		if (++n_errors == 1) prt_log ("\n");
-		if (start != NULL && end == NULL) 
+		if (start != NULL && end == NULL)
 		{
 			for (end = start; *end != 0; end++);
 		}
 		prt_message ("Error, ", msg, start, end, linenum);
-		if (n_errors >= max_errors) 
+		if (n_errors >= max_errors)
 		{
 			prt_log ("Maximum number of errors (%d) has been reached.\n", max_errors);
 			Quit();
@@ -1613,12 +1613,12 @@ void  prt_error (char* msg, char* start, char* end, int linenum)
 void  prt_warning (char* msg, char* start, char* end, int linenum)
 {
 		n_warnings++;
-		if (start != NULL && end == NULL) 
+		if (start != NULL && end == NULL)
 		{
 			for (end = start; *end != 0; end++);
 		}
 		prt_message ("Warning, ", msg, start, end, linenum);
-/*		if (n_warnings >= max_errors) 
+/*		if (n_warnings >= max_errors)
 		{
 			printf  ("Maximum number of warnings (%d) has been reached.\n", max_errors);
 			prt_warn ("Maximum number of warnings (%d) has been reached.\n", max_errors);
@@ -1641,8 +1641,8 @@ void  prt_message (char* msgtype, char* msg, char* tokenstart, char* tokenend, i
 		char* linestart;		// Line start pointer.
 		char* lineend = 0;	// Line end pointer.
 		char  line[10000];	// Line string to be printed.
-		int   linelength;		// Line length. 
-		int   tokenlength;	// Token length. 
+		int   linelength;		// Line length.
+		int   tokenlength;	// Token length.
 
 	// Check line number ...
 		if (tokenlinenumb > 0) // Line number defined?
@@ -1663,7 +1663,7 @@ void  prt_message (char* msgtype, char* msg, char* tokenstart, char* tokenend, i
 		// Check token start ...
    		if (tokenstart >= input_start && tokenstart < input_end) // Token is in input buffer?
 			{
-				if (linestart == NULL)											// Get line start from token. 
+				if (linestart == NULL)											// Get line start from token.
 				{
 				// Get line start ...
 					for (linestart = tokenstart-1; *linestart != '\n'; linestart--);
@@ -1675,7 +1675,7 @@ void  prt_message (char* msgtype, char* msg, char* tokenstart, char* tokenend, i
 					tokenlinenumb = 0; // Maybe this should be 1, so double click will go to file.
 					for (i = 1; i < n_lines; i++) // Not fast, could make this a binary search, later.
 					{
-						if (line_ptr[i] == linestart) 
+						if (line_ptr[i] == linestart)
 						{
 							tokenlinenumb = i;
 							break;
@@ -1693,7 +1693,7 @@ void  prt_message (char* msgtype, char* msg, char* tokenstart, char* tokenend, i
 	// Check line start ...
 		if (linestart != NULL)
 		{
-			if (lineend > linestart + 9999) lineend = linestart + 9999;	
+			if (lineend > linestart + 9999) lineend = linestart + 9999;
 
 		// Remove trailing whitespace.
 			lineend--;															// Backup to '\n'
@@ -1714,14 +1714,14 @@ void  prt_message (char* msgtype, char* msg, char* tokenstart, char* tokenend, i
 		// Print line.
 			if (*msgtype == 'W')
 			{
-				if (option_warnings) 
-				   printf   ("%s(%04d) : %s\n", grmfid, tokenlinenumb, line);	
-				   prt_warn ("%s(%04d) : %s\n", grmfid, tokenlinenumb, line);	
+				if (option_warnings)
+				   printf   ("%s(%04d) : %s\n", grmfid, tokenlinenumb, line);
+				   prt_warn ("%s(%04d) : %s\n", grmfid, tokenlinenumb, line);
 			}
-			else  prt_log ("%s(%04d) : %s\n", grmfid, tokenlinenumb, line);	
+			else  prt_log ("%s(%04d) : %s\n", grmfid, tokenlinenumb, line);
 
 		// See if token is outside this line ...
-			if (tokenstart < linestart || tokenstart >= lineend)	
+			if (tokenstart < linestart || tokenstart >= lineend)
 			{
 				if (tokenstart != NULL)												// Token is not null?
 				{
@@ -1730,7 +1730,7 @@ void  prt_message (char* msgtype, char* msg, char* tokenstart, char* tokenend, i
 					for (p = linestart; p < lineend; p++)						// Scan to end of line.
 					{
 						if (*p == *tokenstart)										// First characters match?
-						{		
+						{
 							int len = tokenlength;
 							if (len > lineend-p) len = (int)(lineend-p);
 							if (strncmp (p, tokenstart, len) == 0)				// Whole tokens match?
@@ -1745,15 +1745,15 @@ void  prt_message (char* msgtype, char* msg, char* tokenstart, char* tokenend, i
 
 			// Token is NULL or not found in line.
 				column = (int)(lineend - linestart);
-				for (i = 0; i < column; i++) line[i] = '.';						
+				for (i = 0; i < column; i++) line[i] = '.';
 				line[i] = 0;
 				if (*msgtype == 'W')
 				{
-					if (option_warnings) 
-					   printf   ("%s(%04d) : %s\n", grmfid, tokenlinenumb, line);	
-					   prt_warn ("%s(%04d) : %s\n", grmfid, tokenlinenumb, line);	
+					if (option_warnings)
+					   printf   ("%s(%04d) : %s\n", grmfid, tokenlinenumb, line);
+					   prt_warn ("%s(%04d) : %s\n", grmfid, tokenlinenumb, line);
 				}
-				else  prt_log ("%s(%04d) : %s\n", grmfid, tokenlinenumb, line);	
+				else  prt_log ("%s(%04d) : %s\n", grmfid, tokenlinenumb, line);
 			}
 			else
 			{
@@ -1762,17 +1762,17 @@ void  prt_message (char* msgtype, char* msg, char* tokenstart, char* tokenend, i
 				linelength  = (int)(lineend - linestart);
 				tokenlength = (int)(tokenend - tokenstart);
 				column      = (int)(tokenstart - linestart);								// Column number for token start.
-				for (i = 0;   i < column;      i++) line[i]   = '.';						
+				for (i = 0;   i < column;      i++) line[i]   = '.';
 				for (j = 0;   j < tokenlength; j++) line[i+j] = '^';
 				for (k = i+j; k < linelength;  k++) line[k]   = '.';
 				line[k] = 0;
 				if (*msgtype == 'W')
 				{
-					if (option_warnings) 
-					   printf   ("%s(%04d) : %s\n", grmfid, tokenlinenumb, line);	
-                  prt_warn ("%s(%04d) : %s\n", grmfid, tokenlinenumb, line);	
+					if (option_warnings)
+					   printf   ("%s(%04d) : %s\n", grmfid, tokenlinenumb, line);
+                  prt_warn ("%s(%04d) : %s\n", grmfid, tokenlinenumb, line);
 				}
-				else  prt_log ("%s(%04d) : %s\n", grmfid, tokenlinenumb, line);	
+				else  prt_log ("%s(%04d) : %s\n", grmfid, tokenlinenumb, line);
 			}
 		}
 
@@ -1801,11 +1801,11 @@ void  prt_message (char* msgtype, char* msg, char* tokenstart, char* tokenend, i
 			if (c == 0) end = ".\n\n"; // Last time?
 			if (*msgtype == 'W')
 			{
-				if (option_warnings) 
-					printf   ("%s(%04d) : %s%s%s", grmfid, tokenlinenumb, MsgType, p, end);	
-					prt_warn ("%s(%04d) : %s%s%s", grmfid, tokenlinenumb, MsgType, p, end);	
+				if (option_warnings)
+					printf   ("%s(%04d) : %s%s%s", grmfid, tokenlinenumb, MsgType, p, end);
+					prt_warn ("%s(%04d) : %s%s%s", grmfid, tokenlinenumb, MsgType, p, end);
 			}
-			else  prt_log ("%s(%04d) : %s%s%s", grmfid, tokenlinenumb, MsgType, p, end);	
+			else  prt_log ("%s(%04d) : %s%s%s", grmfid, tokenlinenumb, MsgType, p, end);
 			*q++ = c;
 			p = q;
 			*MsgType = 0; // Only print "Error:" on the first line.
@@ -1819,12 +1819,12 @@ void  prt_message (char* msgtype, char* msg, char* tokenstart, char* tokenend, i
 void  C_FIRSTNT () // Compute First Nonterminal Set (not used)
 {
       int h, p, s, t;
-		n_words = (N_heads +  3)/4;   // Number of 4-byte words. 
-      n_bytes = 4*n_words;				// Number of bytes to allocate. 
-      ALLOC (FIRSTNT, N_heads);          
+		n_words = (N_heads +  3)/4;   // Number of 4-byte words.
+      n_bytes = 4*n_words;				// Number of bytes to allocate.
+      ALLOC (FIRSTNT, N_heads);
       for (h = 0; h < N_heads; h++)
       {
-         ALLOC (FIRSTNT[h], n_bytes);    
+         ALLOC (FIRSTNT[h], n_bytes);
          memset (FIRSTNT[h], 0, n_bytes);
       }
 
@@ -1838,14 +1838,14 @@ Next:       if (t < F_tail[p+1])
                if ((s = Tail[t]) < 0)
                {
                   FIRSTNT[h][-s] = 1;
-                  if (nullable[-s]) 
-                  { 
-                     t++; 
-                     goto Next; 
+                  if (nullable[-s])
+                  {
+                     t++;
+                     goto Next;
                   }
                }
-            }  
-         }  
+            }
+         }
       }
 
       n_childs = 0;
@@ -1862,13 +1862,13 @@ Nxt:     if (t < F_tail [p+1])
             if ((s = Tail [t]) < 0)
             {
                if (h != -s) ATTACH (h, -s);
-               if (nullable [-s]) 
-               { 
-                  t++; 
-                  goto Nxt; 
+               if (nullable [-s])
+               {
+                  t++;
+                  goto Nxt;
                }
-            }  
-         }  
+            }
+         }
       }
       T_GRAPH (FIRSTNT, N_heads, N_heads);
       FREE (child, max_child);
@@ -1878,18 +1878,18 @@ Nxt:     if (t < F_tail [p+1])
 */
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
-  
-void  C_EQUIVALENCE_N (int n_heads, int* f_prod, int* f_tail, int* tail, char**& EQUIVALENCE)  
+
+void  C_EQUIVALENCE_N (int n_heads, int* f_prod, int* f_tail, int* tail, char**& EQUIVALENCE)
 {
       int h, p, s, t;
 		int n_words, n_bytes;
 
-		n_words = (n_heads +  3)/4;   // Number of 4-byte words. 
-      n_bytes = 4*n_words;				// Number of bytes to allocate. 
-      ALLOC (EQUIVALENCE, n_heads);          
+		n_words = (n_heads +  3)/4;   // Number of 4-byte words.
+      n_bytes = 4*n_words;				// Number of bytes to allocate.
+      ALLOC (EQUIVALENCE, n_heads);
       for (h = 0; h < n_heads; h++)
       {
-         ALLOC  (EQUIVALENCE[h], n_bytes);    
+         ALLOC  (EQUIVALENCE[h], n_bytes);
          memset (EQUIVALENCE[h], 0, n_bytes);
       }
       for (h = 0; h < n_heads; h++) // for all heads.
@@ -1905,7 +1905,7 @@ void  C_EQUIVALENCE_N (int n_heads, int* f_prod, int* f_tail, int* tail, char**&
 						EQUIVALENCE[h][-s] = 1;
                }
             }
-         }  
+         }
       }
       n_childs = 0;
       ALLOC (f_child, n_heads);
@@ -1922,7 +1922,7 @@ void  C_EQUIVALENCE_N (int n_heads, int* f_prod, int* f_tail, int* tail, char**&
                if (s < 0) // nonterminal?
                {
                   if (h != -s) ATTACH (h,-s);
-               }  
+               }
             }
          }
       }
@@ -1931,21 +1931,21 @@ void  C_EQUIVALENCE_N (int n_heads, int* f_prod, int* f_tail, int* tail, char**&
       FREE (f_child, n_heads);
    // P_EQUIVALENT ();
 }
-  
+
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
-  
-void  C_EQUIVALENCE_T (int n_heads, int N_terms, int* f_prod, int* f_tail, int* tail, char**& EQUIVALENCE)  
+
+void  C_EQUIVALENCE_T (int n_heads, int N_terms, int* f_prod, int* f_tail, int* tail, char**& EQUIVALENCE)
 {
       int h, p, s, t;
 		int n_words, n_bytes;
 
-		n_words = (N_terms +  3)/4;   // Number of 4-byte words. 
-      n_bytes = 4*n_words;				// Number of bytes to allocate. 
-      ALLOC (EQUIVALENCE, n_heads);          
+		n_words = (N_terms +  3)/4;   // Number of 4-byte words.
+      n_bytes = 4*n_words;				// Number of bytes to allocate.
+      ALLOC (EQUIVALENCE, n_heads);
       for (h = 0; h < n_heads; h++)
       {
-         ALLOC  (EQUIVALENCE[h], n_bytes);    
+         ALLOC  (EQUIVALENCE[h], n_bytes);
          memset (EQUIVALENCE[h], 0, n_bytes);
       }
       for (h = 0; h < n_heads; h++) // for all heads.
@@ -1961,7 +1961,7 @@ void  C_EQUIVALENCE_T (int n_heads, int N_terms, int* f_prod, int* f_tail, int* 
                   EQUIVALENCE[h][s] = 1;
                }
             }
-         }  
+         }
       }
       n_childs = 0;
       ALLOC (f_child, n_heads);
@@ -1978,7 +1978,7 @@ void  C_EQUIVALENCE_T (int n_heads, int N_terms, int* f_prod, int* f_tail, int* 
                if (s < 0) // nonterminal?
                {
                   if (h != -s) ATTACH (h,-s);
-               }  
+               }
             }
          }
       }
@@ -1987,22 +1987,22 @@ void  C_EQUIVALENCE_T (int n_heads, int N_terms, int* f_prod, int* f_tail, int* 
       FREE (f_child, n_heads);
    // P_EQUIVALENT ();
 }
-  
+
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
 
-void  C_FIRST (int n_heads, int N_terms, int* f_prod, int* f_tail, int* tail, char**& FIRST, int* nullable) 
+void  C_FIRST (int n_heads, int N_terms, int* f_prod, int* f_tail, int* tail, char**& FIRST, int* nullable)
 {
       int h, p, s, t;
 		int n_words, n_bytes;
 
-		n_words = (N_terms +  3)/4;   // Number of 4-byte words. 
-      n_bytes = 4*n_words;				// Number of bytes to allocate. 
+		n_words = (N_terms +  3)/4;   // Number of 4-byte words.
+      n_bytes = 4*n_words;				// Number of bytes to allocate.
 
-      ALLOC (FIRST, n_heads);          
+      ALLOC (FIRST, n_heads);
       for (h = 0; h < n_heads; h++)
       {
-         ALLOC (FIRST[h], n_bytes);    
+         ALLOC (FIRST[h], n_bytes);
          memset (FIRST[h], 0, n_bytes);
       }
       for (h = 0; h < n_heads; h++)
@@ -2014,18 +2014,18 @@ Next:       if (t < f_tail[p+1])
             {
                if ((s = tail[t]) < 0)
                {
-                  if (nullable[-s]) 
-                  { 
-                     t++; 
-                     goto Next; 
+                  if (nullable[-s])
+                  {
+                     t++;
+                     goto Next;
                   }
                }
-               else 
+               else
 					{
 						FIRST[h][s] = 1;
 					}
-            }  
-         }  
+            }
+         }
       }
       n_childs = 0;
       ALLOC (f_child, n_heads);
@@ -2043,13 +2043,13 @@ Nxt:        if (t < f_tail [p+1])
                if (s < 0)
                {
                   if (h != -s) ATTACH (h, -s);
-                  if (nullable [-s]) 
-                  { 
-                     t++; 
-                     goto Nxt; 
+                  if (nullable [-s])
+                  {
+                     t++;
+                     goto Nxt;
                   }
-               }  
-            }  
+               }
+            }
          }
       }
       T_GRAPH (FIRST, n_heads, N_terms);
@@ -2061,18 +2061,18 @@ Nxt:        if (t < f_tail [p+1])
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
 
-void  C_FOLLOW (int n_heads, int N_terms, int* f_prod, int* f_tail, int* tail, char**  FIRST, char**& FOLLOW, int* nullable) 
+void  C_FOLLOW (int n_heads, int N_terms, int* f_prod, int* f_tail, int* tail, char**  FIRST, char**& FOLLOW, int* nullable)
 {
       int h, p, s, t, N, T;
 		int n_words, n_bytes;
 
-		n_words = (N_terms +  3)/4;   // Number of 4-byte words. 
-      n_bytes = 4*n_words;				// Number of bytes to allocate. 
+		n_words = (N_terms +  3)/4;   // Number of 4-byte words.
+      n_bytes = 4*n_words;				// Number of bytes to allocate.
 
-      ALLOC (FOLLOW, n_heads);         
+      ALLOC (FOLLOW, n_heads);
       for (h = 0; h < n_heads; h++)
       {
-         ALLOC (FOLLOW[h], n_bytes);   
+         ALLOC (FOLLOW[h], n_bytes);
          memset (FOLLOW[h], 0, n_bytes);
       }
 
@@ -2085,7 +2085,7 @@ void  C_FOLLOW (int n_heads, int N_terms, int* f_prod, int* f_tail, int* tail, c
                if ((s = tail [t]) < 0) // If nonterminal
                {
                   N = -s;
-                  T = t + 1; 
+                  T = t + 1;
 Next:             if (T < f_tail[p+1])
                   {
                      if ((s = tail[T]) < 0) // Next one is nonterminal?
@@ -2093,16 +2093,16 @@ Next:             if (T < f_tail[p+1])
                         FASTOR (FIRST[-s], FOLLOW[N], n_words);
                         if (nullable[-s]) { T++; goto Next; }
                      }
-                     else 
+                     else
 							{
 								FOLLOW[N][s] = 1;
 							}
                   }
                }
             }
-         }  
+         }
       }
-  
+
       n_childs = 0;
       ALLOC (f_child, n_heads);
       ALLOC (child, max_child);
@@ -2113,19 +2113,19 @@ Next:             if (T < f_tail[p+1])
          for (p = f_prod[h]; p < f_prod[h+1]; p++) // for all prod.
          {
             t = f_tail[p+1]-1;         // Last Tail.
-Nxt:        if (t >= f_tail[p]) 
+Nxt:        if (t >= f_tail[p])
             {
                if ((s = tail [t]) < 0) // If nonterminal
                {
-                  if (h != -s) 
+                  if (h != -s)
                   {
                      ATTACH (-s, h);
                   // prt_con ("%s <- %s\n", head_name[-s], head_name[h]);
                   }
-                  if (nullable[-s]) 
-                  { 
-                     t--; 
-                     goto Nxt; 
+                  if (nullable[-s])
+                  {
+                     t--;
+                     goto Nxt;
                   }
                }
             }
@@ -2141,8 +2141,8 @@ Nxt:        if (t >= f_tail[p])
 ///////////////////////////////////////////////////////////////////////////////
 //																									  //
 //		Print First Set.
-  
-void  P_FIRST (int n_heads, int N_terms, char** FIRST, char** term_name, char** head_name) 
+
+void  P_FIRST (int n_heads, int N_terms, char** FIRST, char** term_name, char** head_name)
 {
       int h, t;
 
@@ -2167,8 +2167,8 @@ void  P_FIRST (int n_heads, int N_terms, char** FIRST, char** term_name, char** 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
 //		Print Follow Set.
-  
-void  P_FOLLOW (int n_heads, int N_terms, char** FOLLOW, char** term_name, char** head_name) 
+
+void  P_FOLLOW (int n_heads, int N_terms, char** FOLLOW, char** term_name, char** head_name)
 {
       int h, t;
       printf ("Follow Set ...\n");
@@ -2185,11 +2185,11 @@ void  P_FOLLOW (int n_heads, int N_terms, char** FOLLOW, char** term_name, char*
                prt_sym (t, "\n", term_name, head_name);
             }
          }
-      }                                                                   
+      }
       printf ("\n");
 }
 #endif
-  
+
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
 
@@ -2211,13 +2211,13 @@ int	prt_sym (int s, char *sp, char** term_name, char** head_name)
 //                                                                           //
 //		Best algorithm for space usage (does not need predefined Cameto).
 
-void  C_CAMEFROM (int   N_states, 
-						int*  tt_start, 
-						int*  tt_action, 
-						int*  ntt_start, 
-						int*  ntt_action, 
-						int*& f_camefrom, 
-						int*& camefrom) 
+void  C_CAMEFROM (int   N_states,
+						int*  tt_start,
+						int*  tt_action,
+						int*  ntt_start,
+						int*  ntt_action,
+						int*& f_camefrom,
+						int*& camefrom)
 {
       int* n_cameto;
       int  s, i, x, n, sum;
@@ -2226,24 +2226,24 @@ void  C_CAMEFROM (int   N_states,
       FASTINI (0, n_cameto, N_states+1);
 
    // Count the number of cameto's for each state.
-		n_cameto[0] = 0;					
+		n_cameto[0] = 0;
       for (s = 0; s < N_states; s++)
       {
          for (i = tt_start[s]; i < tt_start[s+1]; i++)
          {
             x = tt_action[i];					// x = goto state.
-            if (x > 0) n_cameto[x+1]++;	// Increment number of transition to this state. 
+            if (x > 0) n_cameto[x+1]++;	// Increment number of transition to this state.
          }
          for (i = ntt_start[s]; i < ntt_start[s+1]; i++)
          {
             x = ntt_action[i];					// x = goto state.
-            if (x > 0) n_cameto[x+1]++;	// Increment number of transition to this state. 
+            if (x > 0) n_cameto[x+1]++;	// Increment number of transition to this state.
          }
-      } 
-      
-   // Define the first camefrom index for each state. 
+      }
+
+   // Define the first camefrom index for each state.
       n = sum = 0;
-		f_camefrom = n_cameto;					// f_camefrom uses same space as n_cameto! 
+		f_camefrom = n_cameto;					// f_camefrom uses same space as n_cameto!
       for (x = 0; x < N_states; x++)		// For all goto states.
       {
          sum += n;								// Increment sum by number of cameto's from last state.
@@ -2266,7 +2266,7 @@ void  C_CAMEFROM (int   N_states,
             x = ntt_action[i];
             if (x > 0) camefrom [f_camefrom[x+1]++] = s;
          }
-      }  
+      }
 }
 
 void  Quit ()
@@ -2311,7 +2311,7 @@ void  SORTSYMB (int *s, char *start[], int n)
          L2 = L[i];
          s2 = s[i];
          j  = i - 1;
-         do 
+         do
          {
             leng = L[j];
             if (L2 < L[j]) leng = L2;
@@ -2337,7 +2337,7 @@ void  SORTSYMB (int *s, char *start[], int n)
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //																																 //
 
-char* get_typestr (int* x, int n) 
+char* get_typestr (int* x, int n)
 {
 		int i, max = 0, min = 0;
 		for (i = 0; i < n; i++)
@@ -2372,7 +2372,7 @@ char* get_typestr (int* x, int n)
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //																																 //
 
-int   get_typesize (int *x, int n) 
+int   get_typesize (int *x, int n)
 {
 		int i, max = 0, min = 0;
 		for (i = 0; i < n; i++)

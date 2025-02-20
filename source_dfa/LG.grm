@@ -1,14 +1,14 @@
 
-/*--- DFA Lexical Grammar Syntax. ---*/   
+/*--- DFA Lexical Grammar Syntax. ---*/
 
 /*--- Terminal Symbols. ------*/
-  														    
+
 	T_ERROR			<error>        => error ();
 	T_ALPHA			<alpha>        => first ({alpha});
 	T_LEXICAL   	<lexical>      => first ({lexical});
 	T_IGNORE   		<ignore>       => first ({ignore});
 	T_ESCAPE 		<escape>       => first ({escape});
-	T_LITERAL		<literal>		=> first ({literal});	
+	T_LITERAL		<literal>		=> first ({literal});
 	T_INTEGER		<integer>		;
 	T_EOF				<eof>				;
 
@@ -25,13 +25,13 @@
 
 /*--- Nonterminal Symbols. ---*/
 
-   Goal           	-> Grammar <eof>		
+   Goal           	-> Grammar <eof>
 
 	Grammar        	-> TokenProd... (NonterminalDef|SetDef|EscapeDef)...
 
 /*--- Token Definitions ---*/
 
-   TokenProd      	-> Token ReturnValue 
+   TokenProd      	-> Token ReturnValue
 
    Token          	-> {lexical}	   					      => ADD_TOKEN  (1)
                      -> {literal}  					   	      => ADD_TOKEN2 (1)
@@ -41,13 +41,13 @@
 
 /*--- Nonterminal Definitions ---*/
 
-   NonterminalDef    -> HeadSymbol ArrowProd...          
+   NonterminalDef    -> HeadSymbol ArrowProd...
 
    HeadSymbol			-> {alpha}								      => ADD_HEAD(1)
                      -> {lexical}							      => ADD_HEADLEX(1)
                      -> {ignore}								      => ADD_HEADIGNORE(1)
 
-   ArrowProd			-> Arrow TailExprList                        
+   ArrowProd			-> Arrow TailExprList
    Arrow					-> '->'                                => ADD_PROD()
 
    TailExprList     	-> TailExpr...                         => POP_ALL()
@@ -60,7 +60,7 @@
 
    List           	-> TailExpr
                   	-> List TailExpr
-                  	-> List Or TailExpr 
+                  	-> List Or TailExpr
 
    Or             	-> '|'                                 => PUSH_OR()
    GroupStart     	-> '('                                 => PUSH_GBEG()
@@ -112,16 +112,16 @@
 	FCharacter			-> Character									=> FIRST_CHAR(1)
 	FSetItem				-> SetItem										=> FIRST_SET(1)
 
-   Character         -> <literal>                           
-                  	-> <integer>                           
+   Character         -> <literal>
+                  	-> <integer>
 
-  	SetItem				-> <alpha>		
+  	SetItem				-> <alpha>
   							-> <escape>
 
 /*--- Escape Definitions ---*/
 
 	EscapeDef        	-> EscapeSymbol Equals Number [';']
-	
+
    EscapeSymbol		-> {escape}								      => ADD_HEADSET(1)
 
 	Number				-> <integer>									=> FIRST_CHAR(1)

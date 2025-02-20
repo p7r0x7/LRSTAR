@@ -10,12 +10,12 @@
 		typedef unsigned short ushort;
 		typedef unsigned char  uchar;
 
-		class LG_Lexer 
+		class LG_Lexer
 		{
 			public:
          static Token  token;
 			static int    line_numb;
-			static int    col_numb;			
+			static int    col_numb;
 			static int    line_pos;
 			static char*  line_start;
 			static int    max_char_set;

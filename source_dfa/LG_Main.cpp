@@ -2,7 +2,7 @@
 /* Copyright 2018 Paul B Mann.  BSD License. */
 
       #include "CM_Global.h"
-      #include "LG_Global.h"	
+      #include "LG_Global.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -44,7 +44,7 @@ int   LG::Main () /* Display program information. */
       PrintStates (1);
       if (rc != 2) Quit();
       if (!OptimizeStates()) Quit();
-      if (c_states == 1) ch = ""; 
+      if (c_states == 1) ch = "";
       else               ch = "s";
       if (optn[LG_VERBOSE])
            prt_log     ("Conflicts%7d state%s, %d shift-reduce, %d reduce-reduce.\n", c_states, ch, sr_con, rr_con);
@@ -54,7 +54,7 @@ int   LG::Main () /* Display program information. */
       return 1;
 }
 
-int   LG::Start () // Display program information. 
+int   LG::Start () // Display program information.
 {
       int i, ne;
 
@@ -67,7 +67,7 @@ int   LG::Start () // Display program information.
       n_errors      		 =  0;
 		max_child_usage    =  0;
       exefid[0]          =  0;
-		illegal_char_state = -1; 
+		illegal_char_state = -1;
 
    	for (i = 0; i < 256; i++) spaces [i] = ' ';
 
@@ -78,7 +78,7 @@ int   LG::Start () // Display program information.
       n_errors      = 0;
 		return 1;
 }
-  
+
 int   LG::GetFile (char* file_type, char* Msg)
 {
 		strcpy (gft, file_type);
@@ -98,11 +98,11 @@ int   LG::FreeFile ()
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-      
+
 int	LG::CheckOptions ()
 {
 		int n_outputs = 0;
-		if (optn[LG_TABL_SMALL])	n_outputs++;  
+		if (optn[LG_TABL_SMALL])	n_outputs++;
 		if (optn[LG_TABL_MEDIUM])	n_outputs++;
 		if (optn[LG_TABL_LARGE])	n_outputs++;
 
@@ -121,7 +121,7 @@ int	LG::CheckOptions ()
          printf ("State machine option should be 'st' or 'sto', but not both.\n\n");
 		}
 
-		if (optn[LG_NUMBCHAR] == 0) 
+		if (optn[LG_NUMBCHAR] == 0)
 		{
 			optn[LG_NUMBCHAR] = 256; // If undefined.
 		}
@@ -168,14 +168,14 @@ void  LG::PrintStats ()
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-      
+
 void  LG::Terminate ()
 {
 		char* es  = "s";
 		char* ws  = "s";
 
 		if (n_errors    == 1) es  = "";
-		if (n_warnings  == 1) ws  = "";										   
+		if (n_warnings  == 1) ws  = "";
 
       time2 = clock ();
 
@@ -187,7 +187,7 @@ void  LG::Terminate ()
       int x = memory_max/1024/1024;
       int y = memory_max/1024 - 1024*x;
 
-		prt_log ("%1d min %1d.%03d sec, %d.%03d MB, %d warning%s, %d error%s.\n", 
+		prt_log ("%1d min %1d.%03d sec, %d.%03d MB, %d warning%s, %d error%s.\n",
 		min, sec, thou, x, y, n_warnings, ws, n_errors, es);
 		prt_logonly ("\n");
 

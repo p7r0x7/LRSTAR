@@ -48,7 +48,7 @@ int   TERM_ACTIONS::headsymbol (int& t)
 					*token.end = ch;
 					n_errors++;
 					t_error = POSITION;
-					return 0; // No sti. 
+					return 0; // No sti.
 				}
 			}
 			else // Goal already defined.
@@ -73,7 +73,7 @@ int   TERM_ACTIONS::headsymbol (int& t)
 					*token.end = ch;
 					n_errors++;
 					t_error = POSITION;
-					return 0; // No sti. 
+					return 0; // No sti.
 				}
 			/*	if (colon_col != 0 && token.col < colon_col)
 				{
@@ -85,7 +85,7 @@ int   TERM_ACTIONS::headsymbol (int& t)
 					*token.end = ch;
 					n_errors++;
 					t_error = POSITION;
-					return 0; // No sti. 
+					return 0; // No sti.
 				}	*/
 			}
 		}
@@ -100,7 +100,7 @@ int   TERM_ACTIONS::position (int& t)
 		{
 			if (goal_symbol == 0) // Goal not defined?
 			{
-				return 0; // No sti. 
+				return 0; // No sti.
 			}
 			else // Goal already defined.
 			{
@@ -114,7 +114,7 @@ int   TERM_ACTIONS::position (int& t)
 					*token.end = ch;
 					n_errors++;
 					t_error = POSITION;
-					return 0; // No sti. 
+					return 0; // No sti.
 				}
 			/*	if (colon_col != 0 && token.col < colon_col)
 				{
@@ -126,7 +126,7 @@ int   TERM_ACTIONS::position (int& t)
 					*token.end = ch;
 					n_errors++;
 					t_error = POSITION;
-					return 0; // No sti. 
+					return 0; // No sti.
 				}	*/
 			}
 		}
@@ -139,7 +139,7 @@ int   TERM_ACTIONS::semi (int& t)
 {
 		if (goal_symbol == 0) // Goal not defined?
 		{
-			return 0; // No sti. 
+			return 0; // No sti.
 		}
 		else // Goal already defined.
 		{
@@ -254,7 +254,7 @@ int   TERM_ACTIONS::poslookup (int& t)	// Lookup in symbol table.
 					t = 0;
 					n_errors++;
 					t_error = POSITION;
-					return 0; // No sti. 
+					return 0; // No sti.
 				}
 			/*	if (colon_col != 0 && token.col < colon_col)
 				{
@@ -266,7 +266,7 @@ int   TERM_ACTIONS::poslookup (int& t)	// Lookup in symbol table.
 					t = 0;
 					n_errors++;
 					t_error = POSITION;
-					return 0; // No sti. 
+					return 0; // No sti.
 				}	*/
 			}
 		}
@@ -278,8 +278,8 @@ int   TERM_ACTIONS::poslookup (int& t)	// Lookup in symbol table.
 int   TERM_ACTIONS::lookup (int& t)	// Lookup in symbol table.
 {
 		int sti;																		// Symbol-table index.
-		sti = add_symbol (token.start, token.end, t, token.line);	// Add to symbol table. 
-		return sti;																	// Return symbol-table index. 
+		sti = add_symbol (token.start, token.end, t, token.line);	// Add to symbol table.
+		return sti;																	// Return symbol-table index.
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -342,7 +342,7 @@ Loop2:				p++;
 						level--;
 						break;
 					}
-				}        
+				}
 			}
 		}
 		return -t; // '{'

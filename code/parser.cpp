@@ -6,16 +6,17 @@
       #include "string.h"
 		#include "main.h"
 
-	  	#define  UINT_MAX  0xffffffff       		
-	  	#define  INT_MAX   0x7fffffff        			
-		#define  EOF_CHAR          26        
+	  	#define  UINT_MAX  0xffffffff
+	  	#define  INT_MAX   0x7fffffff
+		#define  EOF_CHAR          26
       #define  FAILURE            0
 		#define  STKSIZE          100			// Parser-stack size.
-		
+        
+
 	// Parser variables ...
 		char		PARSER::path[256];			// Path of input file.
-      PStack	PARSER::PSstart[STKSIZE];	// Parser stack.	  
-		PStack*  PARSER::PS;                // Parser stack pointer.  
+      PStack	PARSER::PSstart[STKSIZE];	// Parser stack.
+		PStack*  PARSER::PS;                // Parser stack pointer.
 		int      PARSER::n_nodes;				// Number of nodes in AST.
 		int      PARSER::n_symbols;			// Number of symbols in symbol table.
 
@@ -38,7 +39,7 @@
 		int      PARSER::last_line;				// Last line from previous ND start.
 		int      PARSER::n_warnings;				// Number of warnings.
   		SStack*	PARSER::SS      [ND_THREADS];	// State stack pointer.
-      SStack*	PARSER::SSstart [ND_THREADS];	// State stack.	   		  
+      SStack*	PARSER::SSstart [ND_THREADS];	// State stack.
       int		PARSER::State   [ND_THREADS];	// State.
       int		PARSER::Action  [ND_THREADS];	// Action.
       int 		PARSER::Parsed  [ND_THREADS];	// Parsed (0 or 1).
@@ -51,19 +52,19 @@
 		Node*		PARSER::node;				// Current PARSER node.
 		int      PARSER::max_nodes;		// Maximum number of nodes in PARSER.
 		int*		PARSER::counter;			// Node counter array.
-		Node*		PARSER::nodearea;			// Node area or Node block allocated. 
+		Node*		PARSER::nodearea;			// Node area or Node block allocated.
 		char		PARSER::indent[256];		// Indentation for printing current node.
 		int	  	PARSER::traversal;		// PARSER traversal number: 1, 2, 3 ...
-		int		PARSER::direction;		// Node direction: TOP_DOWN, BOTTOM_UP. 
+		int		PARSER::direction;		// Node direction: TOP_DOWN, BOTTOM_UP.
 		Stack*   PARSER::stack;				// PARSER stack array.
 		int		PARSER::stacki;			// PARSER stack index.
 		char		PARSER::draw_plus[3];
 		char		PARSER::draw_vbar[3];
 		char		PARSER::draw_last[3];
 		char		PARSER::draw_space[3];
-		#endif	
+		#endif
 
-	// lowercase[x] is x. 		
+	// lowercase[x] is x.
 		#ifdef INSENSITIVE
 		uchar lowercase[256] =
 		{
@@ -89,7 +90,7 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-int   PARSER::init_parser (char* patharg, char* input_start, int max_syms, int max_nodes) 
+int   PARSER::init_parser (char* patharg, char* input_start, int max_syms, int max_nodes)
 {
 		#ifdef ND_PARSING
 		for (int i = 0; i < ND_THREADS; i++)
@@ -104,16 +105,16 @@ int   PARSER::init_parser (char* patharg, char* input_start, int max_syms, int m
 		n_warnings = 0;
 		#endif
 
-		strcpy (path, patharg);		
-      PS           = PSstart;					// Set parse-stack pointer.   
-      n_errors     = 0;							// Set number of errors.  
+		strcpy (path, patharg);
+      PS           = PSstart;					// Set parse-stack pointer.
+      n_errors     = 0;							// Set number of errors.
 		n_nodes      = 0;							// In case of no PARSER creation.
 
       init_lexer (input_start, 3);			// Initialize the lexer.
 		init_symtab (max_syms);					// Initialize the symbol table.
 
 		#ifdef MAKE_AST
-		init_ast (max_nodes);					// Initialize the PARSER. 
+		init_ast (max_nodes);					// Initialize the PARSER.
 		#endif
 
 		#ifdef ACTIONS
@@ -147,21 +148,21 @@ void  PARSER::term_parser ()
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                 // 
+//                                                                                                 //
 //		LR Parser
 
-int   PARSER::parse ()                 
+int   PARSER::parse ()
 {
       int x, t, T, p;
 		x = 0;														// State = 0 to start.
 Read:	T = t = get_token ();									// Get incoming token.
 		#ifdef TERM_ACTIONS
-		if (tact_numb[t] >= 0)									// If token action ...         
+		if (tact_numb[t] >= 0)									// If token action ...
 			token.sti = (*tact_func[tact_numb[t]]) (t);	// Call token-action function.
-		#else	
+		#else
 			token.sti = -t;
 		#endif
-		#ifdef EXPECTING 
+		#ifdef EXPECTING
 		RS = RSstart;
 		RS->state = x;
 		RS->ptr = PS;
@@ -169,22 +170,22 @@ Read:	T = t = get_token ();									// Get incoming token.
 
 Test: if (Bm [Br[x] + Bc[t]] & Bf[t])					// Check B-matrix for shift action.
       {
-         PS++;                             			
-         PS->state = x;                       		// Put current state on stack.  
-			PS->sti   = token.sti;             			// Put symbol-table index on stack. 
+         PS++;
+         PS->state = x;                       		// Put current state on stack.
+			PS->sti   = token.sti;             			// Put symbol-table index on stack.
 			#ifdef MAKE_AST
          PS->line  = token.line;                  	// Put line number on stack.
 			PS->start = token.start;                 	// Put start address on stack.
-			PS->node  = 0;						         	// Set node on stack to zero.   
+			PS->node  = 0;						         	// Set node on stack to zero.
 			#endif
 			#ifdef EXPECTING
 			PS->sym   = -t;                           // Put symbol on stack.
 			#endif
 			x = Tm [Tr[x] + Tc[t]];                	// Get next state from terminal transition matrix.
-         while (x < 0)                          	// While shift-reduce actions. 
+         while (x < 0)                          	// While shift-reduce actions.
          {
-	     		p = -x;											
-SR:         PS -= PL[p];									// Reduce stack ptr by production length. 
+	     		p = -x;
+SR:         PS -= PL[p];									// Reduce stack ptr by production length.
 				#ifdef EXPECTING
 				PS->sym = head_numb[p];                // Put symbol on stack.
 				#endif
@@ -196,7 +197,7 @@ SR:         PS -= PL[p];									// Reduce stack ptr by production length.
 		if ((p = Rr[x]) > 0									// Default reduction 90% of the time.
 		||  (p = Rm[Rc[t] - p]) > 0)						// Compute reduction?
       {
-Red:     PS -= PL[p];										// Reduce parse stack ptr by rule length - 1. 
+Red:     PS -= PL[p];										// Reduce parse stack ptr by rule length - 1.
          if (PL[p] < 0)							         // Null production?
          {
 				#ifdef EXPECTING
@@ -207,7 +208,7 @@ Red:     PS -= PL[p];										// Reduce parse stack ptr by rule length - 1.
 				#endif
             PS->state = x;						         // Stack current state, replacing old state.
 				#ifdef MAKE_AST
-				PS->node  = 0;						        	// Set node on stack to zero.   
+				PS->node  = 0;						        	// Set node on stack to zero.
 				#endif
 			}
          while (1)
@@ -219,34 +220,34 @@ Red:     PS -= PL[p];										// Reduce parse stack ptr by rule length - 1.
             x = Nm [Nr[PS->state] + Nc[p]];	      // Get next state from nonterminal transition.
             if (x > 0) goto Test;				      // Continue parsing.
             p = -x;								         // Set production number.
-            PS -= PL[p];                           // Reduce parse stack ptr by rule length - 1. 
+            PS -= PL[p];                           // Reduce parse stack ptr by rule length - 1.
 			}
 		}
 		#ifdef ND_PARSING
 		int  y;
 		uint i, j, na;
-		for (i = nd_fterm[x]; i < nd_fterm[x+1]; i++)	// For all ND terminals in this state. 
+		for (i = nd_fterm[x]; i < nd_fterm[x+1]; i++)	// For all ND terminals in this state.
 		{
 			if (nd_term[i] == t)								//	Got a match?
 			{
 				j = nd_faction[i];							// Start of actions.
-				na = 0;											// Number of actions. 
+				na = 0;											// Number of actions.
 				do
 				{
 					State[na] = x;								// Copy this state.
 					Action[na++] = nd_action[j];			// Copy this action.
-				} 
+				}
 				while (++j < nd_faction[i+1]);			// While there's more.
-				y = nd_parser (x,t,na);						// ND lookahead parser. 
+				y = nd_parser (x,t,na);						// ND lookahead parser.
 				if (y > 0)										// Shift?
 				{
 					PS++;											// Increment parser stack pointer.
-					PS->state = x;								// Put current state on stack.  
-					PS->sti   = token.sti;           	// Put symbol table index on stack. 
+					PS->state = x;								// Put current state on stack.
+					PS->sti   = token.sti;           	// Put symbol table index on stack.
 					#ifdef MAKE_AST
 					PS->line  = token.line;            	// Put line number on stack.
 					PS->start = token.start;            // Put start address on stack.
-					PS->node  = 0;						     	// Set node on stack to zero.   
+					PS->node  = 0;						     	// Set node on stack to zero.
 					#endif
 					if (y > accept_state)					// Shift and reduce action?
 					{
@@ -266,28 +267,28 @@ Red:     PS -= PL[p];										// Reduce parse stack ptr by rule length - 1.
 				}
 			}
 		}
-		#endif			
-      if (x == accept_state)								// If Goal production.  
+		#endif
+      if (x == accept_state)								// If Goal production.
       {
-			PS -= PL[p];										// Reduce parse stack ptr by rule length - 1. 
+			PS -= PL[p];										// Reduce parse stack ptr by rule length - 1.
 			reduce (p);											// Call reduce action with production number.
 			#ifdef ND_PARSING
 			print_lookaheads();								// Print lookahead statistics.
-			#endif	
+			#endif
 			print_symtab ();									// Print the symbol table contents.
 			#ifdef MAKE_AST
 			find_root (PS[0].node);
-			print_ast ();	
-			traverse	(FIRST_PASS);						
+			print_ast ();
+			traverse	(FIRST_PASS);
 			#endif
 			#ifdef DEBUG_PARSER
 			fprintf (output, "\nDone.\n\n");
 			#endif
 			return linenumb-1;								// Success.
       }
-		#ifdef EXPECTING 
+		#ifdef EXPECTING
 		x = restore ();
-		if (t != 0)	
+		if (t != 0)
 		{
 			t = 0;											   // Try <error>
 			goto Test;
@@ -295,19 +296,19 @@ Red:     PS -= PL[p];										// Reduce parse stack ptr by rule length - 1.
 		#endif
 		if (n_errors < INT_MAX)								// Error message not printed?
 		{
-			#ifdef EXPECTING 
+			#ifdef EXPECTING
 			print_stack ();
 			#endif
 			syntax_error ("Error", &token, term_symb[T]);
-			#ifdef EXPECTING 
-			expecting (x);	  
+			#ifdef EXPECTING
+			expecting (x);
 			print_terms (x);
 			#endif
 		}
    	return -linenumb; // Failure.
 
-		goto SR;  // Stops compiler from complaining. 
-		goto Red; // Stops compiler from complaining. 
+		goto SR;  // Stops compiler from complaining.
+		goto Red; // Stops compiler from complaining.
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -325,7 +326,7 @@ void  PARSER::reduce (int p)
 		if (node_numb[p] >= 0)   									// MAKE NODE ?
 		{
 			Node* n   = new_node ();								// Get a new node.
-			n->id     = node_numb[p];								// Set node id number. 
+			n->id     = node_numb[p];								// Set node id number.
 			n->prev   = 0;												// Set prev to nonexistent.
 			n->next   = 0;												// Set next to nonexistent.
 			n->child  = 0;												// Set child to nonexistent.
@@ -343,24 +344,24 @@ void  PARSER::reduce (int p)
 			   n->line  = 0;    										// Set line number to zero.
 				n->start = 0;
          }
-			psi = linkup(p);									      // Linkup the nodes in this rule. 
+			psi = linkup(p);									      // Linkup the nodes in this rule.
 			if (psi >= 0)										      // Any nodes found in this rule?
 			{
-				n->child = PS[psi].node;							// Define child. 
+				n->child = PS[psi].node;							// Define child.
 				PS[psi].node->parent = n;							// Define parent.
 			}
 			PS[0].node = n;											// Define this node in the parse stack.
 			PS[0].last = n;											// Define this node in the parse stack.
-		}  
+		}
 		else	                                             // Check for nodes not linked?
 		{
-			psi = linkup (p);                               // Get parse-stack index.  
+			psi = linkup (p);                               // Get parse-stack index.
 		  	if (psi > 0)                                    // If we have a node here ...
 			{
 			  	PS[0].node = PS[psi].node;		               // Move node to 1st position.
 			  	PS[0].last = PS[psi].last;		               // Move last also.
-			}	
-		}  
+			}
+		}
 		#endif
 }
 
@@ -372,8 +373,8 @@ int   PARSER::nd_parser (int x, int t, int na)
 {
 	  	int  i;
 		int  la;					// Lookaheads to try.
-		int  total;				// Total number parsed. 
-		int  limit;				// Lookahead limit. 
+		int  total;				// Total number parsed.
+		int  limit;				// Lookahead limit.
 		char string[64];
 
 		#ifdef DEBUG_PARSER
@@ -391,9 +392,9 @@ int   PARSER::nd_parser (int x, int t, int na)
 		for (i = 0; i < na; i++)
       {
          SS[i] = SSstart[i];
-         for (PStack* P = PSstart; P < PS;) 
+         for (PStack* P = PSstart; P < PS;)
          {
-            (++SS[i])->state = (++P)->state;  
+            (++SS[i])->state = (++P)->state;
          }
 			Parsed[i] = 1;
       }
@@ -402,7 +403,7 @@ int   PARSER::nd_parser (int x, int t, int na)
 		LA = t;
 		total = 0;
 		la = 0;
-		i = 0; 
+		i = 0;
 		do
 		{
 			if (Parsed[i] > 0)
@@ -422,7 +423,7 @@ int   PARSER::nd_parser (int x, int t, int na)
 			i = 0;
 			do
 			{
-				if (Parsed[i] > 0) 
+				if (Parsed[i] > 0)
 				{
 					#ifdef DEBUG_PARSER
 					printf ("   CHOOSING ");
@@ -435,27 +436,27 @@ int   PARSER::nd_parser (int x, int t, int na)
 			while (++i < na);
 		}
 
-		lookahead.end = token.end; // Prime get_lookahead(). 
+		lookahead.end = token.end; // Prime get_lookahead().
 		lookahead_linenumb = linenumb;
 		limit = LOOKAHEADS;
-		la = 1; 
+		la = 1;
 		do
       {
          total = 0;
 			LA = get_lookahead();
 			#ifdef TERM_ACTIONS
-			if (tact_numb[LA] >= 0)						// If term action ...         
+			if (tact_numb[LA] >= 0)						// If term action ...
 				(*tact_func[tact_numb[LA]]) (LA);	// Call term-action function.
 			#endif
 			if (LA == eof_symb) limit = la; // <eof> ?
-         i = 0; 
+         i = 0;
 			do
          {
 				if (Parsed[i] > 0)
 				{
 					total += Parsed[i] = nd_parser_la (i,la);
 				}
-         } 
+         }
 			while (++i < na);
 
 		// ONE ACTION SUCCEEDED ? ...
@@ -465,7 +466,7 @@ int   PARSER::nd_parser (int x, int t, int na)
 				#ifdef DEBUG_PARSER
 				n_warnings = 0;
 				#endif
-				i = 0; 
+				i = 0;
 				do
 				{
 					if (Parsed[i] > 0)
@@ -483,7 +484,7 @@ int   PARSER::nd_parser (int x, int t, int na)
 			}
 
 		// TOKEN NOT ACCEPTED, SYNTAX ERROR ...
-		  	if (total == 0) 
+		  	if (total == 0)
 			{
 				if (n_warnings == 0)
 				{
@@ -511,9 +512,9 @@ int   PARSER::nd_parser (int x, int t, int na)
 			return Action[0];
 		}
 
-   // Some parsers choose the lowest numbered reduction. 
+   // Some parsers choose the lowest numbered reduction.
 	// Not a good idea, because the grammar is ambiguous.
-	// Fix the grammar or increase option /k, if necessary. 
+	// Fix the grammar or increase option /k, if necessary.
 		#ifdef DEBUG_PARSER
 		printf("\n   AMBIGUITY after %d lookaheads, unable to decide.\n", limit);
 		#else
@@ -534,7 +535,7 @@ void	PARSER::print_actions (int na)
 		do
 		{
 			print_action ("   * ", i);
-		} 
+		}
 		while (++i < na);
 }
 
@@ -561,7 +562,7 @@ void	PARSER::print_action (char* str, int i)
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-			
+
 int   PARSER::nd_parser_la (int i, int la)				// ND LA Parser.
 {
       int p;														// Production (rule).
@@ -570,7 +571,7 @@ int   PARSER::nd_parser_la (int i, int la)				// ND LA Parser.
      	   if (Action[i] > 0)									// Shift and goto action?
 		   {
             SS[i]++;
-            SS[i]->state = State[i];						// Put State stack.   
+            SS[i]->state = State[i];						// Put State stack.
 				if (Action[i] > accept_state)					// Shift and reduce?
 				{
 					State[i] = accept_state - Action[i];	// Convert to production number.
@@ -583,15 +584,15 @@ int   PARSER::nd_parser_la (int i, int la)				// ND LA Parser.
 	      goto Red;												// Reduce.
       }
 
-Shft: if (Bm [Br[State[i]] + Bc[LA]] & Bf[LA])			// Check B-matrix for shift action. 
+Shft: if (Bm [Br[State[i]] + Bc[LA]] & Bf[LA])			// Check B-matrix for shift action.
       {
          SS[i]++;
-         SS[i]->state = State[i];							// Put current state on stack.   
+         SS[i]->state = State[i];							// Put current state on stack.
          State[i] = Tm [Tr[State[i]] + Tc[LA]];			// Get next state from terminal transition matrix.
-         while (State[i] < 0)									// While shift-reduce actions. 
+         while (State[i] < 0)									// While shift-reduce actions.
          {
 SR:         p = -State[i];
-				SS[i] -= PL[p];									// Reduce stack ptr by production length. 
+				SS[i] -= PL[p];									// Reduce stack ptr by production length.
             State[i] = Nm [Nr[SS[i]->state] + Nc[p]];	// Get next state from nonterminal transition matrix.
          }
          return 1;												// Return success.
@@ -600,14 +601,14 @@ SR:         p = -State[i];
 		if ((p = Rr[State[i]]) > 0 							// Default reduction?
 		||  (p = Rm [Rc[LA] - p]) > 0)						// Compute reduction?
       {
-Red:		SS[i] -= PL[p];										// Reduce parse stack ptr by rule length - 1. 
+Red:		SS[i] -= PL[p];										// Reduce parse stack ptr by rule length - 1.
          if (PL[p] < 0)	SS[i]->state = State[i];		// Stack current state.
-         while (1) 
+         while (1)
          {
    		   State[i] = Nm [Nr[SS[i]->state] + Nc[p]];	// Get next state from nonterminal transition.
             if (State[i] > 0) goto Shft;					// If a state, continue parsing.
             p = -State[i];										// Make the production number positive.
-            SS[i] -= PL[p];									// Reduce parse stack ptr by rule length - 1. 
+            SS[i] -= PL[p];									// Reduce parse stack ptr by rule length - 1.
          }
       }
 
@@ -622,7 +623,7 @@ Red:		SS[i] -= PL[p];										// Reduce parse stack ptr by rule length - 1.
 				if (nd_action[k] > 0)								// Shift action (always first one)?
 				{
 					SS[i]++;
-					SS[i]->state = State[i];						// Put State on stack.   
+					SS[i]->state = State[i];						// Put State on stack.
 					if (nd_action[k] > accept_state)				// Shift and reduce?
 					{
 						State[i] = accept_state - nd_action[k];// Convert to production number.
@@ -632,8 +633,8 @@ Red:		SS[i] -= PL[p];										// Reduce parse stack ptr by rule length - 1.
 					return 1;
 				}
 				#ifdef DEBUG_PARSER
-			// A recursive call to nd_parse() is needed to continue the ND lookahead parsing. 
-			// This version of the LR(*) algorithm does not support 2nd, 3rd or more depths of 
+			// A recursive call to nd_parse() is needed to continue the ND lookahead parsing.
+			// This version of the LR(*) algorithm does not support 2nd, 3rd or more depths of
 			//	recursion.  Probably the grammar has ambiguity that needs to be resolved.
 				n_warnings++;
 				char string[16];
@@ -645,7 +646,7 @@ Red:		SS[i] -= PL[p];										// Reduce parse stack ptr by rule length - 1.
 				do
 				{
 					print_prod ("   * Reduce", -nd_action[k], 0);
-				} 
+				}
 				while (++k < nd_faction[j+1]);
 				print_action ("\n   IGNORING ", i);
 				#endif
@@ -680,10 +681,10 @@ void	PARSER::print_lookaheads()
 					  printf  ("      %3d Lookahead  needed: %6d %s\n", i, LAcount[i], msg);
 				else printf  ("      %3d Lookaheads needed: %6d %s\n", i, LAcount[i], msg);
 			}
-		}	
+		}
 }
 
-#endif ND_PARSING 
+#endif ND_PARSING
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -702,7 +703,7 @@ int   PARSER::restore ()
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void  PARSER::syntax_error (char *msg, Token* T, char* symb)
-{       
+{
       char  c;
 		char* p;
       char* lineout;
@@ -711,7 +712,7 @@ void  PARSER::syntax_error (char *msg, Token* T, char* symb)
       char  string[256];
 
 		n_errors++;
-		if (*T->start <= 32) 
+		if (*T->start <= 32)
 		{
 			T->end = T->start+1;
 			*(T->end) = '\n';
@@ -762,7 +763,7 @@ void  PARSER::expecting (int x)
             T_exp[t] = 1;                          // Mark this terminal.
 			}
 		}
-		#ifdef ND_PARSING 
+		#ifdef ND_PARSING
 		uint i, j;
      	for (i = nd_fterm[x]; i < nd_fterm[x+1]; i++)		// For all terminals in this state.
 		{
@@ -779,7 +780,7 @@ void  PARSER::expecting (int x)
 				}
 			}
 		}
-		#endif	
+		#endif
 		int p, q;
 		if ((p = Rr[x]) > 0)								// Default reduction?
 		{
@@ -804,7 +805,7 @@ void  PARSER::reduction (int q, int x)
 		RStack* RSx = RS;						// Reset restore-stack pointer.
 		PStack* PSx = PS;						// Save parse-stack pointer.
 
-		PS -= PL[q];							// Reduce parse stack ptr by rule length - 1. 
+		PS -= PL[q];							// Reduce parse stack ptr by rule length - 1.
 		if (PL[q] < 0)                   // Null production?
 		{
 			(++RS)->ptr = PS;					// Save parse-stack pointer.
@@ -826,7 +827,7 @@ void  PARSER::reduction (int q, int x)
 
  	// Restore parse stack.
 Done: PS = PSx;									// Restore PS.
- 		while (RS > RSx)							
+ 		while (RS > RSx)
       {
          RS->ptr->state = RS->state;      // Reset state to saved state.
 			RS--;
@@ -848,7 +849,7 @@ void  PARSER::print_terms (int state)
 		int* seq = new int [n_terms];
 		sort_terms (seq);
 
-		for (t = 0; t < n_terms; t++) 
+		for (t = 0; t < n_terms; t++)
       {
 			x = seq[t];
       // if (x == eof_symb) continue;
@@ -860,7 +861,7 @@ void  PARSER::print_terms (int state)
             }
          }
       }
-		for (t = 0; t < n_terms; t++) 
+		for (t = 0; t < n_terms; t++)
       {
 			x = seq[t];
          if (x == eof_symb) continue;
@@ -944,7 +945,7 @@ void	PARSER::print_prod (char* prefix, int p, int dot)
 
 void	PARSER::print_stack () // Print parser stack.
 {
-		#ifdef DEBUG_PARSER 
+		#ifdef DEBUG_PARSER
 		printf ("\nParse stack:\n");
 		for (PStack* ps = PSstart + 1; ps <= PS; ps++)
 		{
@@ -953,8 +954,8 @@ void	PARSER::print_stack () // Print parser stack.
 			if (sym <= 0) // Terminal?
 			{
 				name  = term_symb[-sym];
-				name2 = "";           
-				if (*name == '<' || *name == '{') 
+				name2 = "";
+				if (*name == '<' || *name == '{')
 				{
 					if (ps->sti > 0) name2 = symbol_name (ps->sti);
 				}
@@ -971,11 +972,11 @@ void	PARSER::print_stack () // Print parser stack.
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-int	PARSER::init_symtab (int max_symb) 
+int	PARSER::init_symtab (int max_symb)
 {
-      int i; 
-		if (max_symb <= 0) 
-		{	
+      int i;
+		if (max_symb <= 0)
+		{
 			printf ("Maximum number of symbols cannot be zero or negative.\n");
          quit (1); // Failure.
 		}
@@ -989,17 +990,17 @@ int	PARSER::init_symtab (int max_symb)
 			printf ("Not enough memory available for Symbol Table.\n");
 			quit (1); // Failure.
 		}
-      for (i = 0; i < max_cells; i++) 
+      for (i = 0; i < max_cells; i++)
 		{
 			hashvec[i] = -1;
 		}
 	// Define symbol[0] for symbol_name(sti=0).
 		symbol[0].start = " "; // Pointer to blank.
 		symbol[0].length = 0;  // Length of symbol.
-		n_symbols = 1;						// 0 is reserved for null symbol.						   
+		n_symbols = 1;						// 0 is reserved for null symbol.
 		return 1; // Success.
 }
-													        
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void  PARSER::term_symtab ()
@@ -1014,17 +1015,17 @@ void  PARSER::term_symtab ()
 int	PARSER::add_symbol (int t, char* token_start, char* token_end)
 {
       char* p = token_start;					 		// Point at start.
-      int   length = (int)(token_end - p);		// Set length. 
-      uint  hash = length;         	   			// Set hash to length. 
+      int   length = (int)(token_end - p);		// Set length.
+      uint  hash = length;         	   			// Set hash to length.
       int   i = 0;						   			// Set shift value to 0.
       do									      			// Assume length != 0
-      {															
+      {
 			#ifdef INSENSITIVE
          hash += lowercase[*p] << i;
 			#else
          hash += *p << i;
 			#endif
-         i += 4;		                  			
+         i += 4;
          i %= 32;
       }
       while (++p < token_end);
@@ -1040,26 +1041,26 @@ int	PARSER::add_symbol (int t, char* token_start, char* token_end)
 				do
 				{
 					#ifdef INSENSITIVE
-					if (lowercase[*p] != lowercase[*start]) goto Cont;	
+					if (lowercase[*p] != lowercase[*start]) goto Cont;
 					#else
-					if (*p != *start) goto Cont;		// If characters not equal ...		
+					if (*p != *start) goto Cont;		// If characters not equal ...
 					#endif
 					start++;
 					p++;
 				}
-				while (start < end);						// while end not reached. 
+				while (start < end);						// while end not reached.
 				return sti;									// Return sti.
 			}
 Cont:    cell = (hash *= 65549)/hashdiv;			// Get new cell number.
 			sti  = hashvec[cell];							// Get symbol table index.
 		}
 	// NEW SYMBOL ...
-		if (n_symbols >= max_symbols)					// Reached maximum number? 
+		if (n_symbols >= max_symbols)					// Reached maximum number?
 		{
 			printf("\nNumber of symbols exceeds %d.\n\n", max_symbols);
 			quit (1); // Failure.
 		}
-		sti = hashvec[cell] = n_symbols;				// Put symbol number into hash vector.     
+		sti = hashvec[cell] = n_symbols;				// Put symbol number into hash vector.
 		symbol[sti].start   = token_start;			// Pointer to original location in input file.
 		symbol[sti].length  = length;					// Length of symbol.
 		symbol[sti].cell    = cell;					// Cell in the hash vector.
@@ -1086,9 +1087,9 @@ void  PARSER::print_symtab ()
 					symbol[i].length,
 					symbol[i].type,
 					symbol_name(i),
-					symbol[i].term, 
-					term_symb[symbol[i].term]); 
-			}   
+					symbol[i].term,
+					term_symb[symbol[i].term]);
+			}
 		}
 		else // No symbols in the table.
 		{
@@ -1120,7 +1121,7 @@ char* PARSER::symbol_name (int sti)
 			p = symbol[sti].start;
 			L = symbol[sti].length;
 			if (L > 255) L = 255;
-			for (i = 0; i < L; i++) 
+			for (i = 0; i < L; i++)
 			{
 				name[i] = p[i];
 			}
@@ -1136,7 +1137,7 @@ char* PARSER::symbol_name (char* start, char* end)
       char *p, *q;
       static char name[256];
 		if (end - start > 255) end = start + 255;
-		p = start; 
+		p = start;
 		q = name;
 		do
 		{
@@ -1151,45 +1152,45 @@ char* PARSER::symbol_name (char* start, char* end)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-int   PARSER::linkup (int p)      
+int   PARSER::linkup (int p)
 {
       int i;
       int next = -1;
 		#ifdef REVERSABLE
-      if (reverse[p] != 0)                               // IF NOT TO REVERSE THE ORDER. 
+      if (reverse[p] != 0)                               // IF NOT TO REVERSE THE ORDER.
       {
-         for (i = 0; i <= PL[p]; i++)				         // For each tail pointer. 
+         for (i = 0; i <= PL[p]; i++)				         // For each tail pointer.
          {
             if (PS[i].node != 0)                          // If tail points to node.
             {
-               if (next >= 0)                            // If one waiting.        
+               if (next >= 0)                            // If one waiting.
                {
                   PS[i   ].last->next = PS[next].node;	// Define next node.
                   PS[next].node->prev = PS[i].last;		// Define previous node.
                   PS[i   ].last       = PS[next].last;   // Change last to next last.
                }
-               next = i;									      // Next = Curr.  
-				}  
-			}  
+               next = i;									      // Next = Curr.
+				}
+			}
 		}
       else                                               // REVERSE THE ORDER.
 		#endif
       {
-         for (i = PL[p]; i >= 0; i--)				         // For each tail pointer. 
+         for (i = PL[p]; i >= 0; i--)				         // For each tail pointer.
          {
-            if (PS[i].node != 0)                          // If tail points to node.	  
+            if (PS[i].node != 0)                          // If tail points to node.
             {
-               if (next >= 0)                            // If one waiting.        
+               if (next >= 0)                            // If one waiting.
                {
 						PS[i   ].last->next = PS[next].node;	// Define next node.
                   PS[next].node->prev = PS[i   ].last;	// Define previous node.
                   PS[i   ].last       = PS[next].last;   // Change last to next last.
                }
-               next = i;									      // Next = Curr.  
+               next = i;									      // Next = Curr.
 				}
-			}  
+			}
 		}
-      return (next); 
+      return (next);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1221,13 +1222,13 @@ int   PARSER::init_ast (int max)
       }
 		node         =  new_node();
       node->id     = -1; // Undefined.
-      node->sti	 =  0;          
-      node->line   =  0;								
-      node->start  =  0;          
-      node->next   =  0;          
-      node->prev   =  0;							   
-      node->child  =  0;          
-      node->parent =  0;							   
+      node->sti	 =  0;
+      node->line   =  0;
+      node->start  =  0;
+      node->next   =  0;
+      node->prev   =  0;
+      node->child  =  0;
+      node->parent =  0;
 
 		strcpy (draw_plus,  "+ ");
 		strcpy (draw_vbar,  "| ");
@@ -1251,7 +1252,7 @@ Node* PARSER::new_node()
 {
 		if (n_nodes % max_nodes == 0) 						// Filled up nodearea?
 		{
-			nodearea = new Node[max_nodes];					// Get another nodearea. 
+			nodearea = new Node[max_nodes];					// Get another nodearea.
 			if (nodearea == NULL)								// Not got?
 			{
 				printf ("\nNot enough memory available for %d PARSER nodes.\n\n", max_nodes);
@@ -1270,7 +1271,7 @@ void  PARSER::find_root (Node* last_node)
 		root = last_node;						// Define root node.
 		if (root != 0)
 		{
-			while (root->prev != 0)			// In case of a list only. 
+			while (root->prev != 0)			// In case of a list only.
 			{
 				root = root->prev;			// Go up the list to first node.
 			}
@@ -1296,7 +1297,7 @@ void  PARSER::print_ast (Node* n) // Print subtree.
 		if (n != 0)
 		{
 			fprintf (output, "   sti  line   col  \n");
-			traverse (indent, n); // Start PARSER traversal.    
+			traverse (indent, n); // Start PARSER traversal.
 		}
 		else
 		{
@@ -1309,14 +1310,14 @@ void  PARSER::print_ast (Node* n) // Print subtree.
 void  PARSER::traverse (int trav)
 {
 		#ifdef NODE_ACTIONS
-	  	if (n_nodes > 1) // Any nodes in the tree? 
+	  	if (n_nodes > 1) // Any nodes in the tree?
 		{
 		  	if (n_nodeactns > 0) // Any node actions?
 			{
 				stacki  = -1;
-				stack   = new Stack [STKSIZE];	 
+				stack   = new Stack [STKSIZE];
 				counter = new int [n_nodenames];
-				for (int i = 0; i < n_nodenames; i++) 
+				for (int i = 0; i < n_nodenames; i++)
 				{
 					counter[i] = 0;
 				}
@@ -1327,9 +1328,9 @@ void  PARSER::traverse (int trav)
 				#endif
 				traversal = trav;
 				Node* n = root;
-				do 
+				do
 				{
-  					traverse (n); 	
+  					traverse (n);
 					n = n->next;
 				}
 				while (n != 0);
@@ -1344,36 +1345,36 @@ void  PARSER::traverse (Node* n)
 {
 		#ifdef NODE_ACTIONS
 		int   i  = n->id;					// Node id.
-		Node* c  = n->child;				// Child nove pointer. 
+		Node* c  = n->child;				// Child nove pointer.
       stacki++;
       counter[i]++;
       stack[stacki].id = i;
-      stack[stacki].counter = counter[i]; 
+      stack[stacki].counter = counter[i];
 		if (nact_func[i] != 0) // Got a node action ?
 		{
 			direction = TOP_DOWN;
 			tracer (n);
-			(*nact_func[i]) (n);		
+			(*nact_func[i]) (n);
 		}
       while (c != 0)
 		{
-   	   traverse (c); 
+   	   traverse (c);
 			c = c->next;
-		/*	if (c != 0) 
-			{ 
+		/*	if (c != 0)
+			{
 				if (nact_func[i] != 0) // Got a node action ?
-				{ 
-					direction = PASS_OVER; 
+				{
+					direction = PASS_OVER;
 					tracer (n);
 					(*nact_func[i])(n);
-				} 
+				}
 			} */
-		}  
+		}
 		if (nact_func[i] != 0) // Got a node action ?
 		{
-			direction = BOTTOM_UP;	 		  
+			direction = BOTTOM_UP;
 			tracer (n);
-			(*nact_func[i]) (n);		
+			(*nact_func[i]) (n);
 		}
       stacki--;
 		#endif
@@ -1383,34 +1384,34 @@ void  PARSER::traverse (Node* n)
 
 void  PARSER::traverse (char *indent, Node* n)
 {
-      while (n->next != 0)                
+      while (n->next != 0)
       {
-         strcat (indent, draw_plus); 
-         print_node (indent, n);                
+         strcat (indent, draw_plus);
+         print_node (indent, n);
          indent [strlen(indent)-2] = 0;
-         if (n->child != 0)                
+         if (n->child != 0)
          {
             strcat (indent, draw_vbar);
-            traverse (indent, n->child);  
+            traverse (indent, n->child);
             indent [strlen(indent)-2] = 0;
          }
-         n = n->next;                    
+         n = n->next;
       }
 
-      strcat (indent, draw_last); 
-      print_node (indent, n);                   
+      strcat (indent, draw_last);
+      print_node (indent, n);
       indent [strlen(indent)-2] = 0;
-      if (n->child != 0)                   
+      if (n->child != 0)
       {
-         strcat (indent, draw_space); 
-         traverse (indent, n->child);     
+         strcat (indent, draw_space);
+         traverse (indent, n->child);
          indent [strlen(indent)-2] = 0;
       }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void  PARSER::print_node (char *indent, Node* n) 
+void  PARSER::print_node (char *indent, Node* n)
 {
 		int id  = n->id;
       int sti = n->sti;
@@ -1432,7 +1433,7 @@ void  PARSER::print_node (char *indent, Node* n)
 				*p = ch;
 			}
 			else // A terminal symbol of the grammar!
-			{	
+			{
 				fprintf (output, " (%s)\n", term_symb[-sti]);
 			}
 		}
@@ -1444,6 +1445,6 @@ void  PARSER::print_node (char *indent, Node* n)
 
 #endif
 
-//                                                                           // 
+//                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
 

@@ -14,16 +14,16 @@
 		{
 		   public:
 		// Functions ...
-			static void     initialize   (int);				
-			static int      Parse        ();	
-			static int      ParseInit    ();	
-			static int      parse        ();	
-			static void     terminate    ();	
+			static void     initialize   (int);
+			static int      Parse        ();
+			static int      ParseInit    ();
+			static int      parse        ();
+			static void     terminate    ();
 			static void     syntax_error (int);
 
 		// Variables ...
-         static PStack*  PS;           	      // Parse Stack pointer.       
-         static PStack*  PS_end;        	      // Parse Stack end.       
+         static PStack*  PS;           	      // Parse Stack pointer.
+         static PStack*  PS_end;        	      // Parse Stack end.
 
 			static char     pact_arg[];		      // Parse-action argument index (for first arg).
 			static char     nact_arg[];		      // Node-action argument index (for first arg).
@@ -33,27 +33,27 @@
 		   static uchar    f_tail[];
 
 			static char*    T_start;
-			static char*    T_end; 
-			static int      T_line;        
+			static char*    T_end;
+			static int      T_line;
 
 		   private:
 		// Functions ...
 			static int      nd_parse      (int*, int*, int*, int x, int t, int a);
-			static int      apply         (int p); 
+			static int      apply         (int p);
 			static int      linkup			(int p);
-			static void     rebuild		   ();                           
+			static void     rebuild		   ();
 			static short    err_rec		   (short, short);
 			static short    lookahead		(short t, short x);
 			static void     get_list		(short);
-			static void     prt_token		(short); 
-			static void     prt_prod		(short); 
-			static void     prt_stack		(); 
-			static void     expecting		(); 
+			static void     prt_token		(short);
+			static void     prt_prod		(short);
+			static void     prt_stack		();
+			static void     expecting		();
 			static int      restore       ();
 			static void	    collect		   (int x);
 			static void	    reduce			(int p, int x);
 			static void     prt_list      (int t);
-			static char*    prt_line      (char* ls, int ln); 
+			static char*    prt_line      (char* ls, int ln);
 			static void	    prt_pointer   (char* ls, int ln, char* token);
 
 		// Variables ...

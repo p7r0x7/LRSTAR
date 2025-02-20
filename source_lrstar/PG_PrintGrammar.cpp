@@ -19,7 +19,7 @@ void  PG_PrintGrammar::PrintGrammar ()
       strcat (fid, gft);
       strcat (fid, ".grammar.txt");
 
-	// GRAMMAR NAME 
+	// GRAMMAR NAME
 
 		fprintf (grmfp, "\n/* %s grammar */\n\n", gfn);
 
@@ -29,7 +29,7 @@ void  PG_PrintGrammar::PrintGrammar ()
 			goto Ret;
 		}
 
-	// TERMINALS. 
+	// TERMINALS.
 
 		int *seq, i, n;
 		ALLOC (seq, N_terms);
@@ -42,7 +42,7 @@ void  PG_PrintGrammar::PrintGrammar ()
 			char* con;
 			i = seq[t]; // In alphabetical order.
 			if (term_const[t] >= 0)
-			{	
+			{
 				n++;
 				con = const_name[term_const[t]];
 				fprintf (grmfp, "       %-24s  %s;\n", con, term_name[t]);
@@ -61,7 +61,7 @@ void  PG_PrintGrammar::PrintGrammar ()
 
 		FREE (seq, N_terms);
 
-   // PRODUCTIONS. 
+   // PRODUCTIONS.
 
 		fprintf(grmfp, "/* Productions */\n\n");
 
@@ -81,7 +81,7 @@ void  PG_PrintGrammar::PrintGrammar ()
 				}
 				fprintf (grmfp, "\n");
          }
-			fprintf (grmfp, "               ;\n\n"); 
+			fprintf (grmfp, "               ;\n\n");
       }
 		fprintf (grmfp, "/* End of %s grammar \n\n", gfn);
 Ret:	fclose (grmfp);
@@ -92,7 +92,7 @@ Ret:	fclose (grmfp);
 int	PG_PrintGrammar::p_head (char* before, int s, char* after)
 {
 		char* p;
-      if (s <= 0)      
+      if (s <= 0)
 			  p = head_name[-s]; // Nonterminal
       else p = term_name[s];	// Terminal
 
@@ -105,7 +105,7 @@ int	PG_PrintGrammar::p_head (char* before, int s, char* after)
 int	PG_PrintGrammar::p_tail (char* before, int s, char* after)
 {
 		char* p;
-      if (s < 0)      
+      if (s < 0)
 			  p = head_name[-s]; // Nonterminal
       else p = term_name[s];	// Terminal
 
@@ -212,19 +212,19 @@ void  PG_PrintGrammar::PrintHtml ()
       strcat (fid, gfn);
       strcat (fid, gft);
       strcat (fid, ".grammar.html");
-		if (optn[PG_GRAMMARHTML] == 0) 
+		if (optn[PG_GRAMMARHTML] == 0)
 		{
 			unlink (fid);
 			return;
 		}
       fp = fopen (fid, "w");
       if (fp == NULL)
-      {  
+      {
          n_errors++;
          prt_log ("\nFile %s cannot be created.\n", fid);
 			return;
       }
-   
+
 		fprintf (fp, "<head>\n");
 		fprintf (fp, "<title>%s grammar.</title>\n", gfn);
 		fprintf (fp, "<meta name=\"description\" content=\"%s grammar.\">\n", gfn);
@@ -241,39 +241,39 @@ void  PG_PrintGrammar::PrintHtml ()
 		fprintf (fp, "<basefont face=\"arial\">\n");
 		fprintf (fp, "<body bgcolor=\"white\" text=\"#000000\">\n");
 
-		if (optn[PG_GRAMMARHTML] == 0) 
+		if (optn[PG_GRAMMARHTML] == 0)
 		{
 			fprintf (fp, "<pre>\n            'h' option was not specified.</pre>\n");
 			goto Ret;
 		}
 
-		fprintf (fp, "<table cellspacing=20 cellpadding=0>\n"); 
-		fprintf (fp, "<tr>\n<td valign=top width=350>\n\n"); 
+		fprintf (fp, "<table cellspacing=20 cellpadding=0>\n");
+		fprintf (fp, "<tr>\n<td valign=top width=350>\n\n");
 
-   // NONTERMINALS. 
+   // NONTERMINALS.
 
       int  i;
       int* seq;
 		ALLOC (seq, N_heads);
-  		SORTNAMES (head_name, N_heads, seq);      
+  		SORTNAMES (head_name, N_heads, seq);
 		fprintf (fp, "<pre>        Nonterminal Symbols\n</pre>\n\n");
 		nh = N_heads;
-		fprintf (fp, "<pre>\n"); 
+		fprintf (fp, "<pre>\n");
       for (i = 0; i < nh; i++)
       {
          if (head_type[seq[i]] & GENERATED) continue;
          fprintf (fp, "%4d    ", seq[i]);
          ph_nont ("", seq[i], "\n");
       }
-		fprintf (fp, "</pre>\n\n"); 
+		fprintf (fp, "</pre>\n\n");
 		FREE (seq, N_heads);
 
-   // TERMINALS. 
+   // TERMINALS.
 
 		ALLOC (seq, N_terms);
-  		SORTNAMES (term_name, N_terms, seq);      
+  		SORTNAMES (term_name, N_terms, seq);
 		fprintf (fp, "<pre>        Terminal Symbols\n</pre>\n\n");
-		fprintf (fp, "<pre>\n"); 
+		fprintf (fp, "<pre>\n");
       for (t = 0; t < N_terms; t++)
       {
          if (*term_name[seq[t]] == '<')
@@ -323,12 +323,12 @@ void  PG_PrintGrammar::PrintHtml ()
          fprintf (fp, "%4d    ", seq[t]);
          ph_tail ("", seq[t], "\n");
       }
-		fprintf (fp, "</pre>\n\n"); 
+		fprintf (fp, "</pre>\n\n");
 		FREE (seq, N_terms);
 
-		fprintf (fp, "</td>\n<td valign=top>\n\n"); 
+		fprintf (fp, "</td>\n<td valign=top>\n\n");
 
-   // PRODUCTIONS. 
+   // PRODUCTIONS.
 
 		fprintf (fp, "<pre>           %s grammar (output from <a href=\"http://lrgen.org/\" target=\"_blank\">%s %s</a>).\n</pre>\n", gfn, program, version);
 		nh = N_heads;
@@ -352,14 +352,14 @@ void  PG_PrintGrammar::PrintHtml ()
 				}
 				fprintf (fp, "\n");
          }
-			fprintf (fp, "              ;\n</pre>\n"); 
+			fprintf (fp, "              ;\n</pre>\n");
       }
 		fprintf (fp, "<pre>\n           End of %s grammar listing.\n</pre>\n", gfn);
 		for (h = 0; h < 30; h++)
 		{
-			fprintf (fp, "<pre><br></pre>\n"); 
+			fprintf (fp, "<pre><br></pre>\n");
 		}
-		fprintf (fp, "</td>\n</tr>\n</table>\n"); 
+		fprintf (fp, "</td>\n</tr>\n</table>\n");
 
 Ret:	fprintf (fp, "</body>\n");
 		fprintf (fp, "</html>\n\n");
@@ -401,7 +401,7 @@ int	PG_PrintGrammar::ph_sym (int nont_on, int tail_on, char* before, int s, char
       }
       else if (tail_on) // Tail?
       {
-         if (s < 0) 
+         if (s < 0)
          {
             nont_on = 1;
             p = head_name[-s];
@@ -435,11 +435,11 @@ int	PG_PrintGrammar::ph_sym (int nont_on, int tail_on, char* before, int s, char
 		}
    	string [j] = 0;
       fprintf (fp, "%s", before);
-      if (nont_on)   
+      if (nont_on)
       {
-         if (tail_on) 
+         if (tail_on)
          {
-         // if ((head_type[-s] & GENERATED) == 0) 
+         // if ((head_type[-s] & GENERATED) == 0)
             fprintf (fp, "<a href=\"#%s\">", p); // Link to NT definition.
          }
       }
@@ -453,11 +453,11 @@ int	PG_PrintGrammar::ph_sym (int nont_on, int tail_on, char* before, int s, char
          }
       }
       fprintf (fp, "%s", string);
-      if (nont_on)   
+      if (nont_on)
       {
-         if (tail_on) 
+         if (tail_on)
          {
-         // if ((head_type[-s] & GENERATED) == 0) 
+         // if ((head_type[-s] & GENERATED) == 0)
             fprintf (fp, "</a>"); // Link end.
          }
       }

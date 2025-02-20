@@ -15,7 +15,7 @@ void  LG_CheckGrammar::PrintGrammar ()
 
    // if (n_errors) return;
 
-      if (!optn [LG_GRAMMAR]) 
+      if (!optn [LG_GRAMMAR])
 		{
 			option_grammar = 1;
 	      prt_grm ("\n/* %s%s grammar */\n\n", gfn, gft);
@@ -59,7 +59,7 @@ void  LG_CheckGrammar::PrintGrammar ()
                {
                   prt_grm ("\n                ");
                   line_length = 16;
-               }  
+               }
             }
 				if (h == 1)
 				{
@@ -98,13 +98,13 @@ void  LG_CheckGrammar::PRT_SYMB (int s)
 int   LG_CheckGrammar::prt_sym2 (int s, char *after)
 {
       char *p;
-      if (s >= 0) 
+      if (s >= 0)
 		{
 			if (s >= N_terms) p = "???";
 			else              p = term_name[s];
 	      prt_grm ("%s%s", p, after);
 		}
-      else        
+      else
 		{
 			if (-s >= n_heads) p = "???";
 			else               p = head_name[-s];

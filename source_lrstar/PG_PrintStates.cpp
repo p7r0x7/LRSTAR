@@ -22,7 +22,7 @@ void  PG_PrintStates::PrintStates ()
       for (s = 0; s < N_states; s++)
       {
          if (N_Conflicts[s] > 0)
-         {  
+         {
             n++;
             char* str;
             if (optn[PG_NONDETER]) str = "nondeterministic";
@@ -31,9 +31,9 @@ void  PG_PrintStates::PrintStates ()
                  prt_sta ("%3d. STATE %-3d has %2d %s\n",  n, s, 1, str);
             else prt_sta ("%3d. STATE %-3d has %2d %ss\n", n, s, N_Conflicts[s], str);
          }
-      }   
+      }
       if (n) prt_sta ("\n");
-      else   
+      else
       {
          if (optn[PG_NONDETER]) prt_sta ("No Nondeterministic States.\n\n");
          else                   prt_sta ("No Conflicts Reported.\n\n");
@@ -45,7 +45,7 @@ void  PG_PrintStates::PrintStates ()
          {
 				int na = 0;
          // max_symbl = C_max_symbl (s);
-            if (nd_item[s+1] > nd_item[s]) 
+            if (nd_item[s+1] > nd_item[s])
             {
                if (optn[PG_NONDETER])
                   prt_sta ("   Nondeterministic\n");
@@ -61,7 +61,7 @@ void  PG_PrintStates::PrintStates ()
                {
                   if (optn[PG_NONDETER]) P_SYMBOL (t, "   N ");
                   else                   P_SYMBOL (t, "   C ");
-                  if (x > opt_states) 
+                  if (x > opt_states)
                   {
                      prt_sta (" shift & reduce ");
 							p = x - opt_states;
@@ -69,7 +69,7 @@ void  PG_PrintStates::PrintStates ()
                   }
                   else prt_sta (" shift & goto   %4d\n",  x);
                }
-					else // reduce. 
+					else // reduce.
                {
                   if (optn[PG_NONDETER]) P_SYMBOL (t, "   N ");
                   else                   P_SYMBOL (t, "   C ");
@@ -77,7 +77,7 @@ void  PG_PrintStates::PrintStates ()
                   int c = 0;
                   for (int f = f_final [s]; f < f_final [s+1]; f++)
                   {
-                     if (item [final[f]].prod == p) 
+                     if (item [final[f]].prod == p)
                      {
                         c++;
                         prt_sta (" reduce         ");
@@ -98,20 +98,20 @@ void  PG_PrintStates::PrintStates ()
 						t = tt_symb [i];
 						P_SYMBOL (t);
 						if (x > 0) prt_sta (" shift & goto   %4d\n", x);
-					  	else       
+					  	else
                   {
                      p = -x;
                      int c = 0; // counter.
                      for (int f = f_final [s]; f < f_final [s+1]; f++)
                      {
-                        if (item [final[f]].prod == p) 
+                        if (item [final[f]].prod == p)
                         {
                            c++;
                            prt_sta (" reduce         ");
                            break;
                         }
                      }
-							if (c == 0) 
+							if (c == 0)
 							{
 								prt_sta (" shift & reduce ");
 								p_prod (p, prod_len[p] - 1, "", "\n");
@@ -131,7 +131,7 @@ void  PG_PrintStates::PrintStates ()
                   int c = 0; // counter.
                   for (int f = f_final [s]; f < f_final [s+1]; f++)
                   {
-                     if (item [final[f]].prod == p) 
+                     if (item [final[f]].prod == p)
                      {
                         c++;
                         prt_sta (" reduce         ");
@@ -151,7 +151,7 @@ void  PG_PrintStates::PrintStates ()
 					na++;
                p = D_red[s];
                if (N_Conflicts[s]) P_SYMBOL (-32767, "   # "); // default
-               else                P_SYMBOL (-32767);          // default  
+               else                P_SYMBOL (-32767);          // default
                prt_sta (" reduce         ");
    			  	p_prod (p, -1, "", "\n");
 				}
@@ -166,7 +166,7 @@ void  PG_PrintStates::PrintStates ()
 						h = ntt_symb [i];
 						P_SYMBOL (-h);
 						if (x > 0) prt_sta (" goto           %4d\n", x);
-						else       
+						else
                   {
                      p = -x;
                      prt_sta (" reduce         ");
@@ -292,7 +292,7 @@ void  PG_PrintStates::PRT_STA (int s)
             prt_sta ("STATE %d nd_max = 2 ..............................................................................\n\n", s);
          else if (nd_state[s] > 2)
             prt_sta ("STATE %d nd_max > 2 = %d .........................................................................\n\n", s, nd_state[s]);
-         else 
+         else
             prt_sta ("STATE %d .........................................................................................\n\n", s);
       }
 

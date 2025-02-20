@@ -28,11 +28,11 @@
                   -> '.' digits
                   -> digits '.' digits
 
-   exp            -> 'e'     digits 
+   exp            -> 'e'     digits
                   -> 'E'     digits
-                  -> 'e' '-' digits 
+                  -> 'e' '-' digits
                   -> 'E' '-' digits
-                  -> 'e' '+' digits 
+                  -> 'e' '+' digits
                   -> 'E' '+' digits
 
    <string>       -> ''' inside '''

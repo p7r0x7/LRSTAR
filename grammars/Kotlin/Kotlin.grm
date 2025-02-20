@@ -125,21 +125,21 @@
    WHEN                             'when';
    WHERE                            'where';
    WHILE                            'while';
-  
+
 // Goal rule for input to LRSTAR ...
 
-Goal 
+Goal
 	 : (kotlinFile | script) <eof>
 	 ;
 
 // SECTION: general
 
 kotlinFile
-    : shebangLine? NL* fileAnnotation* packageHeader importList topLevelObject* 
+    : shebangLine? NL* fileAnnotation* packageHeader importList topLevelObject*
     ;
 
 script
-    : shebangLine? NL* fileAnnotation* packageHeader importList (statement semi)* 
+    : shebangLine? NL* fileAnnotation* packageHeader importList (statement semi)*
     ;
 
 shebangLine

@@ -156,7 +156,7 @@ void  PG_Parser::parse_init (int max_symb, char* grm_path)
       n_errors    = 0;
       n_warnings  = 0;
       max_errs    = 10;
-      keyword_sym = 0; 
+      keyword_sym = 0;
       n_declared  = 0;
 		prod_numb   = 0;
       n_constants = 0;
@@ -179,14 +179,14 @@ void  PG_Parser::parse_init (int max_symb, char* grm_path)
 		char* end = start + 7;
 		sti = add_symbol(start, end, TERMINAL, 0);
 		symbol[sti].type = TERMINAL;
-		symbol[sti].numb = N_terms++;	// = 0 
+		symbol[sti].numb = N_terms++;	// = 0
 		symbol[sti].value = -1;			// Undefined.
 
 		start = "<eof>";
 		end = start + 5;
 		sti = add_symbol(start, end, TERMINAL, 0);
 		symbol[sti].type = TERMINAL;
-		symbol[sti].numb = N_terms++;	// = 0 
+		symbol[sti].numb = N_terms++;	// = 0
 		symbol[sti].value = -1;			// Undefined.
 }
 
@@ -282,7 +282,7 @@ Red2:		  	if (reduce (p) != 0) return -line_numb;		// Call reduce action with ru
 			traverse ();
 			if (n_errors) return -line_numb;
 
-		//	find_ebnf (); 
+		//	find_ebnf ();
 		//	print_ast ();
 			pass = THIRD_PASS;										// Make EBNF rules (top down).
 			traverse ();
@@ -296,9 +296,9 @@ Red2:		  	if (reduce (p) != 0) return -line_numb;		// Call reduce action with ru
 		syntax_error ("Error", &token, term_symb[t]);
 		expecting   (x);
 		print_terms (x);
-		return -line_numb;						              
+		return -line_numb;
 
-Overflow:                                                
+Overflow:
 		prt_log ("\nInternal error, Parser stack overflow.\n\n");
 		return -line_numb;
 }
@@ -310,7 +310,7 @@ void  PG_Parser::find_root()
 		root = PS[0].node;            // Define root node.
 		if (root != 0)
 		{
-			while (root->prev != 0)		// In case of a list only. 
+			while (root->prev != 0)		// In case of a list only.
 			{
 				root = root->prev;		// Go up the list to first node.
 			}
@@ -321,7 +321,7 @@ void  PG_Parser::find_root()
 
 void  PG_Parser::find_ebnf()
 {
-		ebnf = ebnf->next; // first EBNF nonterminal. 
+		ebnf = ebnf->next; // first EBNF nonterminal.
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -430,8 +430,8 @@ int   PG_Parser::restore ()
 void  PG_Parser::expecting (int x)
 {
 		int t;													// Terminal number.
-		int p;													// Production for default reduction. 
-		int q;													// Production for a terminal. 
+		int p;													// Production for default reduction.
+		int q;													// Production for a terminal.
 
 		if (t_error == POSITION) return;
 
@@ -473,7 +473,7 @@ void  PG_Parser::reduction (int q, int x)
 		RStack* RSx = RS;							// Reset restore-stack pointer.
 		PStack* PSx = PS;							// Save parse-stack pointer.
 
-		PS -= PL[q];								// Reduce parse stack ptr by rule length - 1. 
+		PS -= PL[q];								// Reduce parse stack ptr by rule length - 1.
 		if (PL[q] < 0)								// Null production?
 		{
 			(++RS)->ptr = PS;					   // Save parse-stack pointer.
@@ -495,7 +495,7 @@ void  PG_Parser::reduction (int q, int x)
 
  	// Restore parse stack.
 Done: PS = PSx;									// Restore PS.
- 		while (RS > RSx)							
+ 		while (RS > RSx)
       {
          RS->ptr->state = RS->state;      // Reset state to saved state.
 			RS--;
@@ -518,7 +518,7 @@ void  PG_Parser::print_terms (int state)
 		for (i = 0; i < n_terms; i++)
       {
 			t = seq[i];
-         if (t == EOFSYMBOL) continue; // <eof> 
+         if (t == EOFSYMBOL) continue; // <eof>
 			if (T_exp[t] == 1)
          {
 				if (term_symb[t][0] == '<' || term_symb[t][0] == '{')
@@ -530,7 +530,7 @@ void  PG_Parser::print_terms (int state)
 		for (i = 0; i < n_terms; i++)
       {
 			t = seq[i];
-			if (t == EOFSYMBOL) continue; // <eof> 
+			if (t == EOFSYMBOL) continue; // <eof>
 			if (T_exp[t] == 1)
          {
 				if (term_symb[t][0] != '<' && term_symb[t][0] != '{')
@@ -603,9 +603,9 @@ void	PG_Parser::print_stack () // Print parser stack.
 			if (sym <= 0)
 			{
 				name = term_symb[-sym];
-				if (*name == '<' || *name == '{') 
+				if (*name == '<' || *name == '{')
 					  name2 = symbol_name (ps->sti);
-				else name2 = "";           
+				else name2 = "";
 				printf ("\t%4d %s %s\n", -sym, name, name2);
 			}
 			else
@@ -620,7 +620,7 @@ void	PG_Parser::print_stack () // Print parser stack.
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void  PG_Parser::syntax_error (char *msg, Token* T, char* symb)
-{       
+{
       char  c;
 		char* p;
       char* lineout;
@@ -631,7 +631,7 @@ void  PG_Parser::syntax_error (char *msg, Token* T, char* symb)
 		if (t_error == POSITION) return;
 
 		n_errors++;
-		if (*T->start <= 32) 
+		if (*T->start <= 32)
 		{
 			T->end = T->start+1;
 			*(T->end) = '\n';
@@ -710,7 +710,7 @@ int   PG_Parser::add_symbol (char* token_start, char* token_end, int type, int l
 			sti = n_symbols;
 			if (n_symbols >= max_symbols)				   // Reached maximum number?
 			{
-            MemCrash ("Number of symbols", max_symbols); 
+            MemCrash ("Number of symbols", max_symbols);
 				Quit ();
 			}
 			hashvec[cell] = n_symbols;					   // Put symbol number into hash vector.
@@ -737,7 +737,7 @@ void  PG_Parser::rename_symbol (short sti, int gen_numb)
 {
       char*p;
       p = ALLOC (p, 8);									// Allocate space for text string.
-		sprintf (p, "$%05d", gen_numb);				
+		sprintf (p, "$%05d", gen_numb);
       *(p+6) = 0;											// Padd with zero byte.
       symbol[sti].original = symbol[sti].name;	// Save original name.
       symbol[sti].name     = p;             		// Define pointer to symbol name.
@@ -770,12 +770,12 @@ int   PG_Parser::get_symbol (char* token_start, char* token_end, int type)
          p = token_start;				            // Point at token start.
 			do
 			{
-				if (symbol[i].origleng != 0) 
+				if (symbol[i].origleng != 0)
 					  len = symbol[i].origleng;
 				else len = symbol[i].length;
 				if (len == length && symbol[i].type & type) // Length and type match?
 				{
-					if (symbol[i].original != 0) 
+					if (symbol[i].original != 0)
 						  q = symbol[i].original;		// Point at original name.
 					else q = symbol[i].name;			// Point at symbol name.
 					short j = 0;
@@ -893,7 +893,7 @@ void  PG_Parser::init_ast ()
 
 void  PG_Parser::term_ast ()
 {
-   //	delete [] node; Should delete all nodes. 
+   //	delete [] node; Should delete all nodes.
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -915,7 +915,7 @@ void  PG_Parser::print_ast (Node* n) // Print subtree.
 		if (n != 0)
 		{
 			printf ("   node   prev   next parent  child   line    sti \n");
-			traverse (indent, n); // Start AST traversal.    
+			traverse (indent, n); // Start AST traversal.
 		}
 		else printf ("   Tree is empty.\n\n");
 		#endif
@@ -925,27 +925,27 @@ void  PG_Parser::print_ast (Node* n) // Print subtree.
 
 void  PG_Parser::traverse (char *indent, Node* n)
 {
-      while (n->next != 0)                
+      while (n->next != 0)
       {
-         strcat (indent, draw_plus); 
-         print_node (indent, n);                
+         strcat (indent, draw_plus);
+         print_node (indent, n);
          indent [(int)strlen(indent)-2] = 0;
-         if (n->child != 0)                
+         if (n->child != 0)
          {
             strcat (indent, draw_vbar);
-            traverse (indent, n->child);  
+            traverse (indent, n->child);
             indent [(int)strlen(indent)-2] = 0;
          }
-         n = n->next;                    
+         n = n->next;
       }
 
-      strcat (indent, draw_last); 
-      print_node (indent, n);                   
+      strcat (indent, draw_last);
+      print_node (indent, n);
       indent [(int)strlen(indent)-2] = 0;
-      if (n->child != 0)                   
+      if (n->child != 0)
       {
-         strcat (indent, draw_space); 
-         traverse (indent, n->child);     
+         strcat (indent, draw_space);
+         traverse (indent, n->child);
          indent [(int)strlen(indent)-2] = 0;
       }
 }
@@ -970,14 +970,14 @@ void  PG_Parser::print_node (char *indent, Node* n) /* Print this node function.
 		char oper = oper_char (n);
 
 		printf (" %6d %6d %6d %6d %6d %6d %6d %s%s",
-			numb, 
-  			prev, 
-  			next, 
-  			parent, 
-  			child, 
-		  	line, 
-			sti, 
-			indent, 
+			numb,
+  			prev,
+  			next,
+  			parent,
+  			child,
+		  	line,
+			sti,
+			indent,
 			node_name[n->id]);
 
 		if (sti != 0) // zero means no symbol.
@@ -1027,7 +1027,7 @@ void  PG_Parser::traverse (Node* np)
 {
 		int na;		 // Mode action.
 		Node* cp;	 // Child pointer.
-		na = np->id; 
+		na = np->id;
 		if (na >= 0)
 		{
 			direction = TOP_DOWN;

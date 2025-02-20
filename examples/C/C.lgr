@@ -3,13 +3,13 @@
 
 	<eof>						-> \z
 
-	<constant>     		-> literal 
-								-> integer	
-								-> decimal 
+	<constant>     		-> literal
+								-> integer
+								-> decimal
 								-> real
 
-	<identifier>   		-> letter (letter|digit)* 
-					  
+	<identifier>   		-> letter (letter|digit)*
+
 	integer        		-> digit+
 
 	real	         		-> integer exp
@@ -19,43 +19,43 @@
 								->        '.' digit+
 								-> digit+ '.' digit+
 
-	exp	         		-> 'e' digit+ 
+	exp	         		-> 'e' digit+
 								-> 'E' digit+
-								-> 'e' '-' digit+ 
+								-> 'e' '-' digit+
 								-> 'E' '-' digit+
-								-> 'e' '+' digit+ 
+								-> 'e' '+' digit+
 								-> 'E' '+' digit+
 
 	literal        		-> ''' lchar '''
 
-	lchar          		-> lany 
+	lchar          		-> lany
 								-> '\' '\'
 								-> '\' '''
 								-> '\' '"'
-								-> '\' 'n' 
-								-> '\' 't'			 
+								-> '\' 'n'
+								-> '\' 't'
 								-> '\' 'a'
 								-> '\' 'b'
 								-> '\' 'f'
 								-> '\' 'r'
 								-> '\' 'v'
 								-> '\' '0'
-								
+
 	<string>       		-> '"' schar* '"'
 
-	schar          		-> sany 
+	schar          		-> sany
 								-> '\' '\'
 								-> '\' '''
 								-> '\' '"'
-								-> '\' 'n' 
-								-> '\' 't'			 
+								-> '\' 'n'
+								-> '\' 't'
 								-> '\' 'a'
 								-> '\' 'b'
 								-> '\' 'f'
 								-> '\' 'r'
 								-> '\' 'v'
 								-> '\' '0'
-								
+
 	{whitespace}       	-> whitechar+
 
 	{commentline}  		-> '/' '/' neol*
@@ -64,14 +64,14 @@
 
 /* Character Sets */
 
-	any						= 0..255 - \z  		
-	lany           		= any - ''' - '\' - \n 
-	sany	         		= any - '"' - '\' - \n 
+	any						= 0..255 - \z
+	lany           		= any - ''' - '\' - \n
+	sany	         		= any - '"' - '\' - \n
 
-	letter	      		= 'a'..'z' | 'A'..'Z' | '_' 
-	digit	         		= '0'..'9' 
+	letter	      		= 'a'..'z' | 'A'..'Z' | '_'
+	digit	         		= '0'..'9'
 
-	whitechar     			= \t | \n | \r | \f | \v | ' ' 
+	whitechar     			= \t | \n | \r | \f | \v | ' '
 
 	na             		= any - '*' 			// not asterisk
 	nans           		= any - '*' - '/'	   // not asterisk not slash
@@ -84,5 +84,5 @@
 	\r							= 13						// return
 	\z							= 26						// end of file
 	\b							= 32						// blank/space
-	
+
 /* End */

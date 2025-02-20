@@ -20,10 +20,10 @@
 		}
 		#else
       #include "io.h"
-		#include "conio.h"	
+		#include "conio.h"
 		#endif
 
-  		#define EOL_CHAR 10 // End Of Line character.				  
+  		#define EOL_CHAR 10 // End Of Line character.
 		#define EOF_CHAR 26 // End Of File character.
 
 		class cOption
@@ -37,8 +37,8 @@
 		class cInput
 		{
 			public:
-			static char*  input_start;		// First byte of input area.              
-			static char*  input_end;		// Byte after input.                      
+			static char*  input_start;		// First byte of input area.
+			static char*  input_end;		// Byte after input.
 			static char   path[256];		// Path to file (dir/fn.ft).
 			static char   dir[256];			// Directory (folder) of file.
 			static char   filename[256];	// Filename of input file.
@@ -49,13 +49,13 @@
 			static void   term ();
 		};
 
-  		class cOutput 
+  		class cOutput
 		{
 			public:
 			static char   path[256];		// Path to file (dir/fn.ft).
 			static char   dir[256];			// Directory.
-			static char   filename[256];	// File name.  
-			static char   filetype[64];	// File type.  
+			static char   filename[256];	// File name.
+			static char   filetype[64];	// File type.
 			static FILE*  filedesc;			// File descriptor.
 			static int    init (char* dir, char* fn, char* ft);
 			static void   term ();
@@ -77,7 +77,7 @@
 		char   cInput::path[256];			// Path of include file.
 		char   cInput::filename[256];		// Filename of include file.
 		char   cInput::filetype[64];		// Filetype of include file.
-		int    cInput::filedesc;		 
+		int    cInput::filedesc;
 		int    cInput::filesize;
 
 		char   cOutput::path[256];			// Path of output file.
@@ -95,7 +95,7 @@ int   main (int na, char **arg)
 {
 		char* copyright = "\n%s parser, copyright ?.\n";
       int   i, t, time1, time2, thou, sec, nlps, nl, rc;
-   
+
 		time1 = clock();	// Get start time.
 		rc = 0;
 		nl = 0;
@@ -113,10 +113,10 @@ int   main (int na, char **arg)
 		output   = Output.filedesc;
 
 	// Parse the input file ...
-		rc = PARSER::init_parser (Input.path, Input.input_start, 100000, 1000000);	
-		if (rc <= 0) 
+		rc = PARSER::init_parser (Input.path, Input.input_start, 100000, 1000000);
+		if (rc <= 0)
 		{
-			nl = 0;	 
+			nl = 0;
 			printf ("\nError in init_parser().\n");
 			quit (1);
 		}
@@ -141,15 +141,15 @@ int   main (int na, char **arg)
       thou = t * 1000 / CLOCKS_PER_SEC;
       sec  = thou / 1000;
       thou -= sec * 1000;
- 
-      printf ("\nSuccess ...\n");		  
+
+      printf ("\nSuccess ...\n");
       printf ("%10s symbols in symbol table.\n",  number (PARSER::n_symbols));
       printf ("%10s nodes in AST.\n",				  number (PARSER::n_nodes));
       printf ("%10s lines read in input file.\n", number (nl));
       printf ("%10s lines per second.\n",			  number (nlps));
-      printf ("%6d.%03ld seconds.\n",				  sec, thou);		  
+      printf ("%6d.%03ld seconds.\n",				  sec, thou);
 
-		quit (rc);		
+		quit (rc);
 		return 0;
 }
 
@@ -174,26 +174,26 @@ int   cInput::init (char* dir, char* fn, char* ft)
 		strcpy (path, dir);
 		strcat (path, fn);
 		strcat (path, ft);
-		filedesc = _open (path, 0);					// Open the file.             
-		if (filedesc < 0)                         // If open error.             
+		filedesc = _open (path, 0);					// Open the file.
+		if (filedesc < 0)                         // If open error.
 		{
 			printf ("File %s not found.\n", path);
 			quit (1);
 		}
-		filesize = _filelength (filedesc);					// Get filesize.             
-		input_start = new char [filesize+6];				// Get some RAM space.       
-		*input_start = '\n';										// Put <eol> at beginning. 
-      nb = _read (filedesc, input_start+1, filesize);	// Read size bytes into buffer. 
-      if (nb <= 0)												// If read error.               
+		filesize = _filelength (filedesc);					// Get filesize.
+		input_start = new char [filesize+6];				// Get some RAM space.
+		*input_start = '\n';										// Put <eol> at beginning.
+      nb = _read (filedesc, input_start+1, filesize);	// Read size bytes into buffer.
+      if (nb <= 0)												// If read error.
       {
          printf ("Read error on file %s.\n", path);
 			quit (1);
       }
-      input_end = input_start + nb + 1;		// Set end-of-buffer pointer.         
+      input_end = input_start + nb + 1;		// Set end-of-buffer pointer.
       *input_end++ = EOL_CHAR;					// Put end-of-line here.
       *input_end++ = EOF_CHAR;					// Put first <eof> here.
-      *input_end++ = EOF_CHAR;					// Put second <eof> here. 
-      _close (filedesc);							// Close file.                        
+      *input_end++ = EOF_CHAR;					// Put second <eof> here.
+      _close (filedesc);							// Close file.
 		return 1;
 }
 
@@ -201,7 +201,7 @@ int   cInput::init (char* dir, char* fn, char* ft)
 
 void  cInput::term ()
 {
-  		delete [] input_start;                  
+  		delete [] input_start;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -211,7 +211,7 @@ int   cOutput::init (char* dir, char* fn, char* ft)
 		strcpy (path, dir);
 		strcat (path, fn);
 		strcat (path, ft);
-		filedesc = fopen (path, "w");  
+		filedesc = fopen (path, "w");
 
       if (filedesc == NULL)
       {
@@ -220,12 +220,12 @@ int   cOutput::init (char* dir, char* fn, char* ft)
       }
 		return 1;
 }
-                                        
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void  cOutput::term ()
 {
-		if (filedesc != 0) fclose (filedesc);  
+		if (filedesc != 0) fclose (filedesc);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -236,7 +236,7 @@ char* number (int x)
 		char buff[16];
 		static char string[12] = "           ";
 
-		sprintf (buff, "%d", x);		
+		sprintf (buff, "%d", x);
 		k = (int)strlen (buff);
 		i = k + (k-1)/3;
 		string[i--] = 0;
@@ -265,16 +265,16 @@ Help:		printf ("Usage:\n");
 		}
 
 		ne = 0;	// Number of errors.
-		no = 0;	// Number of options. 
+		no = 0;	// Number of options.
 		nf = 0;  // Number of files.
 
-		if (na > 1) 
+		if (na > 1)
 		{
-			cInput::dir[0]      = 0; 
-			cInput::filename[0] = 0; 
+			cInput::dir[0]      = 0;
+			cInput::filename[0] = 0;
 			cInput::filetype[0] = 0;
-			if (arg[1][0] == '/') goto Optn; 
-			nf++; 
+			if (arg[1][0] == '/') goto Optn;
+			nf++;
 			split (arg[1], cInput::dir, cInput::filename, cInput::filetype, "input.txt");
 			if (cInput::filename[0] == 0)
 			{
@@ -287,14 +287,14 @@ Help:		printf ("Usage:\n");
 				strcpy ((char*)Output.dir, (char*)Input.dir);
             char* p = Input.filename;
             while (*p != '.' && *p != 0) p++;
-            if (*p == '.') 
+            if (*p == '.')
             {
                *p = 0;
 				   strcat ((char*)Output.filename, (char*)Input.filename);
 				   strcat ((char*)Output.filename, ".output");
                *p = '.';
             }
-            else 
+            else
             {
 				   strcat ((char*)Output.filename, "output");
             }
@@ -303,8 +303,8 @@ Help:		printf ("Usage:\n");
 		}
 
 	// Default values ...
-Optn:	debug      = 0; 
-		echo       = 0; 
+Optn:	debug      = 0;
+		echo       = 0;
 		help       = 0;
 
 	// Process options ...
@@ -315,10 +315,10 @@ Optn:	debug      = 0;
 			char* p = arg[i];
 			while (*p != 0 && *p != '=') p++;
 			int val = 1;
-			if (*p == '=') 
-			{ 
-				f = p+1; 
-				val = atoi(f); 
+			if (*p == '=')
+			{
+				f = p+1;
+				val = atoi(f);
 				if (*f == 0) goto Err;
 				if (*f < '0' || *f > '1') val = -1; // error.
 				if (*(f+1) != 0) val = -1;
@@ -326,7 +326,7 @@ Optn:	debug      = 0;
 			}
 			switch (arg[i][1])
 			{
-				case 'd': 
+				case 'd':
 				{
 					if (arg[i][2] == 0)
 					{
@@ -337,24 +337,24 @@ Optn:	debug      = 0;
 					else goto Err;
 					break;
 				}
-				case 'e': 
+				case 'e':
 				{
-					if (arg[i][2] == 0) 
-					{ 
+					if (arg[i][2] == 0)
+					{
 						if (f) *p = '=';
 						if (val < 0) goto Err;
-						echo = val; 
+						echo = val;
 					}
 					else goto Err;
 					break;
 				}
-				case '?': 
+				case '?':
 				{
-					if (arg[i][2] == 0) 
-					{ 
+					if (arg[i][2] == 0)
+					{
 						if (f) *p = '=';
 						if (val < 0) goto Err;
-						help = val; 
+						help = val;
 					}
 					else goto Err;
 					break;
@@ -367,8 +367,8 @@ Err:				ne++;
 				}
 			}
 		}
-		if (ne || help) 
-		{															   
+		if (ne || help)
+		{
 			if (ne) printf ("\n");
 			goto Help;
 		}
@@ -401,7 +401,7 @@ int   split (char* arg, char* dir, char* fn, char* ft, char* def)
 		{
 			if (arg[0] != '*') 		// Not '*'?
 			{
-				strcpy (dir, arg);	// Override directory.     
+				strcpy (dir, arg);	// Override directory.
 				dir[x-arg+1] = 0;
 			}
 		}
@@ -416,24 +416,24 @@ int   split (char* arg, char* dir, char* fn, char* ft, char* def)
 		}
 		if (x == 0)						// Filetype not specified?
 		{
-			if (f[0] != '*' && f[0] != 0) 
+			if (f[0] != '*' && f[0] != 0)
 			{
 				strcpy (fn, f);		// Override filename.
 			}
-			strcpy (ft, def);			// Use default filetype. 
+			strcpy (ft, def);			// Use default filetype.
 		}
 		else
 		{
-			if (f[0] != '*' && f[0] != 0) 
+			if (f[0] != '*' && f[0] != 0)
 			{
-				*x = 0; 
+				*x = 0;
 				strcpy (fn, f);		// Override filename.
-				*x = '.'; 
+				*x = '.';
 			}
-			strcpy (ft, x);			// Use specified filetype. 
+			strcpy (ft, x);			// Use specified filetype.
 		}
 		return 1;
 }
 
-//                                                                                                 // 
+//                                                                                                 //
 /////////////////////////////////////////////////////////////////////////////////////////////////////

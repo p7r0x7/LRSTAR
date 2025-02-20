@@ -1,7 +1,7 @@
 
-/* XPL 
+/* XPL
    A language and LALR(1) grammar,
-	both created by Dr Bill McKeeman. 
+	both created by Dr Bill McKeeman.
 */
 
 /* TOKENS */
@@ -143,8 +143,8 @@
    -> '~<'
    -> '~>'
    -> '<='
-   -> '>=' 
-   
+   -> '>='
+
    string_expression -> arithmetic_expression
                      -> string_expression '||' arithmetic_expression
 

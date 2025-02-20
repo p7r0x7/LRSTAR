@@ -5,7 +5,7 @@
  * by Thomas Skibo, May 23 2003 (original version).
  * by Paul Mann,    May 17 2013 (reformatted for use with LRSTAR 4.0).
  *
- * Notes: (1) Conflicts have not been fixed. 
+ * Notes: (1) Conflicts have not been fixed.
  *        (2) Operator precedence has not been defined.
  */
 
@@ -30,23 +30,23 @@
 
 	source_text	-> [description]+ <eof>
 
-	description -> module 
+	description -> module
 					-> UDP
 
 	module
 		-> 'module'
-		   name_of_module 
-		   [list_of_ports] 
+		   name_of_module
+		   [list_of_ports]
 			{identifier}
-		   ';' 
-			[module_item]+ 
+		   ';'
+			[module_item]+
 			'endmodule'
 
-		-> 'macromodule' 
-			name_of_module 
-			[list_of_ports] 
-			';' 
-			[module_item]+ 
+		-> 'macromodule'
+			name_of_module
+			[list_of_ports]
+			';'
+			[module_item]+
 			'endmodule'
 
 	name_of_module
@@ -72,12 +72,12 @@
 		-> IDENTIFIER
 
 	module_item
-		-> parameter_declaration				
-		-> input_declaration						
-		-> output_declaration					
-		-> inout_declaration						
-		-> net_declaration						
-		-> reg_declaration						
+		-> parameter_declaration
+		-> input_declaration
+		-> output_declaration
+		-> inout_declaration
+		-> net_declaration
+		-> reg_declaration
 		-> time_declaration
 		-> integer_declaration
 		-> real_declaration

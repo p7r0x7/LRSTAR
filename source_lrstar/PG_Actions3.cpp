@@ -9,7 +9,7 @@
 
 		#define EBNF_TAIL   1
 		#define EBNF_REPEAT 2
-		#define EBNF_GROUP  3 
+		#define EBNF_GROUP  3
 		static int priority = 0;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -151,7 +151,7 @@ int   PG_NodeActions::prod_ (void* v)
 		   {
 			   case TOP_DOWN:
                F_tail  [N_prods] = N_tails;
-               Reverse [N_prods] = 0; 
+               Reverse [N_prods] = 0;
 					Priority[N_prods] = priority;
 					priority = 0;
                break;
@@ -213,7 +213,7 @@ int   PG_NodeActions::repeat_one_or_more_(void* v)
       {
          switch (direction)
 		   {
-			   case BOTTOM_UP: 
+			   case BOTTOM_UP:
 				oper      = oper_char (np);
 				np->sti   = make_ebnf (np,EBNF_REPEAT,oper);
 				np->id    = N_tail_;
@@ -265,7 +265,7 @@ int   PG_NodeActions::repeat_zero_or_more_(void* v)
       {
          switch (direction)
 		   {
-			   case BOTTOM_UP: 
+			   case BOTTOM_UP:
 				np->sti   = make_ebnf (np,EBNF_REPEAT,'*');
 				np->id    = N_tail_;
 				np->child = NULL;
@@ -316,7 +316,7 @@ int   PG_NodeActions::repeat_zero_or_one_(void* v)
       {
          switch (direction)
 		   {
-			   case BOTTOM_UP: 
+			   case BOTTOM_UP:
 				oper      = oper_char (np);
 				np->sti   = make_ebnf (np,EBNF_REPEAT,oper);
 				np->id    = N_tail_;
@@ -374,7 +374,7 @@ int   PG_NodeActions::optgroup_(void* v)
 					np->id = np->child->id;
 					np->sti = np->child->sti;
 					np->oper |= np->child->oper;
-					np->child = np->child->child; 
+					np->child = np->child->child;
 				}
 			}
 		}
@@ -438,7 +438,7 @@ int   PG_NodeActions::bypass_(void* v)
 				char *h = "<error>*";
 				char *p = h + 8;
 				int head = add_symbol (h, p, NONTERMINAL|TAIL, 0);
-				if (symbol[head].numb <= 0) 
+				if (symbol[head].numb <= 0)
 				{
 					symbol[head].numb = N_heads++;
 					symbol[head].type = NONTERMINAL|GENERATED|TAIL;
@@ -531,7 +531,7 @@ int   PG_NodeActions::get_length (Node* np, int type)
 		Node *s, *t;
 		if (type == EBNF_REPEAT)
 		{
-			if (np->child != NULL) np = np->child;	
+			if (np->child != NULL) np = np->child;
 			if      (np->id == N_tail_    ) leng = get_length (np, EBNF_TAIL);
 			else if (np->id == N_group_   ) leng = get_length (np, EBNF_GROUP);
 			else if (np->id == N_optgroup_) leng = get_length (np, EBNF_GROUP);
@@ -559,11 +559,11 @@ int   PG_NodeActions::get_length (Node* np, int type)
 				{
 					leng += symbol[t->sti].length + 1; // ' '
 					t = t->next;
-				} 
+				}
 				while (t != NULL);
 				leng += 2;  // '| '
 				s = s->next;
-			} 
+			}
 			while (s != NULL);
 			leng -= 3;
 		}
@@ -626,18 +626,18 @@ char* PG_NodeActions::make_nonterminal (Node* np, int type, char* p, int& sep, c
 					p += leng;
 					*p++ = ' ';
 					t = t->next;
-				} 
+				}
 				while (t != NULL);
 				*p++ = '|';
 				*p++ = ' ';
 				s = s->next;
-			} 
+			}
 			while (s != NULL);
 			p -= 3;
 			*p++ = ')';
 		}
 		sep = 0;
-		if (oper != ' ') *p++ = oper;	  
+		if (oper != ' ') *p++ = oper;
 		*p = 0;
 		return p;
 }
@@ -657,7 +657,7 @@ int   PG_NodeActions::make_productions (Node* np, int type, int head, int sep, c
 		symbol[head].numb = N_heads++;
 		symbol[head].type = NONTERMINAL|GENERATED|TAIL;
 		make_head (head);
-		if (oper == '*' || oper == '?') 
+		if (oper == '*' || oper == '?')
 		{
 			make_prod (ARROW); // Null production.
 		}
@@ -696,12 +696,12 @@ Group:	if (oper == '?' || oper == '+' || oper == ' ' || sep != 0)
 					{
 						make_tail (t->sti);
 						t = t->next;
-					} 
+					}
 					while (t != NULL);
 					s = s->next;
-				} 
+				}
 				while (s != NULL);
-			}	
+			}
 			if (oper == '*' || oper == '+')
 			{
 				s = np->child; // first section_
@@ -715,7 +715,7 @@ Group:	if (oper == '?' || oper == '+' || oper == ' ' || sep != 0)
 					{
 						make_tail(t->sti); // tail_
 						t = t->next;
-					} 
+					}
 					while (t != NULL);
 					s = s->next;
 				}
@@ -732,7 +732,7 @@ void  PG_NodeActions::make_head (int sti)
       Node* np;
    // printf ("%s ", symname(sti));
 		np = lastebnf;
-		np = np->next = (Node*)ALLOC(node, 1);		
+		np = np->next = (Node*)ALLOC(node, 1);
       np->id     = N_headdef_;
       np->numb   = n_nodes++;
       np->prod   = -1;
@@ -889,9 +889,9 @@ void  PG_NodeActions::make_tail (int sti)
 //                                                                                                 //
 //    Assign sequence numbers to the terminal tail symbols (not declared).
 /*
-		Note that the classification changes here.  TERMINAL meant declared. 
-		But now we have to mark all terminals as TERMINAL and so we mark the 
-      declared as DECLARED and leave the undeclared as just TERMINAL.		
+		Note that the classification changes here.  TERMINAL meant declared.
+		But now we have to mark all terminals as TERMINAL and so we mark the
+      declared as DECLARED and leave the undeclared as just TERMINAL.
 */
 void  PG_NodeActions::number_the_terminals()
 {
@@ -914,12 +914,12 @@ void  PG_NodeActions::number_the_terminals()
 							if (optn[PG_KEYWORDUNDECL] && itsakeyword (symbol[i].name))
 							{
 								nu++;
-								prt_warning ("Keyword %s was in a grammar rule but not declared", 
+								prt_warning ("Keyword %s was in a grammar rule but not declared",
 									symbol[i].name, 0, symbol[i].line);
 							}
 						}
                }
-            }			  
+            }
          }
       }
       for (i = 0; i < n_symbols; i++)
@@ -943,7 +943,7 @@ void  PG_NodeActions::number_the_terminals()
 									if (optn[PG_KEYWORDUNDECL] && itsakeyword (symbol[i].name))
 									{
 										nu++;
-										prt_warning ("Keyword %s was as argument but not declared", 
+										prt_warning ("Keyword %s was as argument but not declared",
 											symbol[i].name, 0, symbol[i].line);
 									}
                         }
@@ -958,7 +958,7 @@ void  PG_NodeActions::number_the_terminals()
       ALLOC (term_end,   N_terms);
       ALLOC (term_type,  N_terms);
       ALLOC (term_line,  N_terms);
-		ALLOC (term_const, N_terms); // Defined constant associated with this term. 
+		ALLOC (term_const, N_terms); // Defined constant associated with this term.
 		ALLOC (const_term, N_terms); // Defined term     associated with this constant.
 		ALLOC (const_name, N_terms);
 
@@ -980,7 +980,7 @@ void  PG_NodeActions::number_the_terminals()
 					term_line [symbol[i].numb] = symbol[i].line;
 					if (symbol[i].value >= 0) // Got a defined constant?
 					{
-						term_const[symbol[i].numb] = symbol[i].numb; 
+						term_const[symbol[i].numb] = symbol[i].numb;
 						const_name[symbol[i].numb] = symbol[symbol[i].value].name;
 					}
 				}
@@ -1066,7 +1066,7 @@ void  PG_NodeActions::fill_struc ()
 				Defcon_value[nc++] = symbol[symbol[i].value].numb;
          }
       }
-      for (i = 1; i < n_symbols; i++)      
+      for (i = 1; i < n_symbols; i++)
       {
          if (symbol[i].type & NONTERMINAL)
          {
@@ -1100,7 +1100,7 @@ void  PG_NodeActions::fill_struc ()
 				//	printf ("NACTION  %s\n", symbol[i].name);
 					Nact_start[symbol[i].numb] = symbol[i].name;
 				}
-				else 
+				else
 				{
 					Nact_start[symbol[i].numb] = "NULL";
 				}
@@ -1249,7 +1249,7 @@ int   PG_NodeActions::ta_name_ (void* v)
 			   case BOTTOM_UP:
 					if (optn[PG_TERMACTIONS])
 					{
-						if (N_args == F_targ[terminal]) 
+						if (N_args == F_targ[terminal])
 						{
 							F_targ[terminal] = -1;
 							N_targ[terminal] = 0;
@@ -1310,7 +1310,7 @@ int   PG_NodeActions::node_action_ (void* v)
 
 int   PG_NodeActions::targs_ (void* v)
 {
-/*		
+/*
 		Node* np = (Node*)v;
 		if (pass == THIRD_PASS)
       {
@@ -1354,14 +1354,14 @@ int   PG_NodeActions::semargs_ (void* v)
 						F_parg[N_prods] = -1; // First production argument.
 						N_parg[N_prods] = 0;  // Number of production arguments.
 					}
-					else // One semantic argument. 
+					else // One semantic argument.
 					{
 						N_parg[N_prods] = N_args - F_parg[N_prods];
 					}
 					break;
 			}
       }
-		N_semantics = 1;		
+		N_semantics = 1;
 		return 0;
 }
 
@@ -1373,15 +1373,15 @@ int   PG_NodeActions::pargs_ (void* v)
       {
          switch (direction)
 		   {
-			   case TOP_DOWN:	 
+			   case TOP_DOWN:
 					if (N_parg[N_prods] == 0)
 					{
-						F_parg[N_prods] = N_args; 
+						F_parg[N_prods] = N_args;
 					}
 					else // In case of semarg_
 					{
 						N_args -= N_parg[N_prods];
-						F_parg[N_prods] = N_args; 
+						F_parg[N_prods] = N_args;
 					}
                break;
 				case BOTTOM_UP:
@@ -1447,7 +1447,7 @@ int   PG_NodeActions::arg_integer_ (void* v)
       }
 		return 0;
 }
-					  
+
 ///////////////////////////////////////////////////////////////////////////////
 
 int   PG_NodeActions::arg_semantic_ (void* v)

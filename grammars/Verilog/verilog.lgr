@@ -1,11 +1,11 @@
 
 /* Lexical grammar */
 
-	<eof>					
+	<eof>
 	   -> \z
 
-	<decimal_number>	
-		-> digit+ '.' 
+	<decimal_number>
+		-> digit+ '.'
 		-> '.' digit+
 		-> digit+ '.' digit+
 
@@ -32,7 +32,7 @@
 	<symtem_name_of_task> -> 't' ''' <identifier>
 
 /* Character Sets */
-	
+
 	digit					= '0'..'9'
 	letter				= 'a'..'z' | 'A'..'Z' | '_'
 

@@ -1,6 +1,6 @@
 
-/* This grammar has problems. I don't know Java and don't care 
-   much about interpreted languages, so I may never fix it, sorry. 
+/* This grammar has problems. I don't know Java and don't care
+   much about interpreted languages, so I may never fix it, sorry.
 	Paul B Mann, Oct 2020, year of the fake Coronavirus.
 */
 /*
@@ -54,7 +54,7 @@
 <error>			=> error ();
 <identifier>	=> lookup ();
 
-Start	 
+Start
 	: compilationUnit <eof>					 +> start(1)
 	;
 
@@ -65,9 +65,9 @@ primitiveType
 
 numericType
 	:	integralType
-	|	floatingPointType		  
+	|	floatingPointType
 	;
-		
+
 integralType
 	:	'byte'
 	|	'short'
@@ -215,7 +215,7 @@ compilationUnit
 	;
 
 ordinaryCompilation
-	:	packageDeclaration? importDeclaration* typeDeclaration* 
+	:	packageDeclaration? importDeclaration* typeDeclaration*
 	;
 
 modularCompilation
@@ -1209,7 +1209,7 @@ conditionalOrExpression
 	;
 
 conditionalAndExpression
-	:	inclusiveOrExpression	
+	:	inclusiveOrExpression
 	|	conditionalAndExpression '&&' inclusiveOrExpression
 	;
 

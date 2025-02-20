@@ -110,19 +110,19 @@ grammar : defs pp
 		    aux_procs
 		  ;
 
-aux_procs	
+aux_procs
 		: /* empty: aux_procs is optional */
-		| pp 
+		| pp
 		;
 
 
-defs		
+defs
 		: /* empty */
-      | defs def	
-		| defs error		
+      | defs def
+		| defs error
 		;
 
-def		
+def
 		: pstart id
 		| pstart error
 		| lcurl  rcurl
@@ -134,12 +134,12 @@ def
       | ptype tag
 		;
 
-tag		
+tag
 		: /* empty: type tag is optional */
 		| langle id rangle
 		;
 
-token_list	
+token_list
 		: token_num
 		| token_list token_num
 		| token_list comma token_num
@@ -155,7 +155,7 @@ token_num	: literal
           	| id number
        		;
 
-nonterm_list	
+nonterm_list
       : nonterm
 		| nonterm_list nonterm
 		| nonterm_list comma nonterm
@@ -164,13 +164,13 @@ nonterm_list
 		| nonterm_list comma error
 		;
 
-nonterm		
+nonterm
       : id
 		;
 
 
-rules		
-         : 
+rules
+         :
 		   | lcurl rcurl rule1
 		   | rules rule
 	    	| error
@@ -186,7 +186,7 @@ rule		: rule1
 		   | bar	body prec
 	    	;
 
-body		
+body
       : /* empty */
 		| body literal
 		| body litid
@@ -195,12 +195,12 @@ body
 		| body error
 		;
 
-action		
+action
       : lbrace rbrace
-		| eq 
+		| eq
 		;
 
-prec		
+prec
       : /* empty */
 		| pprec literal opt_action
 		| pprec litid   opt_action
@@ -208,7 +208,7 @@ prec
 		| prec semicolon
 		;
 
-opt_action	
+opt_action
       : /* empty */
 		| action
 		;

@@ -16,7 +16,7 @@
 		int*   PG_BuildLR0::f_final;
 		int*   PG_BuildLR0::final;
 		int*   PG_BuildLR0::kernel;
-		ITEM*  PG_BuildLR0::item;    
+		ITEM*  PG_BuildLR0::item;
 		int*   PG_BuildLR0::f_item;
 		int    PG_BuildLR0::n_ttran;
 		int    PG_BuildLR0::n_nttran;
@@ -115,16 +115,16 @@ int   PG_BuildLR0::BuildLR0 () /* Build LR0 States */
       n_nttran    = 0;
 
    // Create non-reduce-only states.
-      LR1Activated = 0; 
+      LR1Activated = 0;
       for (state = 0; state < N_states; state++)
       {
          EXPAND (state);
       }
       tt_start  [state] = n_ttran;
       ntt_start [state] = n_nttran;
-	// opt_states (optimum states) = N_states so far generated. 
+	// opt_states (optimum states) = N_states so far generated.
 	// Not to inlcude final state and all reduce-only states.
-      opt_states = N_states;   
+      opt_states = N_states;
 
    // Create reduce-only states.
       state = N_states;
@@ -132,7 +132,7 @@ int   PG_BuildLR0::BuildLR0 () /* Build LR0 States */
       {
       // If production is marked for reduce-state creation ...
       // (not all productions need to have a corresponding reduce state).
-         if (reduce_state[p] != 0) 
+         if (reduce_state[p] != 0)
          {
             reduce_state[p] = state++;
             MAKE_STATE (p);
@@ -147,7 +147,7 @@ int   PG_BuildLR0::BuildLR0 () /* Build LR0 States */
 		org_states = N_states;
 
       MTSL ();
-		C_CAMEFROM (N_states, tt_start, tt_action, ntt_start, ntt_action, f_camefrom, camefrom); 
+		C_CAMEFROM (N_states, tt_start, tt_action, ntt_start, ntt_action, f_camefrom, camefrom);
 
 		char* Grammar = "States  ";
 		int ro_states = N_states - (opt_states+1); // +1 for final state (goal reduction).
@@ -169,9 +169,9 @@ int   PG_BuildLR0::BuildLR0 () /* Build LR0 States */
       FREE (h_vector, max_hashes);
       FREE (added,    N_heads);
 
-      REALLOC (ntt_item,   max_nttran,   n_nttran);	
-      REALLOC (ntt_action, max_nttran,   n_nttran);	
-      REALLOC (tt_action,  max_ttran,    n_ttran); 
+      REALLOC (ntt_item,   max_nttran,   n_nttran);
+      REALLOC (ntt_action, max_nttran,   n_nttran);
+      REALLOC (tt_action,  max_ttran,    n_ttran);
       REALLOC (kernel,     max_kernel,   n_kernels );
       REALLOC (final,      max_final,    n_finals  );
       REALLOC (ntt_start,  max_states+1, N_states+1);
@@ -244,7 +244,7 @@ void  PG_BuildLR0::EXPAND (int state)
             w = TRANSIT (n, (int)-symlist[i].symb);
             ntt_action [n_nttran++] = w;
             if (n_nttran >= max_nttran) MemCrash ("Number of nonterminal transitions", max_nttran);
-         }  
+         }
 			for (i = N_heads; i < term_free; i++)
 			{
 				n = n_kernels;
@@ -286,7 +286,7 @@ void  PG_BuildLR0::DO_CLOSURE (int state)
 {
       int k;
       n_clo = 0;
-      head_free = 0; 
+      head_free = 0;
       term_free = N_heads;
       FASTINI (-1, already, n_symbs+1);
       for (k = f_kernel [state]; k < f_kernel [state+1]; k++)
@@ -322,7 +322,7 @@ void  PG_BuildLR0::ADD_ITEM (int i, int state)
                      ADD_ITEM (f_item [p], state);
                   }
                   added [-symbol] = state;
-               }  
+               }
             }
             else
             {
@@ -331,7 +331,7 @@ void  PG_BuildLR0::ADD_ITEM (int i, int state)
                symlist [symb_free].end = n_clo;
                already [symbol+N_heads] = symb_free;
                n_clo++;
-            }  
+            }
          }
          else
          {
@@ -378,11 +378,11 @@ int   PG_BuildLR0::TRANSIT (int ki, int sym)
             int p;
             n_kernels = ki;                           // Reset this.
             p = item [kernel[ki]].prod;               // Get production.
-            reduce_state[p] = 1;                      // Mark production for reduce-state creation.   
+            reduce_state[p] = 1;                      // Mark production for reduce-state creation.
             return (-p);                              // Return production number.
          }
       }
-      else 
+      else
       {
          SORT (kernel + ki, kernel + n_kernels);
       }
@@ -398,8 +398,8 @@ int   PG_BuildLR0::TRANSIT (int ki, int sym)
 				{
 					n_kernels = ki;                     // Reset this.
 					return (state);
-				}  
-			}  
+				}
+			}
 			probe = (hash_no *= 65549) / hash_div;
 		}
 		h_vector [probe] = N_states;
@@ -418,7 +418,7 @@ int   PG_BuildLR0::TRANSIT (int ki, int sym)
 void  PG_BuildLR0::MAKE_STATE (int prod)
 {
       int state;
-      state = reduce_state[prod]; 
+      state = reduce_state[prod];
       accessor[state]   = Tail [F_tail [prod+1]-1];
       final [n_finals]  = f_item[prod] + prod_len[prod];
       kernel[n_kernels] = f_item[prod] + prod_len[prod];
@@ -436,7 +436,7 @@ void  PG_BuildLR0::MAKE_STATE (int prod)
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
 
-void  PG_BuildLR0::MTSL () // Make Transition Symbols Lists. 
+void  PG_BuildLR0::MTSL () // Make Transition Symbols Lists.
 {
       int i, state, n;
 
@@ -452,7 +452,7 @@ void  PG_BuildLR0::MTSL () // Make Transition Symbols Lists.
             tt_symb[i] = Tail[F_tail[-tt_action[i]+1]-1];
       }
 
-      for (i = 0; i < n_nttran; i++) 
+      for (i = 0; i < n_nttran; i++)
       {
          if (ntt_action[i] > 0)
             ntt_symb[i] = -accessor [ntt_action [i]];

@@ -72,8 +72,8 @@
 
       // Functions ...
          static int   	parse_action_				(int p);
-         static int   	defcon_     				(int p);     
-         static int   	terminal_decl_  			(int p); 
+         static int   	defcon_     				(int p);
+         static int   	terminal_decl_  			(int p);
          static int   	terminal_     				(int p);
          static int   	oper_         				(int p);
          static int   	goalsymbol_   				(int p);
@@ -116,9 +116,9 @@
 			static char**  head_name;
 			static int*    head_type;
 			static int*    head_sym;
-			static int*    head_line; 
-			static int*    term_line; 
-			static int*    term_const; 
+			static int*    head_line;
+			static int*    term_line;
+			static int*    term_const;
 			static int*    const_term;
 			static char**  const_name;
 			static int*    prod_len;
@@ -132,7 +132,7 @@
 			static char**  term_name;
          static int   	linelength;
          static int   	prevtail;
-         static int   	arrow_; 
+         static int   	arrow_;
          static char* 	oper;
          static int   	assoc;
          static int   	constant;
@@ -153,7 +153,7 @@
 			static int     stmt_beg;
 			static int		stmt_end;
 
-      // Functions ...	
+      // Functions ...
 			static int   	start_(void*);
          static int   	declarations_(void*);
 			static int   	operprec_(void*);
@@ -161,7 +161,7 @@
 			static int   	goaldef_(void*);
 			static int   	headdef_(void*);
          static int   	terminal_decl_(void*);
-         static int   	defcon_(void*);			 
+         static int   	defcon_(void*);
          static int   	terminal_(void*);
 			static int   	oper_(void*);
 			static int   	leftassoc_(void*);

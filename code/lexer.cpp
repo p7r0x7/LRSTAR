@@ -1,6 +1,6 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                 // 
+//                                                                                                 //
 //    DFA Lexer Code
 
 		#include "main.h"
@@ -14,22 +14,22 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void  LEXER::init_lexer (char* input_start, int tab_setting)		
+void  LEXER::init_lexer (char* input_start, int tab_setting)
 {
 		linenumb				= 0;
 		linenumb_printed	= 0;
 		tab					= tab_setting; // Tab.
 		token.start       = input_start;	// Point at beginning of first line.
 		token.end         = input_start;	// Point at beginning of first line.
-		lookahead.start   = 0;				// Not activated. 
-		lookahead.end     = 0;				// Not activated. 
+		lookahead.start   = 0;				// Not activated.
+		lookahead.end     = 0;				// Not activated.
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-int   LEXER::get_token ()				// Medium size lexer.		
+int   LEXER::get_token ()				// Medium size lexer.
 {
-		int x, y;							// State, next state.	    
+		int x, y;							// State, next state.
 		do
 		{
 			x = 0;
@@ -41,22 +41,22 @@ int   LEXER::get_token ()				// Medium size lexer.
 			  	if (*token.end == '\n')
 				{
 					linenumb++;
-					#ifdef DEBUG_LEXER 
+					#ifdef DEBUG_LEXER
 					prt_line();
 					#endif
-				} 
+				}
 				token.end++;
 			}
-		} 
-		while (term_numb[x] < 0);	// Ignore whitespace.	
-		return term_numb[x];			// Return token_number.	
+		}
+		while (term_numb[x] < 0);	// Ignore whitespace.
+		return term_numb[x];			// Return token_number.
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-int   LEXER::get_lookahead ()			// Medium size lexer.		
+int   LEXER::get_lookahead ()			// Medium size lexer.
 {
-		int x, y;							// State, next state.	    
+		int x, y;							// State, next state.
 		do
 		{
 			x = 0;
@@ -68,42 +68,42 @@ int   LEXER::get_lookahead ()			// Medium size lexer.
 			  	if (*lookahead.end == '\n')
 				{
 					lookahead_linenumb++;
-				}	
+				}
 				lookahead.end++;
 			}
-		} 
-		while (term_numb[x] < 0);	// Ignore whitespace.	
-		return term_numb[x];			// Return token_number.	
+		}
+		while (term_numb[x] < 0);	// Ignore whitespace.
+		return term_numb[x];			// Return token_number.
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-char* LEXER::untabify (char* ls, char*& ts) 
+char* LEXER::untabify (char* ls, char*& ts)
 {
 	// ls = line start.
 	// ts = token start within this line.;
 		static char string[256];
 		char* stringend = string + 250;
 		char* p;
-		char* s;							  
+		char* s;
 		int   ns;
 		int   col = 0;
 		int   incr = 0;
 		for (p = ls, s = string; *p != '\n'; p++)
-		{		
+		{
 			if (*p == '\t')				 // col = 0 1 2 3 4 5
 			{									 // ns  = 3	2 1 3	2 1
 				ns = 3 - (col % 3);
 				switch (ns)
 				{
-					case 3: 
-						*s++ = ' '; 
+					case 3:
+						*s++ = ' ';
 						if (p < ts) incr++;
-					case 2: 
-						*s++ = ' '; 
+					case 2:
+						*s++ = ' ';
 						if (p < ts) incr++;
-					case 1: 
-						*s++ = ' '; 
+					case 1:
+						*s++ = ' ';
 				}
 				col += ns;
 			}
@@ -124,7 +124,7 @@ Over:	*s = 0;
 		return string;
 }
 
-#ifdef DEBUG_LEXER 
+#ifdef DEBUG_LEXER
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void	LEXER::prt_line() // Print current line.
@@ -161,7 +161,7 @@ char*	LEXER::untabify (char* ls) // Untabify this line.
 		{
 			if (*p == '\t')				 // col = 0 1 2 3 4 5
 			{									 // ns  = 3	2 1 3	2 1
-				ns = 3 - (col % 3); 
+				ns = 3 - (col % 3);
 				switch (ns)
 				{
 					case 3: *s++ = ' ';
@@ -183,6 +183,6 @@ char*	LEXER::untabify (char* ls) // Untabify this line.
 
 #endif
 
-//                                                                                                 // 
+//                                                                                                 //
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 

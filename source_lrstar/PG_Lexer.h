@@ -20,7 +20,7 @@
 			int   col;			// Input column number.
 		};
 
-		class PG_Lexer 
+		class PG_Lexer
 		{
 			public:
          static Token  token;

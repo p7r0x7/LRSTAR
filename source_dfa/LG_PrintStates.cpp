@@ -23,7 +23,7 @@
 			  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,
 			  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,
 			  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,
-			  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5 
+			  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5
 		};
 
 void  LG_PrintStates::PrintStates (int type)
@@ -33,14 +33,14 @@ void  LG_PrintStates::PrintStates (int type)
 
 		switch (type)
 		{
-			case 1: 
+			case 1:
 				if (optn[LG_STATELIST] == 0) return;
 				type_of_sm = "(for checking conflicts)";
 				opt = optn [LG_STATELIST];
 				for (i = 0; *LGOption[i].name != 0; i++) if (LGOption[i].numb == LG_STATELIST) break;
 				optstr = LGOption[i].name;
 				break;
-			case 2: 
+			case 2:
 				if (optn[LG_STATELISTOPT] == 0) return;
 				type_of_sm = "(final optimized one)";
 				opt = optn [LG_STATELISTOPT];
@@ -52,7 +52,7 @@ void  LG_PrintStates::PrintStates (int type)
 		}
 
 		max_headl = 20;
-		
+
       prt_sta ("\nSTATE MACHINE %s\n\n", type_of_sm);
 
       for (s = 0; s < N_states; s++)
@@ -73,16 +73,16 @@ void  LG_PrintStates::PrintStates (int type)
 					c++;
                A = tt_action [t];
                n = tt_symb [t];
-					if (range[n] > 0) 
+					if (range[n] > 0)
 					{
-Inside:				if (count == 0) 
+Inside:				if (count == 0)
 						{
-							first_n = n; 
+							first_n = n;
 							action = A;
 							R = range[n];
 							count++;
 						}
-						else if (count > 0) 
+						else if (count > 0)
 						{
 							if (A == action && range[n] == R && n == last_n+1) count++;
 							else goto Out;
@@ -90,19 +90,19 @@ Inside:				if (count == 0)
 					}
 					else
 					{
-Out:					if (count == 1) 
+Out:					if (count == 1)
 						{
-							P_SYMBOL (first_n); 
+							P_SYMBOL (first_n);
 							prt_sta (" +=> %4d\n", action);
 						}
-						else if (count == 2) 
+						else if (count == 2)
 						{
-							P_SYMBOL (first_n); 
+							P_SYMBOL (first_n);
 							prt_sta (" +=> %4d\n", action);
-							P_SYMBOL (last_n); 
+							P_SYMBOL (last_n);
 							prt_sta (" +=> %4d\n", action);
 						}
-						else if (count > 2) 
+						else if (count > 2)
 						{
 							P_RANGE (first_n, last_n);
 							prt_sta (" +=> %4d\n", action);
@@ -115,19 +115,19 @@ Out:					if (count == 1)
 					}
 					last_n = n;
             }
-				if (count == 1) 
+				if (count == 1)
 				{
-					P_SYMBOL (first_n); 
+					P_SYMBOL (first_n);
 					prt_sta (" +=> %4d\n", action);
 				}
-				else if (count == 2) 
+				else if (count == 2)
 				{
-					P_SYMBOL (first_n); 
+					P_SYMBOL (first_n);
 					prt_sta (" +=> %4d\n", action);
-					P_SYMBOL (last_n); 
+					P_SYMBOL (last_n);
 					prt_sta (" +=> %4d\n", action);
 				}
-				else if (count > 2) 
+				else if (count > 2)
 				{
 					P_RANGE (first_n, last_n);
 					prt_sta (" +=> %4d\n", action);
@@ -152,7 +152,7 @@ Out:					if (count == 1)
 					c++;
                P_SYMBOL (-32767);
 					prt_sta ("  <= %4d\n", A);
-				//	p_prod (A, -1, "", "\n"); 
+				//	p_prod (A, -1, "", "\n");
             }
 				else if (s != accept_state)
 				{
@@ -176,7 +176,7 @@ Out:					if (count == 1)
                else        prt_sta (" +<= %4d  %3d %s\n", -A, prod_len[-A]-1, head_name[head_sym[-A]]);
             }
             if (c) prt_sta ("\n");
-         }  
+         }
       }
       prt_sta (".........................................................................................\n\n");
 }
@@ -230,7 +230,7 @@ void  LG_PrintStates::PRT_STA (int s)
          {
             prt_sta ("   * ");
             p_prod (item[i].prod, item[i].dot, "", "\n");
-         }  
+         }
       }
 
 		a = f_final[s];
@@ -246,8 +246,8 @@ void  LG_PrintStates::PRT_STA (int s)
 				if (p >= n_oprods) prt_sta ("   . ");
 				else               prt_sta ("   * ");
 				p_prod (p, -1, "", "\n");
-         }  
-      }	
+         }
+      }
 
 		if (n == 0 && s == N_states-1) // Must be illegal_char state.
 		{
@@ -281,7 +281,7 @@ void  LG_PrintStates::p_prod (int p, int dot, char *before, char* after)
       }
       prt_sta ("%s", after);
 }
-  
+
 int	LG_PrintStates::p_sym (int s, char *sp)
 {
       char *p;

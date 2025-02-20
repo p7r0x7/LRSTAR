@@ -18,7 +18,7 @@
 			static int*   f_final;
 			static int*   final;
 			static int*   kernel;
-			static ITEM*  item;    
+			static ITEM*  item;
 			static int*   f_item;
 			static int    n_ttran;
 			static int    n_nttran;

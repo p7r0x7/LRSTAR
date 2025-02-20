@@ -14,7 +14,7 @@ int   LG_Lexer::tab;
 char* LG_Lexer::line_start;
 
 ///////////////////////////////////////////////////////////////////////////////
-//                                                                           // 
+//                                                                           //
 //    init                                                                   //
 
 void  LG_Lexer::init_lexer () // General purpose lexer.
@@ -33,11 +33,11 @@ void  LG_Lexer::init_lexer () // General purpose lexer.
 			{
 				Tc[i] = Tc[0]; // Make higher characters an error.
 			}
-		}  
+		}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-//                                                                           // 
+//                                                                           //
 //    term                                                                   //
 
 void  LG_Lexer::term_lexer () // General purpose lexer.
@@ -50,7 +50,7 @@ void  LG_Lexer::term_lexer () // General purpose lexer.
 int   LG_Lexer::get_token ()		// DFA LG_Lexer Engine.
 {
       int state, next;		// State, next state, terminal, keyword.
-		do 
+		do
 		{
 			state = 0;									// Start in state zero.
 			token.start = token.end;				// Set start of token.
@@ -64,12 +64,12 @@ int   LG_Lexer::get_token ()		// DFA LG_Lexer Engine.
 					line_pos = 0;
 					line_start = token.end + 1;	// Set beginning of next line.
 				  	line_ptr [++line_numb] = line_start;
-				}	  
+				}
 			   else if (*token.end == '\t')				// If tab character.
 				{
-					col_numb += tab - (col_numb % tab);	
-				}	  
-				else 
+					col_numb += tab - (col_numb % tab);
+				}
+				else
 				{
 					col_numb++;							// Increment column.
 				}

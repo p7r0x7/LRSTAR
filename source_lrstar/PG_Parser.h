@@ -12,24 +12,24 @@
 		#include "PG_ParserTables.h"
 		#include "stdio.h"
 
-	// AST Action Mode. 
-      #define TOP_DOWN        0  // Top down.  
+	// AST Action Mode.
+      #define TOP_DOWN        0  // Top down.
    	#define PASS_OVER       1  // Pass over.
-   	#define BOTTOM_UP       2  // Bottom up.  
+   	#define BOTTOM_UP       2  // Bottom up.
 
-	// AST Traversal Passes. 
+	// AST Traversal Passes.
       #define FIRST_PASS       1  // EBNF normalization.
       #define SECOND_PASS      2  // EBNF expansion.
       #define THIRD_PASS       3  // Count variables.
       #define FOURTH_PASS      4  // Print the grammar.
-   
+
       class PG_Parser : public PG_Lexer, public PG_ParserTables
 		{
 		   public:
 		// Functions ...
-			static void    parse_init      (int maxsymbols, char* patharg);				
-			static int     parse           (char* input_start);	
-			static void    parse_term      ();	
+			static void    parse_init      (int maxsymbols, char* patharg);
+			static int     parse           (char* input_start);
+			static void    parse_term      ();
 			static void    syntax_error    (char* msg, Token* T, char* symb);
 
 		// Variables ...
@@ -80,8 +80,8 @@
 	      static int     prod_numb;
 			static char*   path;
 
-         static PStack* PS;           	      // Parse Stack pointer.       
-         static PStack* PS_end;        	   // Parse Stack end.       
+         static PStack* PS;           	      // Parse Stack pointer.
+         static PStack* PS_end;        	   // Parse Stack end.
 			static int     prev_token;
 			static int		goal_symbol;
 			static int		error_mode;
@@ -102,12 +102,12 @@
 		// Variables ...
   		  	static char*   tact_name[];		// Parser action name.
   		  	static char*   pact_name[];		// Parser action name.
-    
+
 			static int     max_errs;			// Maximum allowable errors.
 			static int     eof_symb;			// <eof> symbol number.
 			static int     eol_symb;			// <eol> symbol number.
 			static int     err_used;			// <error> used in grammar?
-                                       	                                   
+
          static RStack* RS;           		// Reduction Stack pointer.
 			static uchar*  T_exp;				// Terminal expecting list.
 			static uchar*  S_exam;           // State examined yet.
@@ -117,7 +117,7 @@
 			static char*   head_symb[];      // Head (nonterminal) symbols of the grammar.
 			static uchar   head_numb[];      // Head symbol number for a production (rule).
 
-			public:	
+			public:
 			static char    indent[256];	   // Indentation for printing current node.
          static int*    counter;				// Node counter array.
          static short   stacki;		      // AST stack index.
@@ -151,9 +151,9 @@
 			static short   length;			   // Current length of symbol name.
 			static int     cell;					// Current hash cell number.
 			static int     sti;				   // Current symbol-table index.
-			static uint    hashdiv;				// Hash divisor. 
+			static uint    hashdiv;				// Hash divisor.
 			static int*    hashvec;				// Hash vector.
-			static int     max_cells;			// Maximum number of cells in the hash vector = 2*max_symbols. 
+			static int     max_cells;			// Maximum number of cells in the hash vector = 2*max_symbols.
 			static int     max_symbols;	   // Maximum number of symbols.
 
       // Functions ...
@@ -163,6 +163,6 @@
 			static int     add_symbol   (char*, char*, int, int);	// Add symbol to symbol table.
 			static void    rename_symbol(short, int);					// Rename symbol.
 			static int     get_symbol   (char*, char*, int);		// Get symbol number.
-			static void    print_symtab (char**);						// Print the symbol table. 
+			static void    print_symtab (char**);						// Print the symbol table.
 		};
 

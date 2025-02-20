@@ -27,7 +27,7 @@ int   PG_CheckGrammar::CheckGrammar ()
 
       FREE (term_start, N_terms);
       FREE (term_end,   N_terms);
-      FREE (term_line,  N_terms); 
+      FREE (term_line,  N_terms);
 
 		if (n_errors) return (0);
       return (1);
@@ -200,7 +200,7 @@ void  PG_CheckGrammar::P_UNUSED_OR_UNDECLARED ()
 				{
 					if (!(term_type[t] & ARGUMENT)) // Not used as argument?
 					{
-						if (term_const[t] >= 0) // Defined constant for this term? 
+						if (term_const[t] >= 0) // Defined constant for this term?
 						{
 							prt_warning ("Constant %s was declared but not used anywhere",
 								term_start[t], term_end[t], term_line[t]);
@@ -219,7 +219,7 @@ void  PG_CheckGrammar::P_UNUSED_OR_UNDECLARED ()
 				{
 					if ((term_type[t] & ARGUMENT)) // Used as argument?
 					{
-						prt_warning ("Argument %s was not used in the grammar", 
+						prt_warning ("Argument %s was not used in the grammar",
 						term_start[t], term_end[t], term_line[t]);
 					}
 				}
@@ -240,7 +240,7 @@ void  PG_CheckGrammar::P_USELESS_PROD ()
 				{
 					if (h == -Tail[F_tail[p]])
 					{
-						prt_log ("%s(%04d) : ", grmfid, prod_line[p]); 
+						prt_log ("%s(%04d) : ", grmfid, prod_line[p]);
 						p_prod (-p, -1, "");
 						prt_log ("\n");
 						prt_error ("Useless production", 0, 0, prod_line[p]);
@@ -290,8 +290,8 @@ void  PG_CheckGrammar::P_UNREACHABLES ()
          if (h_vect[h] == 0)  /* Not used?         */
          {
             if (head_line[h] != 0) // Added by PBM, 2018-08-16.
-				prt_warning ("Nonterminal symbol %s is not reachable from the goal symbol", 
-					head_name[h], 0, head_line[h]);	
+				prt_warning ("Nonterminal symbol %s is not reachable from the goal symbol",
+					head_name[h], 0, head_line[h]);
          }
       }
       FREE (h_list, N_heads);

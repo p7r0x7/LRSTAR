@@ -1,34 +1,34 @@
 
-/* C Parser Grammar 
+/* C Parser Grammar
 
-   THIS IS MY SPEED TEST - SYNTAX CHECKING SPEED. 
+   THIS IS MY SPEED TEST - SYNTAX CHECKING SPEED.
 
-	Thes is an early ANSIC C grammar, I think.  
-	I'm getting 8,000,000 lines/sec on my desktop machine. 
-	Built with LRSTAR options /ast=0 and /o, VS Release Build mode, 
-	and all compiler speed optimizations.  Measuring the 2nd, 3rd and 
-	later runs, after the 227.000 line file is already in memory. 
+	Thes is an early ANSIC C grammar, I think.
+	I'm getting 8,000,000 lines/sec on my desktop machine.
+	Built with LRSTAR options /ast=0 and /o, VS Release Build mode,
+	and all compiler speed optimizations.  Measuring the 2nd, 3rd and
+	later runs, after the 227.000 line file is already in memory.
 
 	Notice the '#' placed on the if statement, which gives priority
-	to this rule (i.e. 'else') and avoids the conflict warning and 
+	to this rule (i.e. 'else') and avoids the conflict warning and
 	forces a shift action, useful when k > 1.
 
-	#  | 'if' '(' Exp ')' Stmt 'else' Stmt							+> ifelse_   
+	#  | 'if' '(' Exp ')' Stmt 'else' Stmt							+> ifelse_
 
-	Paul B Mann, Nov 2 2020. 
+	Paul B Mann, Nov 2 2020.
 */
 
 /*--- Token Actions. ---*/
 
 	<error>		   => error();
    <identifier>   => lookup();  /* Symbol table lookup. */
-   <string>       => lookup(); 
+   <string>       => lookup();
    <constant>     => lookup();
 
 /*--- Operator Precedence. ---*/
 
 	{  '?'                      } <<   // lowest precedence
-	{  '||'                     } << 
+	{  '||'                     } <<
 	{  '&&'                     } <<
 	{  '|'                      } <<
 	{  '^'                      } <<
@@ -41,10 +41,10 @@
 
 /*--- Productions. ---*/
 
-   Goal	 
+   Goal
       : ExternalDef* <eof>			   	                     +> goal_
-		;  			
-      
+		;
+
    ExternalDef
       : ExtDeclaration													+> extdef_
       | FunctionDef														+> extdef_
@@ -60,7 +60,7 @@
       ;
 
    FunctionDef
-		: FunctionDecl FunctionBody									+> funcdef_ 
+		: FunctionDecl FunctionBody									+> funcdef_
       ;
 
    FunctionDecl
@@ -93,7 +93,7 @@
       | UnionSpec															+> unionspec_
       ;
 
-   StorageClassSpec										   
+   StorageClassSpec
       : 'extern'														   +> storageclass_(1)
       | 'static'														   +> storageclass_(1)
       | 'auto'															   +> storageclass_(1)
@@ -212,18 +212,18 @@
       | Label Stmt														+> labeledstmt_
       | Block																+> block_
       | 'if' '(' Exp ')' Stmt											+> if_
-	#  | 'if' '(' Exp ')' Stmt 'else' Stmt							+> ifelse_   
+	#  | 'if' '(' Exp ')' Stmt 'else' Stmt							+> ifelse_
       | 'switch' '(' Exp ')' '{' Case Default '}'				+> switch_
       | 'while' '(' Exp ')' Stmt										+> while_
       | 'do' Stmt 'while' '(' Exp ')' ';'							+> do_
       | 'for' '(' [Exp] ';' [Exp] ';' [Exp] ')' Stmt			+> for_
       ;
 
-   Case    
+   Case
       : ('case' ConstExp ':' Stmt*)*					         +> case_
       ;
 
-   Default 
+   Default
       : ['default' ':' Stmt*]							         +> default_
       ;
 
@@ -313,27 +313,27 @@
       | PostfixExp '--'												   +> postdec_
       ;
 
-   Subscript 
+   Subscript
       : Exp														         +> subscript_
       ;
 
-   Args 
+   Args
       : [AssignExp] /','+										      +> arguments_
       ;
 
    PrimaryExp
       : <string>														   +> string_(1)
       | <constant>														+> const_(1)
-      | Identifier														 
+      | Identifier
       | '(' Exp ')'														+> exp_
       ;
 
-   Identifier 
+   Identifier
       : <identifier>											         +> identifier_(1)
       ;
 
-	TypedefIdentifier 
-		: <identifier>^{typename} 
+	TypedefIdentifier
+		: <identifier>^{typename}
       ;
 
 /*--- End. ---*/

@@ -5,48 +5,48 @@
 
   	<eof>						-> \z
 
-	<t_constant>     		-> literal 
-								-> integer	
-								-> decimal	
+	<t_constant>     		-> literal
+								-> integer
+								-> decimal
 
    <f_constant>   		-> real
 
-	<identifier>   		-> letter (letter|digit)* 
-		           
+	<identifier>   		-> letter (letter|digit)*
+
 	<string_literal>		-> string
 
-/* <digit_sequence>     -> '#'  // Not sure what this is. 
-*/								
+/* <digit_sequence>     -> '#'  // Not sure what this is.
+*/
 	string					-> '"' schar* '"'
 
-	schar          		-> sany 
+	schar          		-> sany
 								-> '\' '\'
 								-> '\' '''
 								-> '\' '"'
-								-> '\' 'n' 
-								-> '\' 't'			 
+								-> '\' 'n'
+								-> '\' 't'
 								-> '\' 'a'
 								-> '\' 'b'
 								-> '\' 'f'
 								-> '\' 'r'
 								-> '\' 'v'
 								-> '\' '0'
-	               		
+
 	literal        		-> ''' lchar '''
 
-	lchar          		-> lany 
+	lchar          		-> lany
 								-> '\' '\'
 								-> '\' '''
 								-> '\' '"'
-								-> '\' 'n' 
-								-> '\' 't'			 
+								-> '\' 'n'
+								-> '\' 't'
 								-> '\' 'a'
 								-> '\' 'b'
 								-> '\' 'f'
 								-> '\' 'r'
 								-> '\' 'v'
 								-> '\' '0'
-	               		
+
 	integer        		-> digit+
 
 	real	         		-> integer exp
@@ -56,11 +56,11 @@
 								->        '.' digit+
 								-> digit+ '.' digit+
 
-	exp	         		-> 'e' digit+ 
+	exp	         		-> 'e' digit+
 								-> 'E' digit+
-								-> 'e' '-' digit+ 
+								-> 'e' '-' digit+
 								-> 'E' '-' digit+
-								-> 'e' '+' digit+ 
+								-> 'e' '+' digit+
 								-> 'E' '+' digit+
 
 	{whitespace}       	-> whitechar+
@@ -73,13 +73,13 @@
 
 	any						= 0..255 - \z  		// any character except end of file
 
-	lany           		= any - ''' - '\' - \n 
-	sany	         		= any - '"' - '\' - \n 
+	lany           		= any - ''' - '\' - \n
+	sany	         		= any - '"' - '\' - \n
 
-	letter	      		= 'a'..'z' | 'A'..'Z' | '_' 
-	digit	         		= '0'..'9' 
+	letter	      		= 'a'..'z' | 'A'..'Z' | '_'
+	digit	         		= '0'..'9'
 
-	whitechar     			= \t | \n | \r | \f | \v | ' ' 
+	whitechar     			= \t | \n | \r | \f | \v | ' '
 
 	na             		= any - '*' 			// not asterisk
 	nans           		= any - '*' - '/'	   // not asterisk not slash
@@ -92,6 +92,6 @@
 	\r							= 13						// return
 	\z							= 26						// end of file
 	\b							= 32						// blank/space
-	
+
 /* End of lexical grammar */
 

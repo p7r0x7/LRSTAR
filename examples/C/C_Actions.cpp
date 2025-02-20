@@ -1,6 +1,6 @@
 
 ///////////////////////////////////////////////////////////////////////////////
-//                                                                           // 
+//                                                                           //
 
 #include "C_Actions.h"
 #include "../../code/main.h"
@@ -31,7 +31,7 @@ int   TERM_ACTIONS::error (int& t)
 		{
 			token.end++;
 		}
-      return 0; 
+      return 0;
 }
 
 int   TERM_ACTIONS::lookup (int& t)				// Lookup in symbol table.
@@ -40,21 +40,21 @@ int   TERM_ACTIONS::lookup (int& t)				// Lookup in symbol table.
 		#ifdef ND_PARSING
 		if (lookahead.start > 0)					// In lookahead mode?
 		{
-			sti = add_symbol (t, lookahead.start, lookahead.end); 
+			sti = add_symbol (t, lookahead.start, lookahead.end);
 		}
-		else												// Regular mode of parsing.  
-		#endif	
+		else												// Regular mode of parsing.
+		#endif
 		{
-			sti = add_symbol (t, token.start, token.end); 
+			sti = add_symbol (t, token.start, token.end);
 		}
 		#ifdef SEMANTICS
-		t = symbol[sti].term;						//	Redefine terminal number? 
+		t = symbol[sti].term;						//	Redefine terminal number?
 		#endif
-		return sti;										// Return symbol-table index. 
+		return sti;										// Return symbol-table index.
 }
 
 #endif
 
-//                                                                           // 
+//                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
 

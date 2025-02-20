@@ -8,7 +8,7 @@
       typedef struct LRKERNEL
       {
          ushort item; // Item.
-         ushort LA;   // Lookahead. 
+         ushort LA;   // Lookahead.
       }
       LRKERNEL;       // LR(1) Kernel.
 
@@ -34,7 +34,7 @@
 			static int   COMPATIBLE (int, int);
 			static int   ProblemWithKernels (int, int);
 			static int   EQUIVALENT (int, int);
-			static void  MAKE_LR0_KERNELS (); 
+			static void  MAKE_LR0_KERNELS ();
 			static void  MAKE_LR0_TRANSITIONS ();
 			static void  MODIFY_TRANSITIONS ();
 			static void  P_HEAD (int s);

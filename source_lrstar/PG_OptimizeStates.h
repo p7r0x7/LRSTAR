@@ -9,7 +9,7 @@
 		{
 			public:
 			static int  OptimizeStates ();
-			static int  Accept_state; 
+			static int  Accept_state;
 			static int  ntt_states;
 			static int  tt_states;
 

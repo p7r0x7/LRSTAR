@@ -1,6 +1,6 @@
 
 ///////////////////////////////////////////////////////////////////////////////
-//                                                                           // 
+//                                                                           //
 
 		#pragma once
 
@@ -8,7 +8,7 @@
 
 		#ifdef ACTIONS
 
-      class ACTIONS : public PARSER 
+      class ACTIONS : public PARSER
       {
 			public:
          static void init_actions ();
@@ -26,7 +26,7 @@
 		};
 
 		#endif
-		
-//                                                                           // 
+
+//                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
 

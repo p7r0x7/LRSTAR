@@ -30,7 +30,7 @@ int   PG_ParseActions::goalsymbol_ (int p)  // LR goal symbol.
 		}
       else
       {
-   		symbol[sti].value = -1;	
+   		symbol[sti].value = -1;
       }
 		symbol[sti].type |= NONTERMINAL; // Make it a nonterminal.
 		symbol[sti].numb  = N_heads++;   // Increment nonterminal counter.
@@ -135,7 +135,7 @@ int   PG_ParseActions::oper_ (int p)
       }
 		else if (symbol[sti].type & CONSTANT)
 		{
-			PS[x].sti = symbol[sti].value; // Replace constant sti with the real terminal sti (e.g. '&&'). 
+			PS[x].sti = symbol[sti].value; // Replace constant sti with the real terminal sti (e.g. '&&').
    		symbol[PS[x].sti].type |= TERMINAL|OPERATOR;
 		}
 		else if (symbol[sti].type & OPERATOR)
@@ -232,7 +232,7 @@ int   PG_ParseActions::tail_ (int p)
 			{
 				prt_error ("Constant %s is <eof> and not allowed outside the goal production", PS[x].start, PS[x].end, PS[x].line);
 			}
-			PS[x].sti = symbol[sti].value; // Replace defined constant sti with terminal sti. 
+			PS[x].sti = symbol[sti].value; // Replace defined constant sti with terminal sti.
 			symbol[PS[x].sti].type |= TAIL;
 			return 0;
 		}
@@ -263,16 +263,16 @@ int   PG_ParseActions::tail_eof_ (int p)
 				prt_error ("Expecting <eof>, but constant %s has not been defined as <eof>", PS[x].start, PS[x].end, PS[x].line);
 				Quit();
 			}
-			PS[x].sti = symbol[sti].value; // Replace defined constant sti with terminal sti. 
+			PS[x].sti = symbol[sti].value; // Replace defined constant sti with terminal sti.
 			symbol[PS[x].sti].type |= TAIL;
 			return 0;
 		}
-		else // Not a defined constant and not <eof> 
+		else // Not a defined constant and not <eof>
 		{
 		/*	if (strcmp (symbol[sti].name, "EOF") == 0)  // For ANTLR grammars.
 			{
 				symbol[sti].type |= CONSTANT|TAIL|TERMINAL;
-				symbol[sti].numb  = n_constants++; 
+				symbol[sti].numb  = n_constants++;
 				PS[x].sti = symbol[sti].value = 2; // sti of <eof>
 				symbol[2].type |= TAIL;
 				symbol[2].value = sti;
@@ -299,7 +299,7 @@ int   PG_ParseActions::sep_ (int p)
       }
       else if (symbol[sti].type & CONSTANT)	// A constant?
       {
-			PS[x].sti = symbol[sti].value;		// Replace constant sti with the real sti. 
+			PS[x].sti = symbol[sti].value;		// Replace constant sti with the real sti.
    		symbol[PS[x].sti].type |= TAIL;
       }
       else
@@ -401,7 +401,7 @@ int   PG_ParseActions::arg_first_ (int p)
 					// Cannot check for nonterminal position until AST is finished.
 				}
 			}
-			else // Empty rule. 
+			else // Empty rule.
 			{
 				if (symbol[STI].value >= 0)
 				{

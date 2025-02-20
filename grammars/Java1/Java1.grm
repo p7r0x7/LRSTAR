@@ -122,448 +122,448 @@
 
 /* Grammar Rules. */
 
-   Goal 
+   Goal
    -> CompilationUnit <eof>
 
    TypeSpecifier
-   -> TypeName                                          
-   -> TypeName Dims                                     
+   -> TypeName
+   -> TypeName Dims
 
    TypeName
-   -> PrimitiveType                                     
-   -> QualifiedName                                     
+   -> PrimitiveType
+   -> QualifiedName
 
    ClassNameList
-   -> QualifiedName                                     
-   -> ClassNameList ',' QualifiedName                   
+   -> QualifiedName
+   -> ClassNameList ',' QualifiedName
 
    PrimitiveType
-   -> BOOLEAN                                           
-   -> CHAR                                              
-   -> BYTE                                              
-   -> SHORT                                             
-   -> INT                                               
-   -> LONG                                              
-   -> FLOAT                                             
-   -> DOUBLE                                            
-   -> VOID                                              
+   -> BOOLEAN
+   -> CHAR
+   -> BYTE
+   -> SHORT
+   -> INT
+   -> LONG
+   -> FLOAT
+   -> DOUBLE
+   -> VOID
 
    CompilationUnit
-   -> ProgramFile                                       
+   -> ProgramFile
 
    ProgramFile
-   -> PackageStatement ImportStatements TypeDeclarations 
-   -> PackageStatement ImportStatements                 
-   -> PackageStatement TypeDeclarations                 
-   -> ImportStatements TypeDeclarations                 
-   -> PackageStatement                                  
-   -> ImportStatements                                  
-   -> TypeDeclarations                                  
+   -> PackageStatement ImportStatements TypeDeclarations
+   -> PackageStatement ImportStatements
+   -> PackageStatement TypeDeclarations
+   -> ImportStatements TypeDeclarations
+   -> PackageStatement
+   -> ImportStatements
+   -> TypeDeclarations
 
    PackageStatement
-   -> PACKAGE QualifiedName ';'                         
+   -> PACKAGE QualifiedName ';'
 
    TypeDeclarations
-   -> TypeDeclaration                                   
-   -> TypeDeclarations TypeDeclaration                  
+   -> TypeDeclaration
+   -> TypeDeclarations TypeDeclaration
 
    ImportStatements
-   -> ImportStatement                                   
-   -> ImportStatements ImportStatement                  
+   -> ImportStatement
+   -> ImportStatements ImportStatement
 
    ImportStatement
-   -> IMPORT STATIC? QualifiedName ';'                          
-   -> IMPORT STATUC? QualifiedName '.' '*' ';'                  
+   -> IMPORT STATIC? QualifiedName ';'
+   -> IMPORT STATUC? QualifiedName '.' '*' ';'
 
    QualifiedName
-   -> <identifier>                                        
-   -> QualifiedName '.' <identifier>                      
-   -> QualifiedName '.' '*'                      
+   -> <identifier>
+   -> QualifiedName '.' <identifier>
+   -> QualifiedName '.' '*'
 
    TypeDeclaration
-   -> ClassHeader '{' FieldDeclarations '}'             
-   -> ClassHeader '{' '}'                               
+   -> ClassHeader '{' FieldDeclarations '}'
+   -> ClassHeader '{' '}'
 
    ClassHeader
-   -> Modifiers ClassWord <identifier> Extends Interfaces 
-   -> Modifiers ClassWord <identifier> Extends            
-   -> Modifiers ClassWord <identifier> Interfaces         
-   -> ClassWord <identifier> Extends Interfaces           
-   -> Modifiers ClassWord <identifier>                    
-   -> ClassWord <identifier> Extends                      
-   -> ClassWord <identifier> Interfaces                   
-   -> ClassWord <identifier>                              
+   -> Modifiers ClassWord <identifier> Extends Interfaces
+   -> Modifiers ClassWord <identifier> Extends
+   -> Modifiers ClassWord <identifier> Interfaces
+   -> ClassWord <identifier> Extends Interfaces
+   -> Modifiers ClassWord <identifier>
+   -> ClassWord <identifier> Extends
+   -> ClassWord <identifier> Interfaces
+   -> ClassWord <identifier>
 
    Modifiers
-   -> Modifier                                          
-   -> Modifiers Modifier                                
+   -> Modifier
+   -> Modifiers Modifier
 
    Modifier
-   -> ABSTRACT                                          
-   -> FINAL                                             
-   -> PUBLIC                                            
-   -> PROTECTED                                         
-   -> PRIVATE                                           
-   -> STATIC                                            
-   -> TRANSIENT                                         
-   -> VOLATILE                                          
-   -> NATIVE                                            
-   -> SYNCHRONIZED  
+   -> ABSTRACT
+   -> FINAL
+   -> PUBLIC
+   -> PROTECTED
+   -> PRIVATE
+   -> STATIC
+   -> TRANSIENT
+   -> VOLATILE
+   -> NATIVE
+   -> SYNCHRONIZED
 	-> ENUM
 
    ClassWord
-   -> CLASS                                             
-   -> INTERFACE                                         
+   -> CLASS
+   -> INTERFACE
 
    Interfaces
-   -> IMPLEMENTS ClassNameList                          
+   -> IMPLEMENTS ClassNameList
 
    FieldDeclarations
-   -> FieldDeclaration                                  
-   -> FieldDeclarations FieldDeclaration                
+   -> FieldDeclaration
+   -> FieldDeclarations FieldDeclaration
 
    FieldDeclaration
-   -> FieldVariableDeclaration ';'                      
-   -> MethodDeclaration                                 
-   -> ConstructorDeclaration                            
-   -> StaticInitializer                                 
-   -> NonStaticInitializer                              
-   -> TypeDeclaration                                   
+   -> FieldVariableDeclaration ';'
+   -> MethodDeclaration
+   -> ConstructorDeclaration
+   -> StaticInitializer
+   -> NonStaticInitializer
+   -> TypeDeclaration
 
    FieldVariableDeclaration
-   -> Modifiers TypeSpecifier VariableDeclarators       
-   -> TypeSpecifier VariableDeclarators                 
+   -> Modifiers TypeSpecifier VariableDeclarators
+   -> TypeSpecifier VariableDeclarators
 
    VariableDeclarators
-   -> VariableDeclarator                                
-   -> VariableDeclarators ',' VariableDeclarator        
+   -> VariableDeclarator
+   -> VariableDeclarators ',' VariableDeclarator
 
    VariableDeclarator
-   -> DeclaratorName                                    
-   -> DeclaratorName '=' VariableInitializer            
+   -> DeclaratorName
+   -> DeclaratorName '=' VariableInitializer
 
    VariableInitializer
-   -> Expression                                        
-   -> '{' '}'                                           
-   -> '{' ArrayInitializers '}'                         
+   -> Expression
+   -> '{' '}'
+   -> '{' ArrayInitializers '}'
 
    ArrayInitializers
-   -> VariableInitializer                               
-   -> ArrayInitializers ',' VariableInitializer         
-   -> ArrayInitializers ','                             
+   -> VariableInitializer
+   -> ArrayInitializers ',' VariableInitializer
+   -> ArrayInitializers ','
 
    MethodDeclaration
-   -> Modifiers TypeSpecifier MethodDeclarator Throws MethodBody 
-   -> Modifiers TypeSpecifier MethodDeclarator MethodBody 
-   -> TypeSpecifier MethodDeclarator Throws MethodBody  
-   -> TypeSpecifier MethodDeclarator MethodBody         
+   -> Modifiers TypeSpecifier MethodDeclarator Throws MethodBody
+   -> Modifiers TypeSpecifier MethodDeclarator MethodBody
+   -> TypeSpecifier MethodDeclarator Throws MethodBody
+   -> TypeSpecifier MethodDeclarator MethodBody
 
    MethodDeclarator
-   -> DeclaratorName '(' ParameterList ')'              
-   -> DeclaratorName '(' ')'                            
-   -> MethodDeclarator OP_DIM                           
+   -> DeclaratorName '(' ParameterList ')'
+   -> DeclaratorName '(' ')'
+   -> MethodDeclarator OP_DIM
 
    ParameterList
-   -> Parameter                                         
-   -> ParameterList ',' Parameter                       
+   -> Parameter
+   -> ParameterList ',' Parameter
 
    Parameter
-   -> TypeSpecifier DeclaratorName                      
+   -> TypeSpecifier DeclaratorName
 
    DeclaratorName
-   -> <identifier>                                        
-   -> DeclaratorName OP_DIM                             
+   -> <identifier>
+   -> DeclaratorName OP_DIM
 
    Throws
-   -> THROWS ClassNameList                              
+   -> THROWS ClassNameList
 
    MethodBody
-   -> Block                                             
-   -> ';'                                               
+   -> Block
+   -> ';'
 
    ConstructorDeclaration
-   -> Modifiers ConstructorDeclarator Throws Block      
-   -> Modifiers ConstructorDeclarator Block             
-   -> ConstructorDeclarator Throws Block                
-   -> ConstructorDeclarator Block                       
+   -> Modifiers ConstructorDeclarator Throws Block
+   -> Modifiers ConstructorDeclarator Block
+   -> ConstructorDeclarator Throws Block
+   -> ConstructorDeclarator Block
 
    ConstructorDeclarator
-   -> <identifier> '(' ParameterList ')'                  
-   -> <identifier> '(' ')'                                
+   -> <identifier> '(' ParameterList ')'
+   -> <identifier> '(' ')'
 
    StaticInitializer
-   -> STATIC Block                                      
+   -> STATIC Block
 
    NonStaticInitializer
-   -> Block                                             
+   -> Block
 
    Extends
-   -> EXTENDS TypeName                                  
-   -> Extends ',' TypeName                              
+   -> EXTENDS TypeName
+   -> Extends ',' TypeName
 
    Block
-   -> '{' LocalVariableDeclarationsAndStatements '}'    
-   -> '{' '}'                                           
+   -> '{' LocalVariableDeclarationsAndStatements '}'
+   -> '{' '}'
 
    LocalVariableDeclarationsAndStatements
-   -> LocalVariableDeclarationOrStatement               
-   -> LocalVariableDeclarationsAndStatements LocalVariableDeclarationOrStatement 
+   -> LocalVariableDeclarationOrStatement
+   -> LocalVariableDeclarationsAndStatements LocalVariableDeclarationOrStatement
 
    LocalVariableDeclarationOrStatement
-   -> LocalVariableDeclarationStatement                 
-   -> Statement                                         
+   -> LocalVariableDeclarationStatement
+   -> Statement
 
    LocalVariableDeclarationStatement
-   -> TypeSpecifier VariableDeclarators ';'             
+   -> TypeSpecifier VariableDeclarators ';'
 
    Statement
-   -> EmptyStatement                                    
-   -> LabeledStatement                                  
-   -> ExpressionStatement ';'                           
-   -> SelectionStatement                                
-   -> IterationStatement                                
-   -> JumpStatement                                     
-   -> GuardingStatement                                 
-   -> Block                                             
+   -> EmptyStatement
+   -> LabeledStatement
+   -> ExpressionStatement ';'
+   -> SelectionStatement
+   -> IterationStatement
+   -> JumpStatement
+   -> GuardingStatement
+   -> Block
 
    EmptyStatement
-   -> ';'                                               
+   -> ';'
 
    LabeledStatement
-   -> <identifier> ':' LocalVariableDeclarationOrStatement 
-   -> CASE ConstantExpression ':' LocalVariableDeclarationOrStatement 
-   -> DEFAULT ':' LocalVariableDeclarationOrStatement   
+   -> <identifier> ':' LocalVariableDeclarationOrStatement
+   -> CASE ConstantExpression ':' LocalVariableDeclarationOrStatement
+   -> DEFAULT ':' LocalVariableDeclarationOrStatement
 
    ExpressionStatement
-   -> Expression                                        
+   -> Expression
 
    SelectionStatement
-   -> IF '(' Expression ')' Statement                   
-   -> IF '(' Expression ')' Statement ELSE Statement    
-   -> SWITCH '(' Expression ')' Block                   
+   -> IF '(' Expression ')' Statement
+   -> IF '(' Expression ')' Statement ELSE Statement
+   -> SWITCH '(' Expression ')' Block
 
    IterationStatement
-   -> WHILE '(' Expression ')' Statement                
-   -> DO Statement WHILE '(' Expression ')' ';'         
-   -> FOR '(' ForInit ForExpr ForIncr ')' Statement     
-   -> FOR '(' ForInit ForExpr ')' Statement             
+   -> WHILE '(' Expression ')' Statement
+   -> DO Statement WHILE '(' Expression ')' ';'
+   -> FOR '(' ForInit ForExpr ForIncr ')' Statement
+   -> FOR '(' ForInit ForExpr ')' Statement
 
    ForInit
-   -> ExpressionStatements ';'                          
-   -> LocalVariableDeclarationStatement                 
-   -> ';'                                               
+   -> ExpressionStatements ';'
+   -> LocalVariableDeclarationStatement
+   -> ';'
 
    ForExpr
-   -> Expression ';'                                    
-   -> ';'                                               
+   -> Expression ';'
+   -> ';'
 
    ForIncr
-   -> ExpressionStatements                              
+   -> ExpressionStatements
 
    ExpressionStatements
-   -> ExpressionStatement                               
-   -> ExpressionStatements ',' ExpressionStatement      
+   -> ExpressionStatement
+   -> ExpressionStatements ',' ExpressionStatement
 
    JumpStatement
-   -> BREAK <identifier> ';'                              
-   -> BREAK ';'                                         
-   -> CONTINUE <identifier> ';'                           
-   -> CONTINUE ';'                                      
-   -> RETURN Expression ';'                             
-   -> RETURN ';'                                        
-   -> THROW Expression ';'                              
+   -> BREAK <identifier> ';'
+   -> BREAK ';'
+   -> CONTINUE <identifier> ';'
+   -> CONTINUE ';'
+   -> RETURN Expression ';'
+   -> RETURN ';'
+   -> THROW Expression ';'
 
    GuardingStatement
-   -> SYNCHRONIZED '(' Expression ')' Statement         
-   -> TRY Block Finally                                 
-   -> TRY Block Catches                                 
-   -> TRY Block Catches Finally                         
+   -> SYNCHRONIZED '(' Expression ')' Statement
+   -> TRY Block Finally
+   -> TRY Block Catches
+   -> TRY Block Catches Finally
 
    Catches
-   -> Catch                                             
-   -> Catches Catch                                     
+   -> Catch
+   -> Catches Catch
 
    Catch
-   -> CatchHeader Block                                 
+   -> CatchHeader Block
 
    CatchHeader
-   -> CATCH '(' TypeSpecifier <identifier> ')'            
-   -> CATCH '(' TypeSpecifier ')'                       
+   -> CATCH '(' TypeSpecifier <identifier> ')'
+   -> CATCH '(' TypeSpecifier ')'
 
    Finally
-   -> FINALLY Block                                     
+   -> FINALLY Block
 
    PrimaryExpression
-   -> QualifiedName                                     
-   -> NotJustName                                       
+   -> QualifiedName
+   -> NotJustName
 
    NotJustName
-   -> SpecialName                                       
-   -> NewAllocationExpression                           
-   -> ComplexPrimary                                    
+   -> SpecialName
+   -> NewAllocationExpression
+   -> ComplexPrimary
 
    ComplexPrimary
-   -> '(' Expression ')'                                
-   -> ComplexPrimaryNoParenthesis                       
+   -> '(' Expression ')'
+   -> ComplexPrimaryNoParenthesis
 
    ComplexPrimaryNoParenthesis
-   -> <literal>                                           
-   -> ArrayAccess                                       
-   -> FieldAccess                                       
-   -> MethodCall                                        
+   -> <literal>
+   -> ArrayAccess
+   -> FieldAccess
+   -> MethodCall
 
    ArrayAccess
-   -> QualifiedName '[' Expression ']'                  
-   -> ComplexPrimary '[' Expression ']'                 
+   -> QualifiedName '[' Expression ']'
+   -> ComplexPrimary '[' Expression ']'
 
    FieldAccess
-   -> NotJustName '.' <identifier>                        
-   -> RealPostfixExpression '.' <identifier>              
+   -> NotJustName '.' <identifier>
+   -> RealPostfixExpression '.' <identifier>
 
    MethodCall
-   -> MethodAccess '(' ArgumentList ')'                 
-   -> MethodAccess '(' ')'                              
+   -> MethodAccess '(' ArgumentList ')'
+   -> MethodAccess '(' ')'
 
    MethodAccess
-   -> ComplexPrimaryNoParenthesis                       
-   -> SpecialName                                       
-   -> QualifiedName                                     
+   -> ComplexPrimaryNoParenthesis
+   -> SpecialName
+   -> QualifiedName
 
    SpecialName
-   -> THIS                                              
-   -> SUPER                                             
-   -> JNULL                                             
+   -> THIS
+   -> SUPER
+   -> JNULL
 
    ArgumentList
-   -> Expression                                        
-   -> ArgumentList ',' Expression                       
+   -> Expression
+   -> ArgumentList ',' Expression
 
    NewAllocationExpression
-   -> ArrayAllocationExpression                         
-   -> ClassAllocationExpression                         
-   -> ArrayAllocationExpression '{' '}'                 
-   -> ClassAllocationExpression '{' '}'                 
-   -> ArrayAllocationExpression '{' ArrayInitializers '}' 
-   -> ClassAllocationExpression '{' FieldDeclarations '}' 
+   -> ArrayAllocationExpression
+   -> ClassAllocationExpression
+   -> ArrayAllocationExpression '{' '}'
+   -> ClassAllocationExpression '{' '}'
+   -> ArrayAllocationExpression '{' ArrayInitializers '}'
+   -> ClassAllocationExpression '{' FieldDeclarations '}'
 
    ClassAllocationExpression
-   -> NEW TypeName '(' ArgumentList ')'                 
-   -> NEW TypeName '(' ')'                              
+   -> NEW TypeName '(' ArgumentList ')'
+   -> NEW TypeName '(' ')'
 
    ArrayAllocationExpression
-   -> NEW TypeName DimExprs Dims                        
-   -> NEW TypeName DimExprs                             
+   -> NEW TypeName DimExprs Dims
+   -> NEW TypeName DimExprs
 
    DimExprs
-   -> DimExpr                                           
-   -> DimExprs DimExpr                                  
+   -> DimExpr
+   -> DimExprs DimExpr
 
    DimExpr
-   -> '[' Expression ']'                                
+   -> '[' Expression ']'
 
    Dims
-   -> OP_DIM                                            
-   -> Dims OP_DIM                                       
+   -> OP_DIM
+   -> Dims OP_DIM
 
    PostfixExpression
-   -> PrimaryExpression                                 
-   -> RealPostfixExpression                             
+   -> PrimaryExpression
+   -> RealPostfixExpression
 
    RealPostfixExpression
    -> PostfixExpression '++'
    -> PostfixExpression '--'
 
    UnaryExpression
-   -> '++' UnaryExpression                            
-   -> '--' UnaryExpression                            
-   -> ArithmeticUnaryOperator CastExpression            
-   -> LogicalUnaryExpression                            
+   -> '++' UnaryExpression
+   -> '--' UnaryExpression
+   -> ArithmeticUnaryOperator CastExpression
+   -> LogicalUnaryExpression
 
    LogicalUnaryExpression
-   -> PostfixExpression                                 
-   -> LogicalUnaryOperator UnaryExpression              
+   -> PostfixExpression
+   -> LogicalUnaryOperator UnaryExpression
 
    LogicalUnaryOperator
-   -> '~'                                               
-   -> '!'                                               
+   -> '~'
+   -> '!'
 
    ArithmeticUnaryOperator
-   -> '+'                                               
-   -> '-'                                               
+   -> '+'
+   -> '-'
 
    CastExpression
-   -> UnaryExpression                                   
-   -> '(' PrimitiveTypeExpression ')' CastExpression    
-   -> '(' ClassTypeExpression ')' CastExpression        
-   -> '(' Expression ')' LogicalUnaryExpression         
+   -> UnaryExpression
+   -> '(' PrimitiveTypeExpression ')' CastExpression
+   -> '(' ClassTypeExpression ')' CastExpression
+   -> '(' Expression ')' LogicalUnaryExpression
 
    PrimitiveTypeExpression
-   -> PrimitiveType                                     
-   -> PrimitiveType Dims                                
+   -> PrimitiveType
+   -> PrimitiveType Dims
 
    ClassTypeExpression
-   -> QualifiedName Dims                                
+   -> QualifiedName Dims
 
    MultiplicativeExpression
-   -> CastExpression                                    
-   -> MultiplicativeExpression '*' CastExpression       
-   -> MultiplicativeExpression '/' CastExpression       
-   -> MultiplicativeExpression '%' CastExpression       
+   -> CastExpression
+   -> MultiplicativeExpression '*' CastExpression
+   -> MultiplicativeExpression '/' CastExpression
+   -> MultiplicativeExpression '%' CastExpression
 
    AdditiveExpression
-   -> MultiplicativeExpression                          
-   -> AdditiveExpression '+' MultiplicativeExpression   
-   -> AdditiveExpression '-' MultiplicativeExpression   
+   -> MultiplicativeExpression
+   -> AdditiveExpression '+' MultiplicativeExpression
+   -> AdditiveExpression '-' MultiplicativeExpression
 
    ShiftExpression
-   -> AdditiveExpression                                
-   -> ShiftExpression '<<' AdditiveExpression         
-   -> ShiftExpression '>>' AdditiveExpression         
-   -> ShiftExpression '>>>' AdditiveExpression         
+   -> AdditiveExpression
+   -> ShiftExpression '<<' AdditiveExpression
+   -> ShiftExpression '>>' AdditiveExpression
+   -> ShiftExpression '>>>' AdditiveExpression
 
    RelationalExpression
-   -> ShiftExpression                                   
-   -> RelationalExpression '<' ShiftExpression          
-   -> RelationalExpression '>' ShiftExpression          
-   -> RelationalExpression '<=' ShiftExpression        
-   -> RelationalExpression '>=' ShiftExpression        
-   -> RelationalExpression INSTANCEOF TypeSpecifier     
+   -> ShiftExpression
+   -> RelationalExpression '<' ShiftExpression
+   -> RelationalExpression '>' ShiftExpression
+   -> RelationalExpression '<=' ShiftExpression
+   -> RelationalExpression '>=' ShiftExpression
+   -> RelationalExpression INSTANCEOF TypeSpecifier
 
    EqualityExpression
-   -> RelationalExpression                              
-   -> EqualityExpression '==' RelationalExpression     
-   -> EqualityExpression '!=' RelationalExpression     
+   -> RelationalExpression
+   -> EqualityExpression '==' RelationalExpression
+   -> EqualityExpression '!=' RelationalExpression
 
    AndExpression
-   -> EqualityExpression                                
-   -> AndExpression '&' EqualityExpression              
+   -> EqualityExpression
+   -> AndExpression '&' EqualityExpression
 
    ExclusiveOrExpression
-   -> AndExpression                                     
-   -> ExclusiveOrExpression '^' AndExpression           
+   -> AndExpression
+   -> ExclusiveOrExpression '^' AndExpression
 
    InclusiveOrExpression
-   -> ExclusiveOrExpression                             
-   -> InclusiveOrExpression '|' ExclusiveOrExpression   
+   -> ExclusiveOrExpression
+   -> InclusiveOrExpression '|' ExclusiveOrExpression
 
    ConditionalAndExpression
-   -> InclusiveOrExpression                             
-   -> ConditionalAndExpression '&&' InclusiveOrExpression 
+   -> InclusiveOrExpression
+   -> ConditionalAndExpression '&&' InclusiveOrExpression
 
    ConditionalOrExpression
-   -> ConditionalAndExpression                          
-   -> ConditionalOrExpression '||' ConditionalAndExpression 
+   -> ConditionalAndExpression
+   -> ConditionalOrExpression '||' ConditionalAndExpression
 
    ConditionalExpression
-   -> ConditionalOrExpression                           
-   -> ConditionalOrExpression '?' Expression ':' ConditionalExpression 
+   -> ConditionalOrExpression
+   -> ConditionalOrExpression '?' Expression ':' ConditionalExpression
 
    AssignmentExpression
-   -> ConditionalExpression                             
-   -> UnaryExpression AssignmentOperator AssignmentExpression 
+   -> ConditionalExpression
+   -> UnaryExpression AssignmentOperator AssignmentExpression
 
    AssignmentOperator
-   -> '='                                               
+   -> '='
    -> '*='
    -> '/='
    -> '%='
@@ -577,10 +577,10 @@
    -> '|='
 
    Expression
-   -> AssignmentExpression                              
+   -> AssignmentExpression
 
    ConstantExpression
-   -> ConditionalExpression                             
+   -> ConditionalExpression
 
 /* End of Grammar. */
 

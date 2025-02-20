@@ -2,7 +2,7 @@
 /* Copyright 2018 Paul B Mann.  BSD License. */
 
 		#pragma once
-		#include "LG_ComputeLA.h"		
+		#include "LG_ComputeLA.h"
 
 		class LG_OptimizeStates : public LG_ComputeLA
 		{
@@ -17,14 +17,14 @@
 			static void DESTROY_LOOKAHEADS ();
 			static void ILLEGAL_CHARS ();
 			static int  REMOVE_NT_TRANS ();
-			static void REMOVE_DUP_STATES (); 
+			static void REMOVE_DUP_STATES ();
 			static int  REMOVE_SINGLE_RED ();
 			static int  TRANSITION (int s, int x);
 			static void LOOK_BACK (int p, int dot, int s);
 			static int  REMOVE_OTHER_RED ();
-			static void COLLECT_LOOKAHEADS (int s); 
+			static void COLLECT_LOOKAHEADS (int s);
 			static void LOOK_BACK2 (int p, int dot, int s);
-			static int  MODIFY_TERMINAL_TRAN ();						
+			static int  MODIFY_TERMINAL_TRAN ();
 			static int  NUMBER_OF_STATES_LEFT ();
 			static int  COUNT_NT_LEFT ();
 			static int  REMOVE_DUPLICATES ();

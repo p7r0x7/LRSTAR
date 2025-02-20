@@ -3,8 +3,8 @@
 
   	<eof>						-> \z
 
-	<identifier>   		-> letter (letter|digit)* 
-		           
+	<identifier>   		-> letter (letter|digit)*
+
 	{whitespace}       	-> whitechar+
 
 	{commentline}  		-> '/' '/' neol*
@@ -13,10 +13,10 @@
 
 /* Character-Set Definitions */
 
-	letter	      		= 'a'..'z' | 'A'..'Z' | '_' 
-	digit	         		= '0'..'9' 
+	letter	      		= 'a'..'z' | 'A'..'Z' | '_'
+	digit	         		= '0'..'9'
 
-	whitechar     			= \t | \n | \r | \f | \v | ' ' 
+	whitechar     			= \t | \n | \r | \f | \v | ' '
 
 	any						= 0..255 - \z  		// any character except end of file
 	na             		= any - '*' 			// not asterisk
@@ -30,4 +30,4 @@
 	\r							= 13						// return
 	\z							= 26						// end of file
 	\b							= 32						// blank/space
-	
+

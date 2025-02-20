@@ -40,7 +40,7 @@
    INT              <integer>         => lookup();
    STRING_LITERAL   <string_literal>  => lookup();
    LEXER_CHAR_SET   <lexer_char_set>  => lookup();
-                                                      
+
    RULE_REF         <rule_ref>        => lookup();
    TOKEN_REF        <token_ref>       => lookup();
 
@@ -59,7 +59,7 @@
    CATCH        'catch';
    FINALLY      'finally';
    MODE         'mode';
-               
+
    SEMI         ';';
    COLON        ':';
    COLONCOLON   '::';
@@ -73,7 +73,7 @@
    QUESTION     '?';
    STAR         '*';
    PLUS_ASSIGN  '+=';
-   PLUS         '+';   
+   PLUS         '+';
    OR           '|';
    RANGE        '..';
    DOT          '.';
@@ -85,8 +85,8 @@
 
 // The main entry point for parsing a v4 grammar.
 
-Goal  
-   : grammarSpec EOF 
+Goal
+   : grammarSpec EOF
    ;
 
 grammarSpec
@@ -335,7 +335,7 @@ element
    |  atom (ebnfSuffix)?
    |  ebnf
    |  actionElement     // SEMPRED is ACTION followed by QUESTION
-   |  argActionElement  // Added by Paul Mann. 
+   |  argActionElement  // Added by Paul Mann.
    ;
 
 actionElement
@@ -448,7 +448,7 @@ elementOption
       identifier ASSIGN optionValue
    ;
 
-identifier  
+identifier
    :  RULE_REF
    |  TOKEN_REF
    ;

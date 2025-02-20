@@ -1,6 +1,6 @@
 
 ///////////////////////////////////////////////////////////////////////////////
-//                                                                           // 
+//                                                                           //
 		#pragma once
 
 		#include "Typedef_Parser.h"
@@ -9,7 +9,7 @@
 
 		#ifdef ACTIONS
 
-      class ACTIONS : public PARSER 
+      class ACTIONS : public PARSER
       {
 			public:
          static void init_actions ();
@@ -20,7 +20,7 @@
 		#ifdef TERM_ACTIONS
 
 		class TERM_ACTIONS : public ACTIONS
-		{	
+		{
 			public:
          static int  error		(int& t);
 			static int  lookup	(int& t);
@@ -28,6 +28,6 @@
 
 		#endif
 
-//                                                                           // 
+//                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
 

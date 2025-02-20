@@ -48,8 +48,8 @@
 		: /* empty */
 			  | _USES_ uses_list SEMICOLON
 			  ;
-	uses_list : identifier 
-		       | uses_list COMMA identifier 
+	uses_list : identifier
+		       | uses_list COMMA identifier
 			  ;
 	id_list	: identifier
 		      | id_list COMMA identifier
@@ -87,7 +87,7 @@
 			  | general_procedure_declaration
 			  ;
 
-	general_procedure_declaration 
+	general_procedure_declaration
 	    :	proc_decl
 		 | func_decl
 			  | constructor_decl
@@ -158,18 +158,18 @@
 	const   : simple_const
 			  | simple_const relop simple_const
 			  ;
-	simple_const 
+	simple_const
 	        : const_term
 			  | sign const_term
-			  | _NOT_ const_term        
+			  | _NOT_ const_term
 			  | simple_const addop const_term
 			  ;
-	const_term  
+	const_term
 	        : const_factor
 			  | const_term mulop const_factor
 			  ;
 
-	const_factor 
+	const_factor
 	        : unsigned_number
 			  | qualified_identifier
 			  | general_string_const
@@ -287,7 +287,7 @@
 		: variant
 		| variant_list SEMICOLON variant
 		;
-	variant	
+	variant
 	   : /* empty */
 		| case_tag_list COLON LPAREN field_list RPAREN
 		;
@@ -493,7 +493,7 @@
 		;
 	block	: decl_sect_list compound_stmt
 		;
-	fp_list 
+	fp_list
 	   : /* empty */
 		| LPAREN fp_sect_list RPAREN
 		;
@@ -501,18 +501,18 @@
 		: fp_sect
 		| fp_sect_list SEMICOLON fp_sect
 		;
-	fp_sect	
+	fp_sect
 	   : id_list COLON fptype
 		| _VAR_ id_list COLON fptype
 		| _VAR_ id_list
 		;
-	fptype	
+	fptype
 	   : identifier
 		| _STRING_
 		;
 
 	/* Statements: */
-	stmt	
+	stmt
 	   : unlabelled_stmt
 		| label COLON unlabelled_stmt
 			  ;
@@ -565,7 +565,7 @@
 		: stmt
 		| stmt_list SEMICOLON stmt
 		;
-	if_stmt	
+	if_stmt
 	   : _IF_ expr _THEN_ stmt
 		| _IF_ expr _THEN_ stmt _ELSE_ stmt
 		;
@@ -576,7 +576,7 @@
 		: case
 		| case_list SEMICOLON case
 		;
-	case	
+	case
 	   : /* empty */
 		| case_label_list COLON stmt
 		;
@@ -704,17 +704,17 @@
 		: elem
 		| elem_list1 COMMA elem
 		;
-	elem	
+	elem
 	   : expr
 		| expr DOTDOT expr
 		;
 
 	/* This allows identifiers to have same names as directives. NOT TESTED ! */
-	identifier : ID 
+	identifier : ID
 				  | DIRECTIVE
 				  ;
-	qualified_identifier : identifier 
-								| qualified_identifier DOT identifier 
+	qualified_identifier : identifier
+								| qualified_identifier DOT identifier
 								;
 
 	general_string_const : STRING_CONST

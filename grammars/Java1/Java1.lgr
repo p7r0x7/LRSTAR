@@ -29,16 +29,16 @@
 
 	IntegerTypeSuffix
 		->	'l'
-		->  'L'	
+		->  'L'
 
 	DecimalNumeral
 		->	'0'
-		->	NonZeroDigit 
-		->	NonZeroDigit Digits 
-		->	NonZeroDigit '_'+ Digits 
+		->	NonZeroDigit
+		->	NonZeroDigit Digits
+		->	NonZeroDigit '_'+ Digits
 
 	Digits
-		->	Digit 
+		->	Digit
 		->	Digits Digit
 		->	Digits '_'+ Digit
 
@@ -50,9 +50,9 @@
 		=	'1'..'9'
 
 	HexDigits
-		->	HexDigit 
-		->	HexDigits HexDigit 
-		->	HexDigits '_'+ HexDigit 
+		->	HexDigit
+		->	HexDigits HexDigit
+		->	HexDigits '_'+ HexDigit
 
 	HexDigit
 		=	'0'..'9' | 'a'..'f' | 'A'..'F'
@@ -152,13 +152,13 @@
 		->   '\' 'u' HexDigit HexDigit HexDigit HexDigit
 
 	{whitespace}			-> whitechar+
-	
+
 	{commentline}  		-> '/' '/' neol*
-      
+
 	{commentblock} 		-> '/' '*' na* '*'+ (nans na* '*'+)* '/'
 
 /* Character Sets */
-							
+
 	JavaLetter
 	=	'a'..'z' | 'A'..'Z' | '$' | '_'  // these are the "java letters" below 0x7F
 
@@ -180,7 +180,7 @@
 	FloatTypeSuffix
 		=	'f' | 'F' | 'd' | 'D'
 
-	whitechar     			= \t | \n | \r | \f | \v | ' ' 
+	whitechar     			= \t | \n | \r | \f | \v | ' '
 
 	any						= 0..255 - \z  		// any character except end of file
 	na             		= any - '*' 			// not asterisk
@@ -194,5 +194,4 @@
 	\r							= 13						// return
 	\z							= 26						// end of file
 	\b							= 32						// blank/space
-	
-	
+

@@ -12,7 +12,7 @@
       #define _open		open
       #define _close		close
       #define _chmod		chmod
-      #define _unlink	unlink  
+      #define _unlink	unlink
 		#endif
 
 		extern FILE* output;

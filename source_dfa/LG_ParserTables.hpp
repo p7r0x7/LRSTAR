@@ -19,7 +19,7 @@
       static int err_used     =    0; // <error> used in grammar?
 
    // Terminal symbols of the grammar ...
-      char* LG_ParserTables::term_symb[24] = 
+      char* LG_ParserTables::term_symb[24] =
       {
          "<error>",
          "<eof>",
@@ -48,7 +48,7 @@
       };
 
    // Nonterminal symbols of the grammar ...
-      char* LG_ParserTables::head_symb[36] = 
+      char* LG_ParserTables::head_symb[36] =
       {
          "Goal",
          "Grammar",
@@ -89,7 +89,7 @@
       };
 
    // Terninal action names found in the grammar ...
-      char* LG_ParserTables::tact_name[3] = 
+      char* LG_ParserTables::tact_name[3] =
       {
          "error",
          "first",
@@ -97,7 +97,7 @@
       };
 
    // Parse action names found in the grammar ...
-      char* LG_ParserTables::pact_name[32] = 
+      char* LG_ParserTables::pact_name[32] =
       {
          "ADD_TOKEN",
          "ADD_TOKEN2",
@@ -134,7 +134,7 @@
       };
 
    // Head symbol numbers for the productions ...
-      uchar LG_ParserTables::head_numb[80] = 
+      uchar LG_ParserTables::head_numb[80] =
       {
           0,    1,    2,    3,    3,    4,    4,    5,    6,    6,    6,    7,    8,    9,   10,   10,   10,   10,   10,   11,
          11,   11,   12,   13,   14,   14,   14,   14,   15,   15,   15,   15,   15,   16,   17,   18,   19,   19,   19,   19,
@@ -143,7 +143,7 @@
       };
 
    // First tail symbol index into the tail list ...
-      uchar LG_ParserTables::f_tail[81] = 
+      uchar LG_ParserTables::f_tail[81] =
       {
           0,    2,    4,    6,    7,    8,    9,   10,   12,   13,   14,   15,   17,   18,   19,   20,   22,   24,   26,   29,
          30,   32,   35,   36,   37,   38,   40,   42,   44,   45,   46,   47,   48,   49,   53,   54,   55,   56,   59,   62,
@@ -153,7 +153,7 @@
       };
 
    // Tail symbol numbers ...
-      char LG_ParserTables::tail[143] = 
+      char LG_ParserTables::tail[143] =
       {
          -1,    1,  -30,  -32,   -3,   -4,   19,   22,    7,    2,   -6,  -33,   18,   19,   20,   -8,   -9,    8,  -34,  -15,
         -15,   11,  -15,   12,  -15,   13,  -13,  -11,  -14,  -10,  -11,  -10,  -11,  -12,  -10,   15,    9,   10,   10,   11,
@@ -166,14 +166,14 @@
       };
 
    // Arguments for token actions ...
-      char LG_ParserTables::arga[24] = 
+      char LG_ParserTables::arga[24] =
       {
          -1,   -1,   18,   19,   20,   21,   22,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
          -1,   -1,   -1,   -1
       };
 
    // First arguments for productions ...
-      char LG_ParserTables::argx[80] = 
+      char LG_ParserTables::argx[80] =
       {
          -1,   -1,   -1,    0,    0,    0,    0,   -1,    0,    0,    0,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
          -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,    0,    0,    0,    0,    0,   -1,    0,   -1,    0,    2,    2,    2,
@@ -182,35 +182,35 @@
       };
 
    // Boolean matrix ...
-      uchar LG_ParserTables::Bm[33] = 
+      uchar LG_ParserTables::Bm[33] =
       {
           0,    0,  128,    1,    2,    0,  192,    1,   68,    0,  192,  128,    0,    0,    2,  124,    0,  116,    0,   64,
           0,   56,    0,    4,    0,   24,    0,   32,  124,    9,   96,    0,    0
       };
 
    // Booeal matrix row (for state)...
-      uchar LG_ParserTables::Br[40] = 
+      uchar LG_ParserTables::Br[40] =
       {
           1,    4,    5,    8,    9,   11,   12,   12,    0,    0,   11,   15,   17,   19,   15,   13,   15,   20,   22,    0,
          24,   24,   26,   28,   17,   17,   30,   17,   17,   17,   17,   15,   13,    0,    0,    0,    0,    0,    0,    0
       };
 
    // Booolean matrix column (displacement) ...
-      uchar LG_ParserTables::Bc[24] = 
+      uchar LG_ParserTables::Bc[24] =
       {
           0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
           1,    1,    2,    2
       };
 
    // Boolean matrix filter/mask value ...
-      uchar LG_ParserTables::Bf[24] = 
+      uchar LG_ParserTables::Bf[24] =
       {
           1,    2,    4,    8,    1,   16,   32,   64,  128,    8,    1,    2,    2,    2,    4,    8,   16,   32,   64,  128,
          64,   64,    1,    2
       };
 
    // Terminal transition matrix ...
-      char LG_ParserTables::Tm[61] = 
+      char LG_ParserTables::Tm[61] =
       {
           0,    0,  -66,  -30,  -28,  -32,  -29,   32,    0,    0,  -31,  -22,    0,  -23,  -62,  -61,  -63,    0,    0,    0,
         -60,   29,   30,    0,   -9,  -10,  -65,    0,    8,   39,   -6,   -5,  -12,  -15,  -16,  -17,   26,   24,   25,  -79,
@@ -219,21 +219,21 @@
       };
 
    // Terminal transition matrix row ...
-      uchar LG_ParserTables::Tr[40] = 
+      uchar LG_ParserTables::Tr[40] =
       {
          29,   29,   45,   29,   13,   29,   29,   29,   29,   29,   29,   45,   13,    0,   45,   29,   45,   29,   29,   29,
          45,   13,   29,    3,   13,   13,   13,   13,   13,   13,   13,   45,   45,   29,   29,   29,   29,   29,   29,   29
       };
 
    // Terminal transition matrix column ...
-      uchar LG_ParserTables::Tc[24] = 
+      uchar LG_ParserTables::Tc[24] =
       {
           0,    0,    1,    0,    1,    3,    7,    2,    3,   10,    4,    4,    5,    6,    7,    8,    9,   10,   15,   11,
          12,   13,   14,   15
       };
 
    // Nonterminal transition matrix ...
-      char LG_ParserTables::Nm[117] = 
+      char LG_ParserTables::Nm[117] =
       {
           0,    0,    0,    0,    0,    0,    0,  -20,    0,   31,   16,  -18,   15,    0,  -40,    0,   18,    0,  -55,   36,
         -42,  -43,  -56,   18,    0,    0,   37,  -45,  -46,    0,   18,    0,  -21,   38,  -48,   16,    0,   15,    0,    0,
@@ -244,14 +244,14 @@
       };
 
    // Nonterminal transition matrix row ...
-      uchar LG_ParserTables::Nr[40] = 
+      uchar LG_ParserTables::Nr[40] =
       {
          87,   87,   57,   87,   87,   87,   87,   57,   87,   87,   57,   87,   87,   87,   57,   87,   36,   87,   87,   87,
          87,   87,   57,    3,   57,   36,    3,   28,    0,    7,   14,   28,   87,   87,   87,   87,   87,   87,   87,   87
       };
 
    // Nonterminal transition matrix column ...
-      uchar LG_ParserTables::Nc[80] = 
+      uchar LG_ParserTables::Nc[80] =
       {
           5,    5,    6,    8,    8,   15,   15,    0,    1,    1,    1,    2,    3,   26,    4,    4,    4,    4,    4,    5,
           5,    5,    6,    7,    8,    8,    8,    8,    9,    9,    9,    9,    9,   10,   11,   12,   13,   13,   13,   13,
@@ -260,7 +260,7 @@
       };
 
    // Reduction matrix ...
-      uchar LG_ParserTables::Rm[58] = 
+      uchar LG_ParserTables::Rm[58] =
       {
           0,    0,    0,    0,    0,    0,    0,    8,    0,    0,   34,    0,    0,    3,    9,    0,    0,    0,    0,   57,
          58,    0,   50,    0,    0,   57,   50,    0,   53,    0,    0,   57,   53,    0,   38,    0,    0,   57,   38,    0,
@@ -268,21 +268,21 @@
       };
 
    // Reduction matrix row ...
-      char LG_ParserTables::Rr[40] = 
+      char LG_ParserTables::Rr[40] =
       {
           0,    0,    0,    0,    1,    0,    0,    0,   -4,  -11,    7,    0,    0,    0,   13,   14,    0,   78,    0,  -15,
           0,    0,   78,    0,    0,    0,    0,    0,    0,    0,    0,    0,   24,  -21,  -27,  -33,  -39,  -45,  -51,    0
       };
 
    // Reduction matrix column ...
-      uchar LG_ParserTables::Rc[24] = 
+      uchar LG_ParserTables::Rc[24] =
       {
           0,    1,    2,    0,    0,    0,    0,    2,    3,    0,    0,    0,    0,    0,    4,    5,    5,    1,    1,    1,
           1,    1,    0,    6
       };
 
    // Production lengths (minus one) ...
-      char LG_ParserTables::PL[80] = 
+      char LG_ParserTables::PL[80] =
       {
           1,    1,    1,    0,    0,    0,    0,    1,    0,    0,    0,    1,    0,    0,    0,    1,    1,    1,    2,    0,
           1,    2,    0,    0,    0,    1,    1,    1,    0,    0,    0,    0,    0,    3,    0,    0,    0,    2,    2,    2,
@@ -291,14 +291,14 @@
       };
 
    // Terminal action number ...
-      char LG_ParserTables::tact_numb[24] = 
+      char LG_ParserTables::tact_numb[24] =
       {
           0,   -1,    1,    1,    1,    1,    1,   -1,    2,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
          -1,   -1,   -1,   -1
       };
 
    // Parse action numbers ...
-      char LG_ParserTables::pact_numb[80] = 
+      char LG_ParserTables::pact_numb[80] =
       {
          -1,   -1,   -1,    0,    1,    2,    3,   -1,    4,    5,    6,   -1,    7,    8,   -1,    9,   10,   11,   -1,   -1,
          -1,   -1,   12,   13,   14,   15,   16,   17,   18,   18,   18,   18,   18,   19,   20,    7,   21,   22,   23,   24,
@@ -322,7 +322,7 @@
       };
 
    // Parse action function pointers ...
-      int (*LG_ParserTables::pact_func[32]) (int p) = 
+      int (*LG_ParserTables::pact_func[32]) (int p) =
       {
          LG_ParseActions::ADD_TOKEN,
          LG_ParseActions::ADD_TOKEN2,

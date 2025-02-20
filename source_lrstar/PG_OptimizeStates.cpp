@@ -4,7 +4,7 @@
       #include "CM_Global.h"
 		#include "PG_OptimizeStates.h"
 
-		int    PG_OptimizeStates::Accept_state; 
+		int    PG_OptimizeStates::Accept_state;
 		int    PG_OptimizeStates::ntt_states;
 		int    PG_OptimizeStates::tt_states;
 
@@ -16,13 +16,13 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
-      
+
 int   PG_OptimizeStates::OptimizeStates ()
 {
       Accept_state = FIND_ACCEPT_STATE ();
 
       MAKE_SHIFT_REDUCE_ACTIONS ();
-      ELIMINATE_CHAIN_REDUCTIONS (); 
+      ELIMINATE_CHAIN_REDUCTIONS ();
 
 		if (optn[PG_SHIFTREDUCE])
 		{
@@ -41,8 +41,8 @@ int   PG_OptimizeStates::OptimizeStates ()
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
 //		Find accept state (need this for PG_CLR_PARSER, works for the others too) //
-//		This is a generalized version. Could have searched state 1 for <eof>. 
-      
+//		This is a generalized version. Could have searched state 1 for <eof>.
+
 int   PG_OptimizeStates::FIND_ACCEPT_STATE ()
 {
 		int ntt, tt;
@@ -52,7 +52,7 @@ int   PG_OptimizeStates::FIND_ACCEPT_STATE ()
 		{
 			for (ntt = ntt_start[state]; ntt < ntt_start[state+1]; ntt++)
 			{
-				if (ntt_symb[ntt] == -symb) 
+				if (ntt_symb[ntt] == -symb)
 				{
 					state = ntt_action[ntt];
 					break;
@@ -63,7 +63,7 @@ int   PG_OptimizeStates::FIND_ACCEPT_STATE ()
 		{
 			for (tt = tt_start[state]; tt < tt_start[state+1]; tt++)
 			{
-				if (tt_symb[tt] == symb) 
+				if (tt_symb[tt] == symb)
 				{
 					state = tt_action[tt];
 					break;
@@ -73,7 +73,7 @@ int   PG_OptimizeStates::FIND_ACCEPT_STATE ()
 		symb = Tail [F_tail [F_prod[0]] + 1]; // <eof> symbol
 		for (tt = tt_start[state]; tt < tt_start[state+1]; tt++)
 		{
-			if (tt_symb[tt] == symb) 
+			if (tt_symb[tt] == symb)
 			{
 				state = tt_action[tt];
 				break;
@@ -84,7 +84,7 @@ int   PG_OptimizeStates::FIND_ACCEPT_STATE ()
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
-      
+
 void  PG_OptimizeStates::MAKE_SHIFT_REDUCE_ACTIONS ()
 {
       int state, i;
@@ -120,8 +120,8 @@ void  PG_OptimizeStates::MAKE_SHIFT_REDUCE_ACTIONS ()
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
-      
-void  PG_OptimizeStates::ELIMINATE_CHAIN_REDUCTIONS () // Eliminate Chain Shift-Reduce Actions.   
+
+void  PG_OptimizeStates::ELIMINATE_CHAIN_REDUCTIONS () // Eliminate Chain Shift-Reduce Actions.
 {
 		int state, h, p, i, n, N_total, T_total, n_changed;
 		N_total = 0;
@@ -172,8 +172,8 @@ Loop:       n_changed = 0;
 			if (optn[PG_VERBOSE] > 1)
 			prt_log ("Optimized%7d N-transactions, %d T-transactions, were optimized.\n", N_total, T_total);
 		}
-}				  
+}
 
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
-      
+

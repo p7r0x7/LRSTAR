@@ -1,5 +1,5 @@
 
-/* A Bison parser, made by GNU Bison 2.1. */ 	  
+/* A Bison parser, made by GNU Bison 2.1. */
 
 /* Skeleton parser for Yacc-like parsing with Bison,
    Copyright (C) 1984, 1989, 1990, 2000, 2001, 2002, 2003, 2004, 2005 Free Software Foundation, Inc.
@@ -18,7 +18,7 @@
    along with this program; if not, write to the Free Software
    Foundation, Inc., 51 Franklin Street, Fifth Floor,
    Boston, MA 02110-1301, USA.  */
-	
+
 /* As a special exception, when this file is copied by Bison into a
    Bison output file, you may use that output file without restriction.
    This special exception was added by the Free Software Foundation
@@ -50,9 +50,9 @@
       know about them.  */
 
 	int a = 0;
-      
-   enum yytokentype     
-   {									
+
+   enum yytokentype
+   {
      CHAR = 258,
      NUMBER = 259,
      SECTEND = 260,
@@ -77,7 +77,7 @@
      CCE_LOWER = 279,
      CCE_PRINT = 280,
      CCE_PUNCT = 281,
-     CCE_SPACE = 282,						  
+     CCE_SPACE = 282,
      CCE_UPPER = 283,
      CCE_XDIGIT = 284,
      CCE_NEG_ALNUM = 285,
@@ -175,9 +175,9 @@ int previous_continued_action;	/* whether the previous rule's action was '|' */
 /* The OS might guarantee only one guard page at the bottom of the stack,
     and a page size can be as small as 4096 bytes.  So we cannot safely
     invoke alloca (N) if N exceeds 4096.  Use a slightly smaller number
-    to allow for a few compiler-allocated temporary stack slots.  
+    to allow for a few compiler-allocated temporary stack slots.
 */
-       
+
 void *malloc (int); /* INFRINGES ON USER NAME SPACE */
 void free (void *); /* INFRINGES ON USER NAME SPACE */
 
@@ -567,7 +567,7 @@ int yydebug;
 static int
 yystrlen (const char *yystr)
 {
-  const char *yys = yystr;	 
+  const char *yys = yystr;
 
   while (*yys++ != '\0')
     continue;
@@ -614,7 +614,7 @@ yytnamerr (char *yyres, const char *yystr)
 
 	  case '\\':
 	    if (*++yyp != '\\')
-	      goto do_not_strip_quotes;  
+	      goto do_not_strip_quotes;
 	    /* Fall through.  */
 	  case '"':
 	    if (yyres)
@@ -650,7 +650,7 @@ yysymprint (yyoutput, yytype, yyvaluep)
 
   if (yytype < YYNTOKENS)
         YFPRINTF (yyoutput, "token %s (", yytname[yytype]);
-  else 
+  else
      YYFPRINTF (yyoutput, "nterm %s (", yytname[yytype]);
 
   switch (yytype)
@@ -707,7 +707,7 @@ int yynerrs;
 
 int yyparse (void)
 {
-  
+
   int yystate;
   int yyn;
   int yyresult;
@@ -907,10 +907,10 @@ yyreduce:
 
    /* If YYLEN is nonzero, implement the default value of the action:
      '$$ = $1', otherwise, the following line sets YYVAL to garbage.
-     This behavior is undocumented and Bison users should not rely upon it.  
-     Assigning to YYVAL unconditionally makes the parser a bit smaller, 
+     This behavior is undocumented and Bison users should not rely upon it.
+     Assigning to YYVAL unconditionally makes the parser a bit smaller,
      and it avoids a GCC warning that YYVAL may be used uninitialized.  */
-     
+
    yyval = yyvsp[1-yylen];
 
 
@@ -918,7 +918,7 @@ yyreduce:
    switch (yyn)
    {
       case 2:
-      { 
+      {
          /* add default rule */
 			int def_rule;
 
@@ -956,8 +956,8 @@ yyreduce:
    break;
 
    case 7:
-   { 
-      synerr( _("unknown error processing section 1") ); 
+   {
+      synerr( _("unknown error processing section 1") );
    }
    break;
 
@@ -970,32 +970,32 @@ yyreduce:
    break;
 
    case 9:
-   { 
-      xcluflg = false; 
+   {
+      xcluflg = false;
    }
    break;
 
    case 10:
-   { 
-      xcluflg = true; 
+   {
+      xcluflg = true;
    }
    break;
 
    case 11:
-   { 
-      scinstal( nmstr, xcluflg ); 
+   {
+      scinstal( nmstr, xcluflg );
    }
    break;
 
    case 12:
-   { 
-      scinstal( nmstr, xcluflg ); 
+   {
+      scinstal( nmstr, xcluflg );
    }
    break;
 
    case 13:
-   { 
-      synerr( _("bad start condition list") ); 
+   {
+      synerr( _("bad start condition list") );
    }
    break;
 
@@ -1007,38 +1007,38 @@ yyreduce:
    break;
 
    case 18:
-   { 
-      extra_type = copy_string( nmstr ); 
+   {
+      extra_type = copy_string( nmstr );
    }
    break;
 
    case 19:
-   { 
-      prefix = copy_string( nmstr ); 
+   {
+      prefix = copy_string( nmstr );
    }
    break;
 
    case 20:
-   { 
-      yyclass = copy_string( nmstr ); 
+   {
+      yyclass = copy_string( nmstr );
    }
    break;
 
    case 21:
-   { 
-      headerfilename = copy_string( nmstr ); 
+   {
+      headerfilename = copy_string( nmstr );
    }
    break;
 
    case 22:
-   { 
-      tablesext = true; tablesfilename = copy_string( nmstr ); 
+   {
+      tablesext = true; tablesfilename = copy_string( nmstr );
    }
    break;
 
    case 23:
-   { 
-      scon_stk_ptr = (yyvsp[-3]); 
+   {
+      scon_stk_ptr = (yyvsp[-3]);
    }
    break;
 
@@ -1129,7 +1129,7 @@ yyreduce:
    {
 			if ( scon_stk_ptr > 0 )
 				build_eof_action();
-	
+
 			else
 				{
 				/* This EOF applies to all start conditions
@@ -1238,7 +1238,7 @@ yyreduce:
 
 				/* Mark as variable. */
 				varlength = true;
-				headcnt = 0;		
+				headcnt = 0;
 
 				}
 
@@ -1258,7 +1258,7 @@ yyreduce:
 					num_rules | YY_TRAILING_HEAD_MASK );
 				variable_trail_rule = true;
 				}
-			
+
 			else
 				trailcnt = rulelen;
 
@@ -1637,7 +1637,7 @@ yyreduce:
 
   case 67:
    {
-			cclnegate( (yyvsp[-1]) );	 
+			cclnegate( (yyvsp[-1]) );
 			(yyval) = (yyvsp[-1]);
 			}
     break;
@@ -1689,7 +1689,7 @@ yyreduce:
                 if (sf_case_ins() && has_case((yyvsp[-2])) && has_case((yyvsp[0]))){
                     (yyvsp[-2]) = reverse_case ((yyvsp[-2]));
                     (yyvsp[0]) = reverse_case ((yyvsp[0]));
-                    
+
                     for ( i = (yyvsp[-2]); i <= (yyvsp[0]); ++i )
                         ccladd( (yyvsp[-3]), i );
 
@@ -1763,7 +1763,7 @@ yyreduce:
     break;
 
   case 78:
-   { 
+   {
                           CCL_EXPR(islower);
                           if (sf_case_ins())
                               CCL_EXPR(isupper);
@@ -1835,7 +1835,7 @@ yyreduce:
     break;
 
   case 94:
-   { 
+   {
 				if ( sf_case_ins() )
 					warn(_("[:^lower:] is ambiguous in case insensitive scanner"));
 				else
@@ -1891,7 +1891,7 @@ yyreduce:
      that goes to, based on the state we popped back to and the rule
      number reduced by.  */
 
-  yyn = yyr1[yyn];		
+  yyn = yyr1[yyn];
 
   yystate = yypgoto[yyn - YYNTOKENS] + *yyssp;
   if (0 <= yystate && yystate <= YYLAST && yycheck[yystate] == *yyssp)
@@ -2126,7 +2126,7 @@ yyreturn:
 
   if (yyss != yyssa)
     YYSTACK_FREE (yyss);
-    
+
    return yyresult;
 }
 
@@ -2263,7 +2263,7 @@ int line;
  */
 
 void yyerror( msg )
-const char *msg;					  
+const char *msg;
 	{
 	}
 

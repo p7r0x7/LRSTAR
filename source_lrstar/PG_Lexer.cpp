@@ -13,7 +13,7 @@ int     PG_Lexer::col_numb;			// Column number of token.
 int	  PG_Lexer::line_pos;
 char*   PG_Lexer::line_start;		   // Line start pointer.
 int     PG_Lexer::line_start_numb;	// Line number associated with line_start.
-int     PG_Lexer::linenumb_printed;	
+int     PG_Lexer::linenumb_printed;
 FILE*   PG_Lexer::output;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -23,7 +23,7 @@ void  PG_Lexer::init_lexer (char* input_start)
 		line_numb			 = 1;
 		col_numb           = 0;
 		line_pos				 = 1;
-		tab					 = 3;  
+		tab					 = 3;
 		token.end          = input_start;
 		line_start			 = input_start;
 		line_ptr[1]			 = input_start;
@@ -32,9 +32,9 @@ void  PG_Lexer::init_lexer (char* input_start)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-int   PG_Lexer::get_token ()			// Medium size lexer.		
+int   PG_Lexer::get_token ()			// Medium size lexer.
 {
-		int x, y;							// State, next state.	    
+		int x, y;							// State, next state.
 		do
 		{
 			x = 0;
@@ -52,25 +52,25 @@ int   PG_Lexer::get_token ()			// Medium size lexer.
 					col_numb = 0;
 					line_pos = 1;
 					line_ptr[line_numb] = ++token.end;
-				/*	#ifdef _DEBUG 
+				/*	#ifdef _DEBUG
 					prt_line();
 					#endif  */
-				} 
+				}
 				else if (*token.end == '\t')
 				{
 					col_numb += 3 - (col_numb % 3);	// Increment column.
 					token.end++;							// Increment Token pointer.
 				}
-				else 
+				else
 				{
 					col_numb++;							// Increment column.
 					token.end++;							// Increment Token pointer.
 				}
 			}
-		} 
-		while (term_numb[x] < 0);	// Ignore whitespace.	
+		}
+		while (term_numb[x] < 0);	// Ignore whitespace.
 		line_pos++;
-		return term_numb[x];			// Return token_number.	
+		return term_numb[x];			// Return token_number.
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -98,9 +98,9 @@ void	PG_Lexer::prt_line() // Print current line.
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-int   PG_Lexer::get_nexttoken (char*& start, char*& end)	// Medium size lexer.		
+int   PG_Lexer::get_nexttoken (char*& start, char*& end)	// Medium size lexer.
 {
-		int x, y;								// State, next state.	    
+		int x, y;								// State, next state.
 		do
 		{
 			x = 0;
@@ -110,16 +110,16 @@ int   PG_Lexer::get_nexttoken (char*& start, char*& end)	// Medium size lexer.
 				x = y;
 				end++;
 			}
-		} 
-		while (term_numb[x] < 0);	// Ignore whitespace.	
-		return term_numb[x];			// Return token_number.	
+		}
+		while (term_numb[x] < 0);	// Ignore whitespace.
+		return term_numb[x];			// Return token_number.
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-int   PG_Lexer::get_lookahead ()			// Medium size lexer.		
+int   PG_Lexer::get_lookahead ()			// Medium size lexer.
 {
-	int x, y;							// State, next state.	    
+	int x, y;							// State, next state.
 	do
 	{
 		x = 0;
@@ -134,38 +134,38 @@ int   PG_Lexer::get_lookahead ()			// Medium size lexer.
 			}
 			token.end++;
 		}
-	} while (term_numb[x] < 0);	// Ignore whitespace.	
-	return term_numb[x];				// Return token_number.	
+	} while (term_numb[x] < 0);	// Ignore whitespace.
+	return term_numb[x];				// Return token_number.
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-char* PG_Lexer::untabify (char* ls, char*& ts) 
+char* PG_Lexer::untabify (char* ls, char*& ts)
 {
 	// ls = line start.
 	// ts = token start within this line.;
 		static char string[256];
 		char* stringend = string + 250;
 		char* p;
-		char* s;							  
+		char* s;
 		int   ns;
 		int   col = 0;
 		int   incr = 0;
 		for (p = ls, s = string; *p != '\n'; p++)
-		{		
+		{
 			if (*p == '\t')				 // col = 0 1 2 3 4 5
 			{									 // ns  = 3	2 1 3	2 1
 				ns = 3 - (col % 3);
 				switch (ns)
 				{
-					case 3: 
-						*s++ = ' '; 
+					case 3:
+						*s++ = ' ';
 						if (p < ts) incr++;
-					case 2: 
-						*s++ = ' '; 
+					case 2:
+						*s++ = ' ';
 						if (p < ts) incr++;
-					case 1: 
-						*s++ = ' '; 
+					case 1:
+						*s++ = ' ';
 				}
 				col += ns;
 			}
@@ -194,7 +194,7 @@ char*	PG_Lexer::untabify (char* ls) // Untabify this line.
 		{
 			if (*p == '\t')				 // col = 0 1 2 3 4 5
 			{									 // ns  = 3	2 1 3	2 1
-				ns = 3 - (col % 3); 
+				ns = 3 - (col % 3);
 				switch (ns)
 				{
 					case 3: *s++ = ' ';
@@ -224,7 +224,7 @@ void  PG_Lexer::prt_line ()
 			int len = 0;
          char* p = line_start;
          char* q = line;
-		   while (*p != '\n') 
+		   while (*p != '\n')
          {
             if (*p == '\t') *q++ = ' ';
             else            *q++ = *p;
@@ -237,6 +237,6 @@ void  PG_Lexer::prt_line ()
       }
 }
 */
-//                                                                                                 // 
+//                                                                                                 //
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -9,16 +9,16 @@
 		int	 LG_BuildStates::extra_states;
 		int*   LG_BuildStates::ntt_item;
 		int*   LG_BuildStates::accessor;
-		int    LG_BuildStates::accept_state; 
+		int    LG_BuildStates::accept_state;
 		char** LG_BuildStates::FIRST;
 		char** LG_BuildStates::FOLLOW;
 		int*   LG_BuildStates::f_kernel;
 		int*   LG_BuildStates::l_kernel;
 		int*   LG_BuildStates::f_final;
-		int*   LG_BuildStates::l_final; 
+		int*   LG_BuildStates::l_final;
 		int*   LG_BuildStates::final;
 		int*   LG_BuildStates::kernel;
-		ITEM*  LG_BuildStates::item;    
+		ITEM*  LG_BuildStates::item;
 		int*   LG_BuildStates::f_item;
 		int    LG_BuildStates::n_ttran;
 		int    LG_BuildStates::n_nttran;
@@ -69,11 +69,11 @@ int   LG_BuildStates::BuildStates () /* Build LR0 States */
 	  	printf ("Building states ...\n");
 
 		max_states  = optn[MAX_STA];
-      max_final   = optn[MAX_FIN]; 
-      max_kernel  = optn[MAX_KER]; 
-      max_ntt     = optn[MAX_NTT]; 
-      max_tt      = optn[MAX_TT ]; 
-      max_child   = optn[MAX_CH ]; 
+      max_final   = optn[MAX_FIN];
+      max_kernel  = optn[MAX_KER];
+      max_ntt     = optn[MAX_NTT];
+      max_tt      = optn[MAX_TT ];
+      max_child   = optn[MAX_CH ];
 
       ALLOC (Tcameto,   max_states+1);
       ALLOC (Ncameto,   max_states+1);
@@ -142,7 +142,7 @@ int   LG_BuildStates::BuildStates () /* Build LR0 States */
 			}
 		}
 
-		org_states = N_states;		
+		org_states = N_states;
       if (optn[LG_VERBOSE])
 		     prt_log     ("States   %7d states before converting to a DFA.\n", N_states);
 		else prt_logonly ("States   %7d states before converting to a DFA.\n", N_states);
@@ -156,8 +156,8 @@ int   LG_BuildStates::BuildStates () /* Build LR0 States */
       FREE (slist,    n_symbs+1);
       FREE (added,    n_heads);
 
-      REALLOC (ntt_action,  max_ntt,  n_nonttran);	
-      REALLOC (tt_action,   max_tt,   n_termtran); 
+      REALLOC (ntt_action,  max_ntt,  n_nonttran);
+      REALLOC (tt_action,   max_tt,   n_termtran);
       REALLOC (kernel,    max_kernel,   n_kernels );
       REALLOC (final,     max_final,    n_finals  );
       REALLOC (ntt_start, max_states+1, N_states+2);
@@ -167,9 +167,9 @@ int   LG_BuildStates::BuildStates () /* Build LR0 States */
       REALLOC (accessor,  max_states,   N_states  );
       REALLOC (st_type,   max_states,   N_states  );
 
-		C_CAMEFROM (N_states, tt_start, tt_action, ntt_start, ntt_action, f_camefrom, camefrom); 
+		C_CAMEFROM (N_states, tt_start, tt_action, ntt_start, ntt_action, f_camefrom, camefrom);
 
-      n_oprods = n_prods;  // Set number of original productions. 
+      n_oprods = n_prods;  // Set number of original productions.
 
 	  	if (optn[LG_VERBOSE] > 2)
 	  	printf ("Done with building states !!!\n");
@@ -195,7 +195,7 @@ void  LG_BuildStates::C_ITEMS ()
                i++;
             }
             i++;
-         }  
+         }
       }
 
       n_items = i;
@@ -222,7 +222,7 @@ void  LG_BuildStates::C_ITEMS ()
             item[i].prod   = p;
             item[i].dot    = d;
             item[i++].symb = -32767;
-         }  
+         }
       }
       if (i != n_items) InternalError(4);
 }
@@ -246,15 +246,15 @@ void  LG_BuildStates::EXPAND (int state)
 				w = TRANSIT (n, slist[i].symb);
 				if (w > 0) Tcameto [w]++;
 				tt_action [n_termtran++] = w;
-				if (n_termtran >= max_tt) 
+				if (n_termtran >= max_tt)
 				MemCrash ("Number of terminal transitions", max_tt);
          }
-         for (i = 0; i < head_free; i++)	
+         for (i = 0; i < head_free; i++)
          {
 				nt++;
 				if (slist[i].symb == 1) // if "Token" transition
 				{
-					accept_tran = n_nonttran; // capture this for later.	
+					accept_tran = n_nonttran; // capture this for later.
 					ntt_action [n_nonttran++] = 0;
 				}
 				else
@@ -265,22 +265,22 @@ void  LG_BuildStates::EXPAND (int state)
 					if (w > 0) Ncameto [w]++;
 					ntt_action [n_nonttran++] = w;
 				}
-				if (n_nonttran >= max_ntt) 
+				if (n_nonttran >= max_ntt)
 				MemCrash ("Number of nonterminal transitions", max_ntt);
-         }  
+         }
       }
       tt_start  [state+1] = n_termtran;
       ntt_start [state+1] = n_nonttran;
 
    // Define state type for this state based on transition data.
       st_type[state] = 0;
-      if (tt) st_type[state] |= TT_STATE; 
-      if (nt) st_type[state] |= NT_STATE; 
-      if (tt == 0 && nt == 0) 
-      { 
+      if (tt) st_type[state] |= TT_STATE;
+      if (nt) st_type[state] |= NT_STATE;
+      if (tt == 0 && nt == 0)
+      {
          nfi = f_final[state+1] - f_final[state];
-         if (nfi > 1) st_type[state] = MR_STATE; 
-         else         st_type[state] = RO_STATE; 
+         if (nfi > 1) st_type[state] = MR_STATE;
+         else         st_type[state] = RO_STATE;
       }
 }
 
@@ -291,7 +291,7 @@ void  LG_BuildStates::DO_CLOSURE (int state)
 {
       int k;
       n_clo = 0;
-      head_free = 0; 
+      head_free = 0;
       term_free = n_heads;
       FASTINI (-1, already, n_symbs+1);
 
@@ -328,7 +328,7 @@ void  LG_BuildStates::ADD_ITEM (int i, int state)
                      ADD_ITEM (f_item [p], state);
                   }
                   added [-s] = state;
-               }  
+               }
             }
             else
             {
@@ -337,7 +337,7 @@ void  LG_BuildStates::ADD_ITEM (int i, int state)
                slist [symb_free].end = n_clo;
                already [s+n_heads] = symb_free;
                n_clo++;
-            }  
+            }
          }
          else
          {
@@ -365,7 +365,7 @@ void  LG_BuildStates::MAKE_KERNEL (int c)
       {
          i = closure [c].item + 1;
          hash_no += kernel [n_kernels++] = i;
-         if (n_kernels >= max_kernel) 
+         if (n_kernels >= max_kernel)
 				MemCrash ("Number of kernel items", max_kernel);
       }
       while ((c = closure [c].next) != -1);
@@ -380,12 +380,12 @@ int	LG_BuildStates::TRANSIT (int ki, int sym)
       ni = n_kernels - ki;
       if (ni > 1)                     // Number of items is 1?
       {
-		// Remove this SORT and save 1/2 sec on English.lgr, 
-		// but better to have sorted items in the state listing. 
-			SORT (kernel + ki, kernel + n_kernels);	
+		// Remove this SORT and save 1/2 sec on English.lgr,
+		// but better to have sorted items in the state listing.
+			SORT (kernel + ki, kernel + n_kernels);
 		}
 
-      if (N_states >= max_states) 
+      if (N_states >= max_states)
 			MemCrash ("Number of states", max_states);
       accessor [N_states]   = sym;
       f_kernel [N_states+1] = n_kernels;
@@ -400,17 +400,17 @@ int	LG_BuildStates::TRANSIT (int ki, int sym)
 void	LG_BuildStates::MAKE_ACCEPT_STATE ()
 {
 	// Make accept_state
-      if (N_states >= max_states) 
+      if (N_states >= max_states)
 			MemCrash ("Number of states", max_states);
-      if (n_kernels >= max_kernel) 
+      if (n_kernels >= max_kernel)
 			MemCrash ("Number of kernel items", max_kernel);
-		if (n_termtran >= max_tt) 
+		if (n_termtran >= max_tt)
 			MemCrash ("Number of terminal transitions", max_tt);
 
 		accept_state = N_states;
 		ntt_action [accept_tran]  = accept_state;	// Token transition to accept state.
 		Ncameto  [accept_state]++;						// Came to accept_state.
-		f_kernel [accept_state] = n_kernels;	 
+		f_kernel [accept_state] = n_kernels;
 		f_final  [accept_state] = n_finals;
       accessor [accept_state] = -1;					// Token
 		st_type  [accept_state] = TT_STATE;
@@ -423,21 +423,21 @@ void	LG_BuildStates::MAKE_ACCEPT_STATE ()
       N_states++;
 
 	// Make final_state
-      if (N_states >= max_states) 
+      if (N_states >= max_states)
 			MemCrash ("Number of states", max_states);
-      if (n_finals  >= max_final ) 
+      if (n_finals  >= max_final )
 			MemCrash ("Number of final items", max_final);
-      if (n_kernels >= max_kernel) 
+      if (n_kernels >= max_kernel)
 			MemCrash ("Number of kernel items", max_kernel);
 
 		final_state = N_states;
-		Tcameto  [final_state]++;					
+		Tcameto  [final_state]++;
 		f_kernel [final_state]  = n_kernels;
 		f_final  [final_state]  = n_finals;
 		tt_start [final_state]  = n_termtran;
 		ntt_start[final_state]  = n_nonttran;
       st_type  [final_state]  = RO_STATE;
-      accessor [final_state]  = tail [l_tail [0] - 1]; 
+      accessor [final_state]  = tail [l_tail [0] - 1];
       tt_start [final_state+1] = n_termtran;
       ntt_start[final_state+1] = n_nonttran;
       final [n_finals ] = 0; // Goal production.

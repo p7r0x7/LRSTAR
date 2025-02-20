@@ -10,7 +10,7 @@
       #define EXTERN extern
       #endif
 
-      #define MAX_LENGTH 60 
+      #define MAX_LENGTH 60
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //																																	//
@@ -41,9 +41,9 @@
 //																																	//
 //		Defines
 
-		enum options 
+		enum options
 		{
-         PG_ARGPOINTATNT  , 
+         PG_ARGPOINTATNT  ,
          PG_ASTCONST      ,
          PG_BACKSLASH     ,
 			PG_BOOLMATRIX    ,
@@ -229,26 +229,26 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		class Symbol             
+		class Symbol
 		{
 		   public:
-			char*  name;		// Pointer to symbol name (allocated).   							      4	 4	
+			char*  name;		// Pointer to symbol name (allocated).   							      4	 4
 			char*  original;	// Original name for those renamed symbols.								4	 8
-			char*  start;		// Pointer to symbol start address (in source code).					4	12	
+			char*  start;		// Pointer to symbol start address (in source code).					4	12
 			int	 length;		// Length  of symbol.		      											4  16
 			int	 origleng;	// Original length  of symbol.		      								4  20
          int    type;		// Type (e.g. integer, float, double, char, ...)						4  24
 			int    line;		// Line of first encounter in grammar.	                           4  28
-			int    numb;		// Number assigned to symbol (sequence number).		               4  32 
-			int    value;		// Value of symbol (for constants and integers).		            4  36 
+			int    numb;		// Number assigned to symbol (sequence number).		               4  32
+			int    value;		// Value of symbol (for constants and integers).		            4  36
 		};
 
-		class Node                
+		class Node
 		{
 		   public:
-			int    id;		 // Node id number.	               					4	 4	
-			int    numb;	 // Node number.												4	 8	
-			int    prod;	 // Production number.										4	12	
+			int    id;		 // Node id number.	               					4	 4
+			int    numb;	 // Node number.												4	 8
+			int    prod;	 // Production number.										4	12
 			int    sti;     // Symbol-table index (can be negative).   			4	16
 			int    line;    // Line number.              							4	20
 			int    oper;    // ZERO_OR_MORE, ONE_OR_MORE, ZERO_OR_ONE.       	4	24
@@ -258,46 +258,46 @@
 			Node*  prev;	 // Previous node.			   							4  40
 			Node*  child;   // Child node.                            			4  44
 			Node*  parent;  // Parent node.                            			4  48
-		}; 
-  
+		};
+
       class PStack // Parser stack.
       {
          public:
-         int    state;     // Parser state.                 4	 4	
-         char*  start;     // Token start address.          4	 8	
-         char*  end;       // Token end address.            4	12	
-         int    line;      // Input line number.            4	16	
-         int    sti;       // Symbol table index.           4	20	
-			int    sym;       // Symbol stacked, terminal (positive) or nonterminal (negative). 
-         Node*  node;      // Node pointer.                 4	24	
-         Node*  last;      // Last pointer.                 4	28	bytes 
+         int    state;     // Parser state.                 4	 4
+         char*  start;     // Token start address.          4	 8
+         char*  end;       // Token end address.            4	12
+         int    line;      // Input line number.            4	16
+         int    sti;       // Symbol table index.           4	20
+			int    sym;       // Symbol stacked, terminal (positive) or nonterminal (negative).
+         Node*  node;      // Node pointer.                 4	24
+         Node*  last;      // Last pointer.                 4	28	bytes
       };
 
       class RStack // Restore Stack.
       {
          public:
-         PStack* ptr;		// Parse stack pointer.				4	 4	
+         PStack* ptr;		// Parse stack pointer.				4	 4
          int     state;    // State.								4	 8	bytes.
       };
 
       class Stack
       {
          public:
-         int   id;      // Node id.                      2	 2	
-         int   counter; // Counter of node accesses.     2	 4	
+         int   id;      // Node id.                      2	 2
+         int   counter; // Counter of node accesses.     2	 4
       };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //																																	//
-//		Global Variables 
+//		Global Variables
 
 		extern char*  program;
       extern char*  version;
       extern char*  bits;
       extern char*  copywrt;
 
-		extern uchar  charcode[256]; 
-		extern uchar  numeric[256]; 
+		extern uchar  charcode[256];
+		extern uchar  numeric[256];
 		extern uchar  alpha[256];
 		extern uchar  upper[256];
 		extern uchar  lower[256];
@@ -307,15 +307,15 @@
 		EXTERN int    n_warnings;
 
       EXTERN char   confid [MAX_PATH];
-      EXTERN char   dir [MAX_DIR];   
+      EXTERN char   dir [MAX_DIR];
 	   EXTERN char   exefid [MAX_PATH];
-      EXTERN char   gdn [MAX_DIR];      
-      EXTERN char   gfn [MAX_FILENAME]; 
-      EXTERN char   gft [MAX_FILETYPE]; 
-	   EXTERN char   grmfid [MAX_PATH];  
+      EXTERN char   gdn [MAX_DIR];
+      EXTERN char   gfn [MAX_FILENAME];
+      EXTERN char   gft [MAX_FILETYPE];
+	   EXTERN char   grmfid [MAX_PATH];
 	   EXTERN char   logfid [MAX_PATH];
 	   EXTERN char   lstfid [MAX_PATH];
-      EXTERN char   out_name [MAX_FILENAME]; 
+      EXTERN char   out_name [MAX_FILENAME];
 
       EXTERN int    optn[N_OPTIONS];
       EXTERN int    optncount[N_OPTIONS];
@@ -341,7 +341,7 @@
       EXTERN int    time2;
 		EXTERN char   string [10000];
 
-      EXTERN int    filesize;          
+      EXTERN int    filesize;
   		EXTERN int	  filedesc;
 
       EXTERN char*  input_start;			/* First byte of input area.              */
@@ -350,7 +350,7 @@
       EXTERN char*  lex_input_end;     /* Byte after input.                      */
       EXTERN int    LR1Activated;
       EXTERN int    n_lines;
-      EXTERN char   spaces [256] 
+      EXTERN char   spaces [256]
       #ifdef MAIN
       = "                                                                " //  64
         "                                                                "	// 128
@@ -413,13 +413,13 @@
 //																																	//
 //		Global Functions
 
-		extern void   C_FIRST  (int n_heads, int n_terms, int* f_prod, int* f_tail, int* tail, char**& FIRST, int* nullable); 
+		extern void   C_FIRST  (int n_heads, int n_terms, int* f_prod, int* f_tail, int* tail, char**& FIRST, int* nullable);
 		extern void   C_FOLLOW (int n_heads, int n_terms, int* f_prod, int* f_tail, int* tail, char**  FIRST, char**& FOLLOW, int* nullable);
       extern void   C_EQUIVALENCE_N (int n_heads, int* f_prod, int* f_tail, int* tail, char**& EQUIVALENCE);
       extern void   C_EQUIVALENCE_T (int n_heads, int n_terms, int* f_prod, int* f_tail, int* tail, char**& EQUIVALENCE);
-		extern void   P_FIRST  (int n_heads, int n_terms, char** FOLLOW, char** term_name, char** head_name); 
-		extern void   P_FOLLOW (int n_heads, int n_terms, char** FOLLOW, char** term_name, char** head_name); 
-		extern void   C_CAMEFROM (int n_states, int* tt_start, int* tt_action, int* ntt_start, int* ntt_action, int*& f_camefrom, int*& camefrom); 
+		extern void   P_FIRST  (int n_heads, int n_terms, char** FOLLOW, char** term_name, char** head_name);
+		extern void   P_FOLLOW (int n_heads, int n_terms, char** FOLLOW, char** term_name, char** head_name);
+		extern void   C_CAMEFROM (int n_states, int* tt_start, int* tt_action, int* ntt_start, int* ntt_action, int*& f_camefrom, int*& camefrom);
 
 		extern int    close_con();
 		extern int    close_grm ();
@@ -450,7 +450,7 @@
 
 		extern void   MemCrash (char* msg);
 		extern void   MemCrash (char* value, int n);
-		 
+
 		extern char*  mystrlwr (char* s);
 		extern char*  mystrupr (char* s);
       extern void   memcrash (char*, int);
@@ -509,7 +509,7 @@
 		extern char*  alloc (char *s, char*& x, int size, int n);
 		#else
 		extern char*  alloc (char*& x, int size, int n);
-		#endif		  
+		#endif
 
 		extern void   ralloc (char*& x, int size, int n1, int n2);
 		extern void   frea  (char*& x, int size, int n);

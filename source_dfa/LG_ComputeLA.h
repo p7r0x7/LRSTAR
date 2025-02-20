@@ -20,7 +20,7 @@
 			static int     n_includes;
 
 			static int		ComputeLA ();
-			
+
 			private:
 			static void 	ANALYZE (int& nc, int s, int f);
 			static void 	IND_READ (int i, int s);

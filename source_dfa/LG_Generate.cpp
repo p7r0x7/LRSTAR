@@ -4,7 +4,7 @@
 		#include "CM_Global.h"
 		#include "LG_Global.h"
 		#include "LG_CreateTables.h"
-				
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //																																 //
 
@@ -94,7 +94,7 @@ void	LG::GenerateLexerDefines ()
 		fprintf (tables, "      typedef unsigned short ushort;\n");
 		fprintf (tables, "      #define MAX    0x80000000\n\n");
 
-	// T_matrix ... 
+	// T_matrix ...
       vartype = get_typestr (T_matrix, T_size);
 		fprintf (header, "      static %-6s Tm[%6d]        ; // Terminal transition matrix.\n", vartype, T_size);
 		fprintf (tables, "   // Terminal transition matrix ...\n");
@@ -102,7 +102,7 @@ void	LG::GenerateLexerDefines ()
 		fprintf (tables, "      {");
 		for (int i = 0; i < T_size; i++)
 		{
-			if (i % 20 == 0) 
+			if (i % 20 == 0)
 			{
 				if (i > 0) fprintf (tables, ",");
 				if (T_matrix[i] == MAX_INT)
@@ -118,7 +118,7 @@ void	LG::GenerateLexerDefines ()
 		}
 		fprintf (tables, "\n      };\n\n");
 
-   // T_matrix row ... 
+   // T_matrix row ...
 		if (optn[LG_TABL_MEDIUM])
 		{
 			vartype = get_typestr (T_row, tt_states);
@@ -138,7 +138,7 @@ void	LG::GenerateLexerDefines ()
 			fprintf (tables, "\n      };\n\n");
 		}
 
-   // T_matrix column ... 
+   // T_matrix column ...
 		if (optn[LG_TABL_MEDIUM])
 		{
 			vartype = get_typestr (T_col, N_terms);
@@ -158,7 +158,7 @@ void	LG::GenerateLexerDefines ()
 			fprintf (tables, "\n      };\n\n");
 		}
 
-   // Terminal Numbers (one for for each state) ... 
+   // Terminal Numbers (one for for each state) ...
 		if (optn[LG_TABL_MEDIUM])
 		{
 			vartype = get_typestr (D_red, N_states);
@@ -168,7 +168,7 @@ void	LG::GenerateLexerDefines ()
 			fprintf (tables, "      {");
 			for (int i = 0; i < N_states; i++)
 			{
-				if (i % 20 == 0) 
+				if (i % 20 == 0)
 				{
 					if (i > 0) fprintf (tables, ",");
 					fprintf (tables, "\n      %5d", D_red[i]);
@@ -189,7 +189,7 @@ void	LG::GenerateLexerDefines ()
 		if (n_constants > 0)
 		{
          int i;
-			fprintf (header, 
+			fprintf (header,
 			"      enum terminal\n"
 			"      {\n");
 			for (i = 0; i < n_constants-1; i++)
@@ -197,7 +197,7 @@ void	LG::GenerateLexerDefines ()
 				fprintf (header, "         %s = %d,\n", Defcon_name[i], Defcon_value[i]);
 			}
 			fprintf (header, "         %s = %d\n", Defcon_name[i], Defcon_value[i]);
-			fprintf (header, 
+			fprintf (header,
 			"      };\n\n");
 		}
 
@@ -208,5 +208,5 @@ void	LG::GenerateLexerDefines ()
       chmod (filename_h, S_IREAD); // Make output file read-only.
 }
 
-//                                                                                                 // 
+//                                                                                                 //
 /////////////////////////////////////////////////////////////////////////////////////////////////////

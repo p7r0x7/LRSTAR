@@ -22,8 +22,8 @@
 			static char**  Defcon_term;
 			static char**  head_name;
 			static int*    head_sym;
-			static int*    head_line; 
-			static int*    term_line; 
+			static int*    head_line;
+			static int*    term_line;
 			static int*    prod_len;
 			static int*    prod_line;
 			static int*    nullable;
@@ -65,10 +65,10 @@
 			static int*  	l_tail;
 			static int*  	f_prod;
 			static int*  	l_prod;
-			static int*  	tail;	
+			static int*  	tail;
 			static int*    prod_type;
 			static int    	max_trans;
-			static int    	max_errs;      
+			static int    	max_errs;
 			static int    	max_final;
 			static int    	max_include;
 			static int    	max_kernel;
@@ -85,11 +85,11 @@
 			static int    	max_code;
 			static int    	max_ttas;
 			static int    	max_n_prods;
-			static char*  	tokenstartstr; 
-			static char*  	tokenendstr; 
-			static char*  	tokenlinestr; 
-			static char*  	linenumbstr; 
-			static char*  	colnumbstr; 
+			static char*  	tokenstartstr;
+			static char*  	tokenendstr;
+			static char*  	tokenlinestr;
+			static char*  	linenumbstr;
+			static char*  	colnumbstr;
 			static char*  	tabstopstr;
 			static int    	anl_stat_memory;
 			static int    	amt_code;
@@ -115,11 +115,11 @@
 			static int    	n_words;
 			static int*   	ntt_goto2;
 			static int*   	ntt_symb2;
-			static int    	n_totalterm; 
+			static int    	n_totalterm;
 			static int    	n_codelines;
 			static int    	opt_stat_memory;
 			static int    	parser_memory;
-			static int*   	possibil;   
+			static int*   	possibil;
 			static int    	rr_con;
 			static int    	SLA_expired;
 			static int    	sr_con;
@@ -132,7 +132,7 @@
 
 			static void    init_actions ();
 			static void    term_actions ();
-			
+
 
       // Token actions ...
          static int   	error (int&);
@@ -175,15 +175,15 @@
          static int   	GEN_HEAD_LITERAL (int, char*, int);
          static int   	GEN_PROD ();
          static int   	GEN_TAIL (int);
-         static int   	REMOVE_QUOTES (); 
+         static int   	REMOVE_QUOTES ();
 	   	static int   	CHECK_SYMBOL (int);
-         static int   	GEN_CON (); 
-         static int   	GEN_STRINGS (); 
+         static int   	GEN_CON ();
+         static int   	GEN_STRINGS ();
          static void  	EXP_LITERALS ();
          static int   	EXIST ();
          static int   	SYMNUMB ();
          static int   	GENSYMNUMB ();
-			static int   	ADD_SYMBOL (char* name, int& sym_numb); 
+			static int   	ADD_SYMBOL (char* name, int& sym_numb);
 
       // Production actions ...
 			static int     SET_DEBUG (int p);
@@ -203,7 +203,7 @@
          static int   	CHECK_PROD (int p);
          static int   	DEF_TAIL ();
          static int   	ADD_TERMINAL ();
-         static int   	CHK_NUMB (); 
+         static int   	CHK_NUMB ();
 			static void	 	MAKE_SET (int s);
 			static void  	P_PROD (int p);
 			static void  	ADDSETNAME (int s, char* hit);
@@ -231,7 +231,7 @@
          static int   	ADD_SET (int p);
          static int   	SUB_SET (int p);
          static int   	CHK_SETNAME ();
-         static int   	ADD_NULL (int p);	
+         static int   	ADD_NULL (int p);
          static int   	POP_ALL (int p);
          static int   	POP_SET (int p);
          static int   	PUSH_GBEG (int p);

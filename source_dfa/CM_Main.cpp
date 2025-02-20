@@ -1,8 +1,8 @@
-		
+
 /* Copyright 2018 Paul B Mann.  BSD License. */
-					   
+
       char* program = "DFA";
-      char* version = "24.0.025"; 
+      char* version = "24.0.025";
 		#ifdef x64
       char* bits = "64b";
 		#else
@@ -56,7 +56,7 @@
 		void  InitOptions ();
 
 ///////////////////////////////////////////////////////////////////////////////
- 
+
 int   main (int na, char *arg[])
 {
 		int fd = open ("lrstar.txt", 0);
@@ -78,20 +78,20 @@ int   main (int na, char *arg[])
 		}
 
  		if (!SET_OPTNS (na, arg)) Quit ();
-		if (get_fid (arg[1], gdn, gfn, gft)) 
+		if (get_fid (arg[1], gdn, gfn, gft))
 		{
          mystrlwr (gft);
 			if (*gft == 0) strcpy (gft, ".lgr"); // Default filetype.
-			if (strcmp (gft, ".lgr") != 0) 
+			if (strcmp (gft, ".lgr") != 0)
          {
-            printf ("Cannot use a file type of \"%s\", use \".lgr\" instead.\n", gft); 
+            printf ("Cannot use a file type of \"%s\", use \".lgr\" instead.\n", gft);
             Quit ();
          }
 			strcpy (grmfid, gdn);
 			strcat (grmfid, gfn);
 			strcat (grmfid, gft);
 
-         if (open_log (grmfid)) 
+         if (open_log (grmfid))
          {
             PRT_ARGS (na, arg, 1);
 				char dn[256], fn[256], ft[256];
@@ -105,12 +105,12 @@ int   main (int na, char *arg[])
 
     			if (LG::Main ())
 				{
-					LG::GenerateLexerDefines(); 
+					LG::GenerateLexerDefines();
 					LG::PrintStats();
 				}
          }
 		}
-		LG::Terminate (); 
+		LG::Terminate ();
 		close_log ();
 		exit (n_errors);
 }
@@ -120,7 +120,7 @@ int   main (int na, char *arg[])
 void  ShowOptions ()
 {
 		int i;
-      char  programdesc[] =                  
+      char  programdesc[] =
 			"|\n"
 			"|   DFA LEXER GENERATOR\n"
 			"|\n"
@@ -141,7 +141,7 @@ void  ShowOptions ()
 void  InitOptions ()
 {
 		int i;
-		for (i = 0; i < N_OPTIONS; i++) 
+		for (i = 0; i < N_OPTIONS; i++)
 		{
 			optn[i] = 0;
 		}
@@ -156,8 +156,8 @@ void  InitOptions ()
 
 	// Define invisible LG options ...
 		optn [LG_TABLES]        = 1;
-      optn [LG_BACKSLASH]    	= 0;  
-      optn [LG_TRANSITIONS] 	= 1;   
+      optn [LG_BACKSLASH]    	= 0;
+      optn [LG_TRANSITIONS] 	= 1;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -170,7 +170,7 @@ void  wait (int na)
 		int time1, time2, min, sec, thou, limit;
 		if (na == 1) return;
 		if (!optn[LG_WAIT]) return;
-		limit = 3; // Seconds. 
+		limit = 3; // Seconds.
 		time1 = clock();
 		printf("Press a key to lock this ...\n");
 		do
@@ -178,12 +178,12 @@ void  wait (int na)
 			time2 = clock();
 			dsec = (double)(time2-time1)/CLOCKS_PER_SEC;
 			sec  = dsec;
-			if (_kbhit()) 
+			if (_kbhit())
 			{
 				printf("Locked.\n");
 Halt:			goto Halt;
 			}
-		} 
+		}
 		while (sec < limit);
 		#endif
 }
@@ -218,7 +218,7 @@ void  InternalError (int n)
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
-      
+
 void  MemCrash (char* msg)
 {
       prt_log ("\n%s\n", msg);

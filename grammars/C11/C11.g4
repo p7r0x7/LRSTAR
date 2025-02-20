@@ -305,12 +305,12 @@ directDeclarator
     ;
 
 vcSpecificModifer
-    :   ('__cdecl' 
-    |   '__clrcall' 
-    |   '__stdcall' 
-    |   '__fastcall' 
-    |   '__thiscall' 
-    |   '__vectorcall') 
+    :   ('__cdecl'
+    |   '__clrcall'
+    |   '__stdcall'
+    |   '__fastcall'
+    |   '__thiscall'
+    |   '__vectorcall')
     ;
 
 

@@ -5,15 +5,15 @@
 
 		#pragma once
 
-	// AST Traversal Passes. 
-      #define FIRST_PASS       1  
-      #define SECOND_PASS      2  
-      #define THIRD_PASS       3  
-      #define FOURTH_PASS      4  
-   
+	// AST Traversal Passes.
+      #define FIRST_PASS       1
+      #define SECOND_PASS      2
+      #define THIRD_PASS       3
+      #define FOURTH_PASS      4
+
       class Symbol		   // Symbol in Symbol Table.
-      {						   
-         public:			   
+      {
+         public:
 			char*  start;     // Start of symbol in input file or ?.
 			int    length;    // Length of symbol.
 			int    cell;      // Cell number in hash vector (if need to delete later).
@@ -38,27 +38,27 @@
       class PStack			// Parser stack.
       {
          public:
-         int    state;		// Parser state.                 
-			int    sym;			// Tail symbol.                 
-			int    sti;			// Symbol table index.            
-         int    line;		// Input line number.   
-			char*  start;		// Start of symbol in input file area.  
-			Node*  node;		// Pointer to node.                  
-         Node*  last;		// Pointer to last in list.          
+         int    state;		// Parser state.
+			int    sym;			// Tail symbol.
+			int    sti;			// Symbol table index.
+         int    line;		// Input line number.
+			char*  start;		// Start of symbol in input file area.
+			Node*  node;		// Pointer to node.
+         Node*  last;		// Pointer to last in list.
       };
 
       class RStack			// Restore Stack.
       {
          public:
          PStack* ptr;		// Parse stack pointer.			4	4
-         int     state;		// State.								4	
+         int     state;		// State.								4
          int     sym;		// Symbol.								4	12	bytes.
       };
 
       class SStack			// State stack.
       {
          public:
-         int    state;		// Parser state.                 
+         int    state;		// Parser state.
       };
 
       class Stack				// AST Stack.
@@ -80,7 +80,7 @@
          public:
 		// Parser variables
 			static char    path[256];		// Path of input file.
-			static PStack  PSstart[];		// Parser stack start.	   		  
+			static PStack  PSstart[];		// Parser stack start.
 			static PStack* PS;				// Parse stack pointer.
 			static int	   n_nodes;			// Number of nodes in AST.
 			static int     n_symbols;	   // Number of symbols.
@@ -112,7 +112,7 @@
 			static int     n_warnings;             // Numbor of warnings.
 			static int     last_line;
 			static SStack* SS      [ND_THREADS];	// State stack pointer.
-			static SStack* SSstart [ND_THREADS];	// State stack start.	   		  
+			static SStack* SSstart [ND_THREADS];	// State stack start.
 			static int     State   [ND_THREADS];	// State, during lookahead.
 			static int     Action  [ND_THREADS];	// Parsing action.
 			static int     Parsed  [ND_THREADS];	// Parsed (0 or 1).
@@ -124,12 +124,12 @@
 			static void    print_action      (char* str, int i);
 			static void    print_actions     (int na);
 			static void    print_lookaheads  ();
-			#endif   
+			#endif
 
 		// Symbol-Table Area ...
          public:
          static int     init_symtab  (int max_symbs);
-         static void    term_symtab  ();			
+         static void    term_symtab  ();
          static void    print_symtab ();
          static int     add_symbol	 (int, char*, char*);
          static char*   symbol_name	 (int sti);
@@ -149,14 +149,14 @@
 			static Node*	root;				// Current root node.
 			static Node*	node;				// Current AST node.
 			static int	  	traversal;		// AST traversal number: 1, 2, 3 ...
-			static int		direction;		// Node direction: TOP_DOWN, BOTTOM_UP. 
+			static int		direction;		// Node direction: TOP_DOWN, BOTTOM_UP.
 			static Stack*	stack;			// AST stack array.
 			static int		stacki;			// AST stack index.
 
          private:
 			static int		max_nodes;		// Maximum number of nodes.
 			static int*		counter;			// Node counter array.
-			static Node*   nodearea;		// Node area or Node block allocated. 
+			static Node*   nodearea;		// Node area or Node block allocated.
 			static char		indent[256];	// Indentation for printing current node.
 			static char		draw_plus[3];
 			static char		draw_vbar[3];

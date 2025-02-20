@@ -18,12 +18,12 @@ void	PG_Actions::init_actions ()
 	   int sti;
 
 		char* p = "<error>";
-		sti = add_symbol (p, p+7, LEXICAL, 0);		// Add ERROR symbol. 
+		sti = add_symbol (p, p+7, LEXICAL, 0);		// Add ERROR symbol.
 		symbol[sti].type = TERMINAL;
 		symbol[sti].numb = 0;
 
 		char* q = "<eof>";
-		sti = add_symbol (q, q+5, EOFLITERAL, 0);	// Add EOF symbol. 
+		sti = add_symbol (q, q+5, EOFLITERAL, 0);	// Add EOF symbol.
 		symbol[sti].type = TERMINAL;
 		symbol[sti].numb = 1;
 

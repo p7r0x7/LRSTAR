@@ -29,10 +29,10 @@
 	=>include <PlSqlParserBase.h>
 	}
 */
-/* 
-   I did not have to change much to get it to work with LRSTAR 24. 
+/*
+   I did not have to change much to get it to work with LRSTAR 24.
    This shows the power of LRSTAR, able to process this huge grammar.
-   Paul B Mann 
+   Paul B Mann
 */
 
 sql_script

@@ -11,11 +11,11 @@
 
 int   LG_CheckGrammar::CheckGrammar ()
 {
-	  	if (optn[LG_VERBOSE] > 2) printf ("Checking grammar for problems ...\n");	  
+	  	if (optn[LG_VERBOSE] > 2) printf ("Checking grammar for problems ...\n");
 
       C_LENG ();
-      C_NULLS ();																	
-      C_HEADSYM ();																	
+      C_NULLS ();
+      C_HEADSYM ();
 		CHECK_LEXICALS ();
 		if (n_errors) return 0;
 
@@ -93,7 +93,7 @@ void  LG_CheckGrammar::C_NULLS ()
       n_nulls = 0;
       ALLOC (nullable, n_heads);
       FASTINI (0, nullable, n_heads);
-      do 
+      do
 		{
          n = 0;
          for (h = 0; h < n_heads; h++)
@@ -115,10 +115,10 @@ void  LG_CheckGrammar::C_NULLS ()
                   nullable [h] = 1;
                   goto nexth;
 nextp:            continue;
-               }  
+               }
             }
 nexth:      continue;
-         }  
+         }
       }
       while (n > 0);
 }
@@ -135,7 +135,7 @@ void  LG_CheckGrammar::C_HEADSYM ()
          for (p = f_prod[h]; p < l_prod[h]; p++)
          {
             head_sym[p] = h;
-         }  
+         }
       }
 }
 
@@ -149,20 +149,20 @@ void  LG_CheckGrammar::CHECK_LEXICALS ()
       {
          if (head_type[h] & LEXICON)
          {
-				if (!(head_type[h] & OUTPUTSYM)) 
+				if (!(head_type[h] & OUTPUTSYM))
 				{
                char* g;
                if (already_readlex) g = ".lex";
                else                 g = ".lgr";
 					int x = (int)strlen (head_name[h])-1;
 					head_name[h][x] = 0;
-					sprintf (string, "<%s> assumed to be {%s} because it's not in the tokens list in %s%s", 
+					sprintf (string, "<%s> assumed to be {%s} because it's not in the tokens list in %s%s",
                   head_name[h]+1, head_name[h]+1, gfn, g);
 					head_name[h][x] = '>';
 					prt_warning (string, head_name[h], 0, head_line[h]);
                head_type[h] |= IGNORESYM;
 				}
-         }  
+         }
       }
 }
 
@@ -201,14 +201,14 @@ void  LG_CheckGrammar::P_UNDEFINED ()
 
 			input_start = Input_start;
 			input_end   = Input_end;
-			line_ptr    = Line_ptr;											
+			line_ptr    = Line_ptr;
 
 			for (t = max_char_set+1; t < N_terms; t++) // Skip <eof>
 			{
 				if (!(term_type[t] & LEXFILE))
 				{
 					char code = charcode[*term_name[t]];
-					if ( code == DIGIT || code == QUOTE) 
+					if ( code == DIGIT || code == QUOTE)
 					{
 						prt_error ("'%s' is not a predefined symbol", term_name[t], 0, term_line[t]);
 						prt_log ("Predefined symbols are:\n");
@@ -234,17 +234,17 @@ void  LG_CheckGrammar::P_UNDEFINED ()
 void  LG_CheckGrammar::P_NULL_TOKENS ()
 {
       int p, t;
-      for (p = f_prod [1]; p < l_prod [1]; p++)      // Token -> productions only. 
+      for (p = f_prod [1]; p < l_prod [1]; p++)      // Token -> productions only.
       {
          t = tail [f_tail [p]];                      // First tail symbol.
-         if (t < 0)                                  // Nonterminal?        
+         if (t < 0)                                  // Nonterminal?
          {
-            if (nullable [-t])                       // Nullable?          
+            if (nullable [-t])                       // Nullable?
             {
 					prt_error ("'%s' is a nullable symbol, lexer cannot return or ignore null symbols", head_name[-t], 0, head_line[-t]);
-            }  
+            }
          }
-      }  
+      }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -257,16 +257,16 @@ void  LG_CheckGrammar::P_USELESS_PROD ()
 		{
 			for (p = f_prod[h]; p < l_prod[h]; p++)
 			{
-				if ((l_tail[p] - f_tail[p]) == 1) 
+				if ((l_tail[p] - f_tail[p]) == 1)
 				{
 					if (h == -tail [f_tail[p]])
 					{
-						prt_log ("%s(%04d) : ", grmfid, prod_line[p]); 
+						prt_log ("%s(%04d) : ", grmfid, prod_line[p]);
 						p_prod (-p, -1, "");
 						prt_log ("\n");
 						prt_error ("Useless production", 0, 0, prod_line[p]);
-					}  
-				}  
+					}
+				}
 			}
 		}
 }
@@ -285,7 +285,7 @@ void  LG_CheckGrammar::P_UNREACHABLES ()
       memset(head_used, 0, n_heads);
 
 		i = 0;							// Goal symbol!
-      n_used = 0;						// Start with 0. 
+      n_used = 0;						// Start with 0.
       head_used[i] = 1;				// Mark goal symbol used.
       used_list[n_used++] = i;	// Add goal symbol to list.
 
@@ -294,28 +294,28 @@ void  LG_CheckGrammar::P_UNREACHABLES ()
       {
          h = used_list[i];										// Pick head from list.
 		//	printf ("%s\n", head_name[h]);
-			for (p = f_prod[h]; p < l_prod[h]; p++)		// All of its rules. 
+			for (p = f_prod[h]; p < l_prod[h]; p++)		// All of its rules.
 			{
-				for (t = f_tail[p]; t < l_tail[p]; t++)	// All of its tails. 
+				for (t = f_tail[p]; t < l_tail[p]; t++)	// All of its tails.
 				{
-					if ((s = tail[t]) < 0)						// Nonterminal?      
+					if ((s = tail[t]) < 0)						// Nonterminal?
 					{
-						if (head_used[-s] == 0)					// Not used?   
+						if (head_used[-s] == 0)					// Not used?
 						{
-							head_used[-s] = 1;					// Mark it used.     
-							used_list[n_used++] = -s;			// Add it to list.   
+							head_used[-s] = 1;					// Mark it used.
+							used_list[n_used++] = -s;			// Add it to list.
 						//	printf ("   %s used\n", head_name[-s]);
-						}  
-					}  
-				}  
-			}  
+						}
+					}
+				}
+			}
       }
 
 	// Traverse from [ignore] symbols and mark all nonterminals that are used.
 		int n_ignores = 0;
       for (int H = 0; H < n_heads; H++)
       {
-			if (head_type[H] & IGNORESYM) 
+			if (head_type[H] & IGNORESYM)
 			{
 				n_ignores++;
 			//	printf ("%s unused\n", head_name[H]);
@@ -326,21 +326,21 @@ void  LG_CheckGrammar::P_UNREACHABLES ()
 				{
 					h = used_list[i];										// Pick head from list.
 				//	printf ("%s\n", head_name[h]);
-					for (p = f_prod[h]; p < l_prod[h]; p++)		// All of its rules. 
+					for (p = f_prod[h]; p < l_prod[h]; p++)		// All of its rules.
 					{
-						for (t = f_tail[p]; t < l_tail[p]; t++)	// All of its tails. 
+						for (t = f_tail[p]; t < l_tail[p]; t++)	// All of its tails.
 						{
-							if ((s = tail[t]) < 0)						// Nonterminal?      
+							if ((s = tail[t]) < 0)						// Nonterminal?
 							{
-								if (head_used[-s] == 0)					// Not marked yet?   
+								if (head_used[-s] == 0)					// Not marked yet?
 								{
-									head_used[-s] = 1;				// Mark it used.     
-									used_list[n_used++] = -s;		// Add it to list.   
+									head_used[-s] = 1;				// Mark it used.
+									used_list[n_used++] = -s;		// Add it to list.
 								//	printf ("   %s used %d\n", head_name[-s], n_used);
-								}  
-							}  
-						}  
-					}  
+								}
+							}
+						}
+					}
 				}
 			}
 		}
@@ -348,15 +348,15 @@ void  LG_CheckGrammar::P_UNREACHABLES ()
 
 	// List unreachable heads ...
 		n_unreachables = 0;
-      for (h = 0; h < n_heads; h++)		 
+      for (h = 0; h < n_heads; h++)
       {
-			if (!(head_type[h] & IGNORESYM) && head_used[h] == 0) // Not [ignore] and not used?         
+			if (!(head_type[h] & IGNORESYM) && head_used[h] == 0) // Not [ignore] and not used?
          {
 				if (head_line[h] != 0)							// Not generated symbol?
 				{
 					if (head_type[h] & SETNAME)				// If setname (or escape symbol).
 					{
-						// Nothing. 
+						// Nothing.
 					}
 					else if (head_type[h] & LEXICON)			// If lexicon symbol.
 					{
@@ -366,17 +366,17 @@ void  LG_CheckGrammar::P_UNREACHABLES ()
 						head_name[h][x] = 0;
 						sprintf (string, "<%s> is not reachable from the goal symbol. To ignore, rename to [%s].\n", head_name[h]+1, head_name[h]+1);
 						head_name[h][x] = '>';
-						prt_error (string, head_name[h], 0, head_line[h]); 
-					} 
+						prt_error (string, head_name[h], 0, head_line[h]);
+					}
 					else
 					{
 						n_unreachables++;
 						head_type[h] |= UNREACHABLE;
 						sprintf (string, "%s is not reachable from the goal symbol. To ignore, rename to [%s].\n", head_name[h], head_name[h]);
-						prt_error (string, head_name[h], 0, head_line[h]); 
-					} 
+						prt_error (string, head_name[h], 0, head_line[h]);
+					}
 				}
-         }  
+         }
       }
       FREE (head_used, n_heads);
 
@@ -384,7 +384,7 @@ void  LG_CheckGrammar::P_UNREACHABLES ()
 		if (n_ignores && n_errors == 0)
 		{
 			if (n_prods + n_unreachables >= max_prods)
-				MemCrash ("Number of productions", max_prods); 
+				MemCrash ("Number of productions", max_prods);
 			if (n_tails + n_unreachables >= max_tails)
 				MemCrash ("Number of tail symbols", max_tails);
 	  		RenumberProductions (n_ignores);
@@ -400,30 +400,30 @@ void  LG_CheckGrammar::RenumberProductions (int n_ignores)
 		int new_tail = f_tail[l_prod[1]];
 		for (t = n_tails-1; t >= new_tail; t--)
 		{
-			tail[t + n_ignores] = tail[t]; // Move nu places. 
+			tail[t + n_ignores] = tail[t]; // Move nu places.
 		}
 		n_tails += n_ignores;
 
   		for (p = n_prods-1; p >= f_prod[2]; p--)
 		{
-			f_tail   [p+n_ignores] = f_tail[p] + n_ignores; 
-			l_tail   [p+n_ignores] = l_tail[p] + n_ignores; 
+			f_tail   [p+n_ignores] = f_tail[p] + n_ignores;
+			l_tail   [p+n_ignores] = l_tail[p] + n_ignores;
 			ret_numb [p+n_ignores] = ret_numb[p];
 			prod_line[p+n_ignores] = prod_line[p];
 			prod_type[p+n_ignores] = prod_type[p];
-		}								  
+		}
 		n_prods += n_ignores;
 
 		l_prod[1] += n_ignores;
   		for (h = 2; h < n_heads; h++)
 		{
-			f_prod[h] += n_ignores; 
-			l_prod[h] += n_ignores; 
-		}  
-  
+			f_prod[h] += n_ignores;
+			l_prod[h] += n_ignores;
+		}
+
       for (h = 0; h < n_heads; h++)
       {
-         if (head_type[h] & IGNORESYM)					
+         if (head_type[h] & IGNORESYM)
          {
 			  	f_tail   [new_prod]   = new_tail;
 			  	l_tail   [new_prod]   = new_tail+1;
@@ -431,15 +431,15 @@ void  LG_CheckGrammar::RenumberProductions (int n_ignores)
 			//	ret_numb [new_prod]   = -1;				// Ignore this symbol.
 			  	ret_numb [new_prod]   = 2147483647;		// Ignore this symbol.
 				ret_name [new_prod]   = "UNDEFINED";   // Assign name to defined constant.
-				prod_line[new_prod]   = 0; 
+				prod_line[new_prod]   = 0;
 				prod_type[new_prod++] = 0;
-         }  
+         }
       }
-    
+
 		max_n_prods = n_prods;
       REALLOC (f_tail,		max_prods, n_prods);
       REALLOC (l_tail,		max_prods, n_prods);
-      REALLOC (tail,			max_tails, n_tails);   
+      REALLOC (tail,			max_tails, n_tails);
       REALLOC (ret_numb,   max_prods,  n_prods);
       REALLOC (prod_line,  max_prods,  n_prods);
       REALLOC (prod_type,  max_prods,  n_prods);
@@ -459,7 +459,7 @@ void  LG_CheckGrammar::P_UNREDUCIBLES ()
       ALLOC (red, n_heads);
       memset (red, 2, n_heads); /* undefined */
       m = 0;
-      do 
+      do
       {
          n = 0;
          for (h = 0; h < n_heads; h++)
@@ -473,13 +473,13 @@ void  LG_CheckGrammar::P_UNREDUCIBLES ()
                      if ((s = tail [t]) < 0)
                      {
                         if (red [-s] != 1) goto nextp;
-                     }  
+                     }
                   }
                   n++;
                   red [h] = 1;
                   goto nexth;
 nextp:            continue;
-               }  
+               }
             }
 nexth:      continue;
          }
@@ -494,8 +494,8 @@ nexth:      continue;
             if (red [h] != 1)
             {
 					prt_error ("Nonterminal symbol '%s' is in a cycle, cannot derive anything", head_name[h], 0, head_line[h]);
-            }  
-         }  
+            }
+         }
       }
       FREE (red, n_heads);
 }
@@ -552,7 +552,7 @@ void  LG_CheckGrammar::p_prod (int p, int dot, char *before)
 char*	onstack;
 
 void  LG_CheckGrammar::C_CYCLES ()
-{		
+{
 		int h;
 		ALLOC (onstack, n_heads);
 		for (h = 0; h < n_heads; h++) onstack[h] = 0;
@@ -590,7 +590,7 @@ int   LG_CheckGrammar::C_CYCLES2 (int h)
 							{
 								prt_error ("'%s' is involved in an infinite cycle", head_name[nt], 0, head_line[nt]);
 								return (0);
-							}	 
+							}
 						}
 						else if (C_CYCLES2(nt) == 0) return (0);
 					}
@@ -615,12 +615,12 @@ int   LG_CheckGrammar::C_CYCLES2 (int h)
 		int    N_PRODS;
 		int    N_TAILS;
 		int    N_HEADS;
-		char   vector [MAXPRODLENG]; 
+		char   vector [MAXPRODLENG];
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
 
-void  LG_CheckGrammar::DO_BACK_SUB () // Do back substitutions for nullable nonterminals. 
+void  LG_CheckGrammar::DO_BACK_SUB () // Do back substitutions for nullable nonterminals.
 {
 		int *HEAD, h, p, nn, T;
 
@@ -665,7 +665,7 @@ Top:  nn = 0;
 				for (p = f_prod[h]; p < l_prod[h]; p++)
 				{
 					scan_prod (h, p, f_tail[p]);
-				}						 
+				}
 				L_PROD [N_HEADS] = N_PRODS;
 				N_HEADS++;
 			}
@@ -678,12 +678,12 @@ Top:  nn = 0;
 				for (p = f_prod[h]+1; p < l_prod[h]; p++) // Skip the null production.
 				{
 					make_prod (h, p);
-				}						 
+				}
 				L_PROD [N_HEADS] = N_PRODS;
 				N_HEADS++;
 			}
 		}
-  
+
 		for (T = 0; T < N_TAILS; T++)
 		{
 			if (TAILSYM[T] < 0) TAILSYM[T] = -HEAD[-TAILSYM[T]];
@@ -729,7 +729,7 @@ Top:  nn = 0;
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
 
-void 	LG_CheckGrammar::scan_prod (int h, int p, int t) 
+void 	LG_CheckGrammar::scan_prod (int h, int p, int t)
 {
 		int t0, sym;
 		if (t < l_tail[p])
@@ -738,7 +738,7 @@ void 	LG_CheckGrammar::scan_prod (int h, int p, int t)
 			if (vector [t-t0] == 1)
 			{
 				sym = tail[t];
-				if (sym < 0 && nullable [-sym]) 
+				if (sym < 0 && nullable [-sym])
 				{
 					vector [t-t0] = 0;
 					scan_prod (h, p, t+1);
@@ -756,7 +756,7 @@ void 	LG_CheckGrammar::scan_prod (int h, int p, int t)
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
 
-void 	LG_CheckGrammar::make_prod (int h, int p) 
+void 	LG_CheckGrammar::make_prod (int h, int p)
 {
 		int t, t0, tn, sym, q, n, P, I, T;
 
@@ -782,7 +782,7 @@ Check:		if (sym < 0 && nullable [-sym])
 						if (l_tail [q+1] - f_tail [q+1] == 1)  // Only one tail on 2nd production?
 						{
 							sym = tail [f_tail[q+1]];           // First (and only) tail of 2nd prod.
-							goto Check;	
+							goto Check;
 						}
 					}
 				}
@@ -796,7 +796,7 @@ Check:		if (sym < 0 && nullable [-sym])
 	//	else        printf ("\n");
 		L_TAIL [N_PRODS] = N_TAILS;
 
-	// Check for previous existence of this production. 
+	// Check for previous existence of this production.
 		if (n > 0)
 		{
 			if (n == 1 && -sym == h) goto Undo;
@@ -808,9 +808,9 @@ Check:		if (sym < 0 && nullable [-sym])
 				{
 					I = F_TAIL [N_PRODS];
 					for (T = F_TAIL [P]; T < L_TAIL [P]; T++)
-					{	
-					//	char a[50]; 
-					//	char b[50]; 
+					{
+					//	char a[50];
+					//	char b[50];
 					//	symstr(TAILSYM[T], a);
 					//	symstr(TAILSYM[I], b);
 					//	printf ("Comparing %s to %s\n", b, a);
@@ -830,18 +830,18 @@ NextP:		continue;
 			{
 				if (F_TAIL [FP] == L_TAIL [FP]) goto Undo; // Already have NULL.
 			}
-		// Move current productions down one. 
+		// Move current productions down one.
 			for (P = N_PRODS; P > FP; P--)
 			{
 				F_TAIL [P] = F_TAIL [P-1];
 				L_TAIL [P] = L_TAIL [P-1];
 			}
-		// Create NULL production in first place. 
+		// Create NULL production in first place.
 			F_TAIL [P] = F_TAIL [P+1];
 			L_TAIL [P] = F_TAIL [P+1];
 		//	printf ("<null> production accepted\n");
 		}
-		if (++N_PRODS >= max_prods) 
+		if (++N_PRODS >= max_prods)
 			MemCrash ("Number of productions", max_prods);
       return;
 

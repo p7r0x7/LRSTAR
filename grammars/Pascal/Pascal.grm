@@ -1,7 +1,7 @@
 
-/* Turbo Pascal 5.5 Grammar                                    
-   Written  by Eric Beser, Baltimore, MD                                   
-   Modified by Paul Mann.                                      
+/* Turbo Pascal 5.5 Grammar
+   Written  by Eric Beser, Baltimore, MD
+   Modified by Paul Mann.
 */
 
 /*--- Token Processing -----------------------------------------------------------*/
@@ -66,7 +66,7 @@
                -> ProcAndFuncDeclPart                              +> ProcFunc_Part
 
    LabelDeclPart -> LABEL ';'
-                 -> LABEL LabelIdent /','+ ';'                  
+                 -> LABEL LabelIdent /','+ ';'
 
    LabelIdent    -> <identifier>^{label_identifier}
 

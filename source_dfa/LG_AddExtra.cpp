@@ -66,9 +66,9 @@ int 	LG_AddExtra::AddExtra()
       if (!optn[LG_KEYWORDIDENT]) goto Ret;
 		if (n_genliterals == n_original_prods) goto Ret;
 
-      ALLOC (incycle,    N_states); 
-      ALLOC (traceable,  N_states); 
-      ALLOC (jumpto,     N_states); 
+      ALLOC (incycle,    N_states);
+      ALLOC (traceable,  N_states);
+      ALLOC (jumpto,     N_states);
 
 		FASTINI (0, incycle,    N_states);
 		FASTINI (1, traceable,  N_states);
@@ -86,12 +86,12 @@ int 	LG_AddExtra::AddExtra()
       REALLOC (l_tail,     n_prods, max_prods);
       REALLOC (tail,       n_tails, max_tails);
 
-      ALLOC (trace_stack,  256); 
-      ALLOC (goto_stack,   256); 
-      ALLOC (symbol,       256); 
+      ALLOC (trace_stack,  256);
+      ALLOC (goto_stack,   256);
+      ALLOC (symbol,       256);
 
-      ALLOC (saved_state,  256); 
-      ALLOC (saved_prod,   256); 
+      ALLOC (saved_state,  256);
+      ALLOC (saved_prod,   256);
 
       ALLOC (finalx,      	max_final);
       ALLOC (f_finalx,    	N_states);
@@ -115,7 +115,7 @@ int 	LG_AddExtra::AddExtra()
 		trace_top = 0;
 		goto_top  = 0;
 
-      GOTO (goto_stack [goto_top++] = 0, 0); 
+      GOTO (goto_stack [goto_top++] = 0, 0);
 
       FREE (goto_stack,  256);
       FREE (trace_stack, 256);
@@ -152,7 +152,7 @@ void	LG_AddExtra::GOTO (int s, int agoto)
 		{
 		//	printf ("\n--> GOTO (%d)\n", s);
 		// p_all();
-			for (t = tt_start[s]; t < tt_start[s+1]; t++) 
+			for (t = tt_start[s]; t < tt_start[s+1]; t++)
 			{
 				x = tt_action[t];
 				if (traceable[x])
@@ -167,11 +167,11 @@ void	LG_AddExtra::GOTO (int s, int agoto)
 						trace_top = 0;
 					  	TRACE (x, 0, 0, ++n_symbols);
 					}
-			  		else 
+			  		else
 					{
 						trace_top = n_symbols;
-						TRACE (x, agoto, n_symbols, ++n_symbols);  
-					}	  
+						TRACE (x, agoto, n_symbols, ++n_symbols);
+					}
 					traceable[x] = 0;
 					l_finalx[x] = n_finalx;
 					GOTO (x, alt_goto);
@@ -179,12 +179,12 @@ void	LG_AddExtra::GOTO (int s, int agoto)
 					goto_top--;
 				}
 			}
-			for (f = f_final[s]; f < f_final[s+1]; f++) 
+			for (f = f_final[s]; f < f_final[s+1]; f++)
 			{
 				p = final[f];
 			//	p_prod(p);
-				if (ret_numb[p] == 0) // Not Token -> 
-				{ 
+				if (ret_numb[p] == 0) // Not Token ->
+				{
 					h = head_sym[p];
 					goto_top -= prod_len[p] + 1;
 					r = goto_stack [goto_top++];
@@ -200,7 +200,7 @@ void	LG_AddExtra::GOTO (int s, int agoto)
 						GOTO (x, agoto);
 						goto_stack [--goto_top] = saved_state;
 					}
-					goto_top += prod_len [p];					 
+					goto_top += prod_len [p];
 				}
 			}
 			// printf ("<-- State %d\n", s);
@@ -210,48 +210,48 @@ void	LG_AddExtra::GOTO (int s, int agoto)
 void 	LG_AddExtra::TRACE (int x, int y, int d, int dot)
 {
       int t, f, p, z, sym;
-      if (d < dot)												 
+      if (d < dot)
       {
 			n_traces++;
 		  	trace_stack [trace_top++] = y;
 		//	printf ("\n--> TRACE (%d, %d, %d, %d)\n", x, y, d, dot);
  		//	p_all();
-			sym = symbol[d]; // Has to be symbol[d] a terminal, to traverse all paths. 
+			sym = symbol[d]; // Has to be symbol[d] a terminal, to traverse all paths.
 			for (t = tt_start[y]; t < tt_start[y+1]; t++)
 			{
-		  		if (tt_symb[t] == sym) 
+		  		if (tt_symb[t] == sym)
 				{
 					TRACE (x, tt_action[t], d+1, dot);
 					break;
 				}
 			}
-         for (f = f_final[y]; f < f_final[y+1]; f++) 
+         for (f = f_final[y]; f < f_final[y+1]; f++)
          {
             p = final[f];
 			//	p_prod(p);
-            if (ret_numb[p] == 0) // Not Token -> 
-            { 
+            if (ret_numb[p] == 0) // Not Token ->
+            {
 					z = REDUCE_GOTO (p);
 					TRACE (x, z, d, dot); // d, not d+1 here.
 					UNDO_REDUCE ();
             }
-         }	  
+         }
      		trace_top--;
       }
-		else 
+		else
 		{
 			TRACE_REDUCE (x, y);
 		}
 }
 
-void	LG_AddExtra::TRACE_REDUCE (int x, int y) 
+void	LG_AddExtra::TRACE_REDUCE (int x, int y)
 {
 		int p, z;
 		trace_stack[trace_top++] = y;
    //	printf ("\n--> TRACE_REDUCE (%d, %d)\n", x, y);
    //	p_all();
 	   if (x != y)
-		{	
+		{
 			if (st_type[y] == RO_STATE)
 			{
 				p = final [f_final [y]];
@@ -259,7 +259,7 @@ void	LG_AddExtra::TRACE_REDUCE (int x, int y)
 				if (head_level [head_sym [p]] >= 2) // Not <identifier> -> letter or ?
 				{
 					z = REDUCE_GOTO (p);
-					TRACE_REDUCE (x, z);												
+					TRACE_REDUCE (x, z);
 					UNDO_REDUCE ();
 				}
 				else // or (NO_REDUCE_GOTO (x, y))
@@ -275,11 +275,11 @@ void	LG_AddExtra::TRACE_REDUCE (int x, int y)
 		else
 		{
 		//	printf ("%d == %d, rejected\n", x, y);
-		}    
+		}
 		trace_top--;
 }
 
-void	LG_AddExtra::ADDING (int x, int y) 
+void	LG_AddExtra::ADDING (int x, int y)
 {
 		char name[16];
 		int len, b, i, h;
@@ -302,30 +302,30 @@ void	LG_AddExtra::ADDING (int x, int y)
 			sprintf (name, "NT%d-%d", b, y);			// Create new head name.
 			len = (int)strlen (name) + 1;					// Get length + 1 for '\0'
 			head_name [h] = LG_ParseActions::ADDSYMBOL (name,len);	// Save name in symbol space.
-			head_level [h] = MAX_INT;	
-			possibil   [h] = 1;	
-			ntt_symbx  [n_nttgotox] = h; 
-			ntt_gotox  [n_nttgotox++] = y; 
+			head_level [h] = MAX_INT;
+			possibil   [h] = 1;
+			ntt_symbx  [n_nttgotox] = h;
+			ntt_gotox  [n_nttgotox++] = y;
 			ntt_endx[b] = n_nttgotox;
 		}
 	// printf ("\nTO STATE %d, ADDING: %d %s ->", x, n_prods, head_name[h]);
 		f_tail [n_prods] = n_tails;
-		for (i = 1; i < goto_top; i++)			
+		for (i = 1; i < goto_top; i++)
 		{
-			if (n_tails > max_tails) 
+			if (n_tails > max_tails)
 				MemCrash ("Number of tail symbols", max_tails);
 			tail [n_tails++] = accessor [goto_stack [i]];
 		// p_sym (tail [n_tails-1]);
 		}
 	// printf ("\n\n");
 		l_tail   [n_prods] = n_tails;
-		head_sym [n_prods] = h;	
-		prod_len [n_prods] = goto_top - 1;	
+		head_sym [n_prods] = h;
+		prod_len [n_prods] = goto_top - 1;
 		ret_numb [n_prods] = 0;
-		finalx[n_finalx++] = n_prods++; 
+		finalx[n_finalx++] = n_prods++;
 }
 
-int   LG_AddExtra::REDUCE_GOTO (int p) 
+int   LG_AddExtra::REDUCE_GOTO (int p)
 {
 		int x, h, t;
  		trace_top -= prod_len[p]+1;
@@ -336,22 +336,22 @@ int   LG_AddExtra::REDUCE_GOTO (int p)
 	//	if (n_saved > max_saved) max_saved = n_saved;
       for (t = ntt_start[x]; t < ntt_start[x+1]; t++)
       {
-         if (ntt_symb[t] == h)		
+         if (ntt_symb[t] == h)
          {
-            return (ntt_action[t]);	
+            return (ntt_action[t]);
          }
       }
 		return (0);
 }
 
-void	LG_AddExtra::UNDO_REDUCE () 
+void	LG_AddExtra::UNDO_REDUCE ()
 {
 		n_saved--;
 		trace_stack[trace_top++] = saved_state [n_saved];
 		trace_top += prod_len [saved_prod [n_saved]]-1;
 }
 
-int   LG_AddExtra::NO_MATCHING_REDUCE (int x) 
+int   LG_AddExtra::NO_MATCHING_REDUCE (int x)
 {
 		int f, p, d, t;
 		for (f = f_final[x]; f < f_final[x+1]; f++)
@@ -369,7 +369,7 @@ int   LG_AddExtra::NO_MATCHING_REDUCE (int x)
 					}
 					return 0;
 				}
-			}		
+			}
 Next:		continue;
 		}
 		return 1;
@@ -378,15 +378,15 @@ Next:		continue;
 int	LG_AddExtra::NO_REDUCE_GOTO (int x, int newx)
 {
       int f, p, nj;
-      for (f = f_final[x]; f < f_final[x+1]; f++) 
+      for (f = f_final[x]; f < f_final[x+1]; f++)
       {
          p = final[f];
          if (ret_numb[p] == 0) // Not Token -> ?
-         { 
+         {
 				nj = 0;
             LOOK_BACK (p, prod_len[p], x, nj, jumpto);
 				for (int j = 0; j < nj; j++)
-				{	
+				{
 					if (jumpto[j] == newx) return 0;
 				}
          }
@@ -406,9 +406,9 @@ void  LG_AddExtra::p_symbols ()
 		int i;
 		printf ("Symbols =");
 		if (n_symbols == 0) printf (" [empty]");
-		for (i = 0; i < n_symbols; i++) 
+		for (i = 0; i < n_symbols; i++)
 		{
-			p_sym (symbol[i]); 
+			p_sym (symbol[i]);
 		}
 		printf ("\n");
 }
@@ -419,12 +419,12 @@ void  LG_AddExtra::p_goto_stack ()
 		char* symstr;
 		printf ("Goto stack  =");
 		if (goto_top == 0) printf (" [empty]");
-		for (i = 0; i < goto_top; i++) 
+		for (i = 0; i < goto_top; i++)
 		{
 			sym = accessor [goto_stack[i]];
 			if (sym < 0) symstr = head_name [-sym];
 			else			 symstr = term_name [sym];
-			printf (" [%d %s]", goto_stack[i], symstr); 
+			printf (" [%d %s]", goto_stack[i], symstr);
 		}
 		printf ("\n");
 }
@@ -435,12 +435,12 @@ void  LG_AddExtra::p_trace_stack ()
 		char* symstr;
   		printf ("Trace stack =");
 		if (trace_top == 0) printf (" [empty]");
-		for (i = 0; i < trace_top; i++) 
+		for (i = 0; i < trace_top; i++)
 		{
 			sym = accessor [trace_stack[i]];
 			if (sym < 0) symstr = head_name [-sym];
 			else			 symstr = term_name [sym];
-			printf (" [%d %s]", trace_stack[i], symstr); 
+			printf (" [%d %s]", trace_stack[i], symstr);
 		}
 		printf ("\n");
 }
@@ -451,7 +451,7 @@ int 	LG_AddExtra::MERGE_FINALS ()
 		rc = 1;
       n_finals = 0;
       ALLOC (final2,  max_final);
-      for (s = 0; s < N_states; s++) 
+      for (s = 0; s < N_states; s++)
       {
 			nf = 0;
          ff = n_finals;	// Save this.
@@ -465,9 +465,9 @@ int 	LG_AddExtra::MERGE_FINALS ()
 			{
 				nf++;
 				if (n_finals >= max_final) MemCrash ("Number of final items", max_final);
-				final2[n_finals++] = finalx[f];	
+				final2[n_finals++] = finalx[f];
 			}
-		/*	if ((l_finalx[s] - f_finalx[s]) > 1) 
+		/*	if ((l_finalx[s] - f_finalx[s]) > 1)
    		Not all multiple extra productions are ambiguous, so we can't do this.
 			{
 				rc = 0;
@@ -494,7 +494,7 @@ void 	LG_AddExtra::MERGE_NTTRANS ()
       n_nonttran = 0;
       ALLOC (ntt_symb2,  max_ntt);
       ALLOC (ntt_goto2,  max_ntt);
-      for (s = 0; s < N_states; s++) 
+      for (s = 0; s < N_states; s++)
       {
          i = ntt_start[s];
          ntt_start[s] = n_nonttran;
@@ -505,8 +505,8 @@ void 	LG_AddExtra::MERGE_NTTRANS ()
          }
 			for (i = ntt_startx[s]; i < ntt_endx[s]; i++)
 			{
-				ntt_symb2[n_nonttran]   = ntt_symbx[i];	
-				ntt_goto2[n_nonttran++] = ntt_gotox[i];	
+				ntt_symb2[n_nonttran]   = ntt_symbx[i];
+				ntt_goto2[n_nonttran++] = ntt_gotox[i];
 			}
       }
       ntt_start[s] = n_nonttran;
@@ -526,12 +526,12 @@ void  LG_AddExtra::DETECT_CYCLES ()
 {
 		int s, t, f, x, sym, p, nj;
 
-      n_words = (N_states +  3)/4;	// Number of 4-byte words. 
-      n_bytes = 4*n_words;				// Number of bytes to allocate. 
-      ALLOC (TRANS, N_states);          
+      n_words = (N_states +  3)/4;	// Number of 4-byte words.
+      n_bytes = 4*n_words;				// Number of bytes to allocate.
+      ALLOC (TRANS, N_states);
       for (s = 0; s < N_states; s++)
       {
-         ALLOC  (TRANS[s], n_bytes);    
+         ALLOC  (TRANS[s], n_bytes);
          memset (TRANS[s], 0, n_bytes);
       }
 
@@ -542,23 +542,23 @@ void  LG_AddExtra::DETECT_CYCLES ()
 
 		for (s = 0; s < N_states; s++)
 		{
-			for (t = tt_start[s]; t < tt_start[s+1]; t++) 
+			for (t = tt_start[s]; t < tt_start[s+1]; t++)
 			{
-				x   = tt_action[t];			
+				x   = tt_action[t];
 				sym = tt_symb[t];
 			//	printf ("T-transition: [%2d,%s] -> %2d\n", s, term_name[sym], x);
 			 	ATTACH (s, x);
 				TRANS[s][x] = 1;
 			}
-			for (t = ntt_start[s]; t < ntt_start[s+1]; t++) 
+			for (t = ntt_start[s]; t < ntt_start[s+1]; t++)
 			{
-				x   = ntt_action[t];			
+				x   = ntt_action[t];
 				sym = ntt_symb[t];
 			//	printf ("N-transition: [%2d,%s] -> %2d\n", s, head_name[sym], x);
 			 	ATTACH (s, x);
 				TRANS[s][x] = 1;
 			}
-			for (f = f_final[s]; f < f_final[s+1]; f++) 
+			for (f = f_final[s]; f < f_final[s+1]; f++)
 			{
 				nj = 0;
 				p = final[f];
@@ -570,7 +570,7 @@ void  LG_AddExtra::DETECT_CYCLES ()
 					TRANS[s][jumpto[j]] = 1;
 				//	printf ("Reduction:  [%2d,%3d] -> %2d\n", s, p, jumpto[j]);
 				}
-			}																 
+			}
 		}
 
 	// P_GRAPH (TRANS, N_states, N_states);
@@ -579,8 +579,8 @@ void  LG_AddExtra::DETECT_CYCLES ()
 
 	  	DEF_CYCLES ();
 
-      for (s = 0; s < N_states; s++) FREE (TRANS[s], n_bytes);    
-      FREE (TRANS,   N_states);          
+      for (s = 0; s < N_states; s++) FREE (TRANS[s], n_bytes);
+      FREE (TRANS,   N_states);
       FREE (child,   max_child);
       FREE (f_child, N_states);
 }
@@ -599,9 +599,9 @@ void  LG_AddExtra::LOOK_BACK (int p, int dot, int x, int& nj, int* jumpto)
 			int h = head_sym[p];
          for (int i = ntt_start[x]; i < ntt_start[x+1]; i++)
          {
-            if (ntt_symb[i] == h) 
+            if (ntt_symb[i] == h)
             {
-               jumpto[nj++] = ntt_action[i];		
+               jumpto[nj++] = ntt_action[i];
 		      // printf ("Jumps to %d\n", jumpto[nj-1]);
 					break;
             }
@@ -618,7 +618,7 @@ void  LG_AddExtra::DEF_CYCLES ()
          if (TRANS[s][s])    // In cycle?
 			{
 			//	n++;
-				incycle[s] = 1; 
+				incycle[s] = 1;
 			//	printf ("trace_stack %2d\n", s);
 			}
 		}
@@ -630,7 +630,7 @@ void  LG_AddExtra::DEF_CYCLES ()
 				for (f = f_final[s]; f < f_final[s+1]; f++)
 				{
 					p = final[f];
-					if (head_level [head_sym[p]] > 2) 
+					if (head_level [head_sym[p]] > 2)
 					{
 						scan_row = 0;
 						break;
@@ -667,7 +667,7 @@ void  LG_AddExtra::DEF_CYCLES ()
 		  	// printf ("Not traceable, state %2d\n", s);
 			}
 		}
-	  	if (n == 0) 
+	  	if (n == 0)
 		{
 		// printf ("None!\n");
 		}  */
@@ -676,7 +676,7 @@ void  LG_AddExtra::DEF_CYCLES ()
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-//		Define recusion (1|0) & count number of productions for each head symbol. 
+//		Define recusion (1|0) & count number of productions for each head symbol.
 
 void	LG_AddExtra::DEFINE_RECUR ()
 {
@@ -685,7 +685,7 @@ void	LG_AddExtra::DEFINE_RECUR ()
       ALLOC (onstack, n_heads);
       FASTINI (0, onstack, n_heads);
 
-      RECURSIVE (0); 
+      RECURSIVE (0);
 
       FREE (onstack, n_heads);
 }
@@ -714,7 +714,7 @@ int 	LG_AddExtra::RECURSIVE (int h)
             {
                if ((sym = -tail[t]) > 0)
                {
-                  recur[h] |= RECURSIVE (sym); 
+                  recur[h] |= RECURSIVE (sym);
                }
             }
          }
@@ -727,17 +727,17 @@ int 	LG_AddExtra::RECURSIVE (int h)
       }
       return (0);
 }
-  
+
 ///////////////////////////////////////////////////////////////////////////////
 //
-//		Define number of possibilities for each head symbol (letter = 52). 
+//		Define number of possibilities for each head symbol (letter = 52).
 
 void	LG_AddExtra::DEFINE_POSS ()
 {
       ALLOC (onstack, n_heads);
       FASTINI (0, onstack, n_heads);
 
-      POSSIBIL (0); 
+      POSSIBIL (0);
 
 	/*	for (int h = 0; h < n_heads; h++)
 		{
@@ -758,12 +758,12 @@ int 	LG_AddExtra::POSSIBIL (int h)
 				for (p = f_prod[h]; p < l_prod[h]; p++)
 				{
 					combinations = 1;
-					for (t = f_tail[p]; t < l_tail[p]; t++) 
+					for (t = f_tail[p]; t < l_tail[p]; t++)
 					{
 						if ((sym = -tail[t]) > 0) // head symbol?
 						{
-							x = POSSIBIL(sym); 
-							if (x == MAX_INT) 
+							x = POSSIBIL(sym);
+							if (x == MAX_INT)
 							{
 								combinations = MAX_INT;
 								break;
@@ -771,7 +771,7 @@ int 	LG_AddExtra::POSSIBIL (int h)
 							else combinations *= x;
 						}
 					}
-					if (combinations == MAX_INT) 
+					if (combinations == MAX_INT)
 					     possibil[h]  = MAX_INT;
 					else possibil[h] += combinations;
 				//	printf ("possibil[%s] = %d\n", head_name[h], possibil[h]);
@@ -785,7 +785,7 @@ int 	LG_AddExtra::POSSIBIL (int h)
 			return (possibil[h] = MAX_INT);
 		}
 }
-  
+
 void  LG_AddExtra::p_prod (int p)
 {
 		p_prod (p, -1);
@@ -821,7 +821,7 @@ void  LG_AddExtra::PRT_STA (int s)
 {
       int k, i, f, p, n, a, b;
 
-		if (++n_fatals == 1) 
+		if (++n_fatals == 1)
 		prt_con ("\nFATAL AMBIGUITIES REPORT\n\n");
 
       prt_con ("///////////////////////////// STATE %d /////////////////////////////\n//\n", s);
@@ -837,7 +837,7 @@ void  LG_AddExtra::PRT_STA (int s)
          {
             prt_con ("// * ");
             p_prod2 (item[i].prod, item[i].dot, "", "\n");
-         }  
+         }
       }
 
 		a = f_final[s];
@@ -850,8 +850,8 @@ void  LG_AddExtra::PRT_STA (int s)
          {
 				prt_con ("// * ");
 				p_prod2 (p, -1, "", "\n");
-         }  
-      }	
+         }
+      }
 
 		a = f_finalx[s];
 		b = l_finalx[s];
@@ -863,8 +863,8 @@ void  LG_AddExtra::PRT_STA (int s)
          {
 				prt_con ("// . ");
 				p_prod2 (p, -1, "", "\n");
-         }  
-      }	
+         }
+      }
 }
 
 void  LG_AddExtra::p_prod2 (int p, int dot, char *before, char* after)
@@ -885,7 +885,7 @@ void  LG_AddExtra::p_prod2 (int p, int dot, char *before, char* after)
       }
       prt_con ("%s", after);
 }
-  
+
 int	LG_AddExtra::p_sym2 (int s, char *sp)
 {
       char *p;

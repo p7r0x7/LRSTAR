@@ -8,25 +8,25 @@
 
 /* Rules. */
 
-   Goal				-> Declaration* <eof>							
-						
-	Declaration 	->         Type+     VarList ';'					
-						-> typedef Type+ TypeVarList ';'	 
+   Goal				-> Declaration* <eof>
 
-	VarList			-> Var     /','+				
-	TypeVarList		-> TypeVar /','+				
-						 
-	Var				-> Ptr* <identifier> 		
+	Declaration 	->         Type+     VarList ';'
+						-> typedef Type+ TypeVarList ';'
+
+	VarList			-> Var     /','+
+	TypeVarList		-> TypeVar /','+
+
+	Var				-> Ptr* <identifier>
 	TypeVar			-> Ptr* TypeIdent
-	
+
 	TypeIdent      -> <identifier>^{typename}   +> hello_(1)
-						 
-	Ptr				-> '*'							
-						 									
-	Type				-> char							
-					   -> int												
-						-> short							
-						-> unsigned												
-						-> {typename}											
+
+	Ptr				-> '*'
+
+	Type				-> char
+					   -> int
+						-> short
+						-> unsigned
+						-> {typename}
 
 /* End Of Grammar. */

@@ -25,8 +25,8 @@
 			static void C_CYCLES ();
 			static int  C_CYCLES2 (int h);
 			static void DO_BACK_SUB ();
-			static void scan_prod (int h, int p, int t); 
-			static void make_prod (int h, int p); 
+			static void scan_prod (int h, int p, int t);
+			static void make_prod (int h, int p);
 			static void PrintGrammar ();
 			static void PRT_HEAD (int s);
 			static int  prt_head (int s, char *sp);

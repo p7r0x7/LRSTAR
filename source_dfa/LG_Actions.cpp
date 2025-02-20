@@ -9,8 +9,8 @@
 		char**  	LG_TermActions::Defcon_term;
 		char**  	LG_TermActions::head_name;
 		int*    	LG_TermActions::head_sym;
-		int*    	LG_TermActions::head_line; 
-		int*    	LG_TermActions::term_line; 
+		int*    	LG_TermActions::head_line;
+		int*    	LG_TermActions::term_line;
 		int*    	LG_TermActions::prod_len;
 		int*    	LG_TermActions::prod_line;
 		int*    	LG_TermActions::nullable;
@@ -36,7 +36,7 @@
 		int*     LG_TermActions::ret_numb;
 		int*     LG_TermActions::prod_type;
 		int    	LG_TermActions::max_trans;
-		int    	LG_TermActions::max_errs;      
+		int    	LG_TermActions::max_errs;
 		int    	LG_TermActions::max_final;
 		int    	LG_TermActions::max_include;
 		int    	LG_TermActions::max_kernel;
@@ -72,11 +72,11 @@
 		int		LG_TermActions::N_terms;
 		int		LG_TermActions::n_lex_terms;
 
-		char*  	LG_TermActions::tokenstartstr; 
-		char*  	LG_TermActions::tokenendstr; 
-		char*  	LG_TermActions::tokenlinestr; 
-		char*  	LG_TermActions::linenumbstr; 
-		char*  	LG_TermActions::colnumbstr; 
+		char*  	LG_TermActions::tokenstartstr;
+		char*  	LG_TermActions::tokenendstr;
+		char*  	LG_TermActions::tokenlinestr;
+		char*  	LG_TermActions::linenumbstr;
+		char*  	LG_TermActions::colnumbstr;
 		char*  	LG_TermActions::tabstopstr;
 		int    	LG_TermActions::anl_stat_memory;
 		int    	LG_TermActions::amt_code;
@@ -102,11 +102,11 @@
 		int    	LG_TermActions::n_words;
 		int*   	LG_TermActions::ntt_goto2;
 		int*   	LG_TermActions::ntt_symb2;
-		int    	LG_TermActions::n_totalterm; 
+		int    	LG_TermActions::n_totalterm;
 		int    	LG_TermActions::n_codelines;
 		int    	LG_TermActions::opt_stat_memory;
 		int    	LG_TermActions::parser_memory;
-		int*   	LG_TermActions::possibil;   
+		int*   	LG_TermActions::possibil;
 		int    	LG_TermActions::rr_con;
 		int    	LG_TermActions::SLA_expired;
 		int    	LG_TermActions::sr_con;
@@ -137,14 +137,14 @@ void  LG_Actions::term_actions ()
 //                                                                           //
 //    error                                                                  //
 
-int   LG_TermActions::error (int &t) // New version                   
+int   LG_TermActions::error (int &t) // New version
 {
 		if (token.end == token.start) token.end++;
-      return (t); // t = 0 
+      return (t); // t = 0
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-//                                                                           // 
+//                                                                           //
 //    first()   																			  //
 
 int   LG_TermActions::first (int &t) // New version
@@ -164,7 +164,7 @@ int   LG_TermActions::first (int &t) // New version
 			int blankline = 0;
 			for (p = token.start; *p != '\n'; p--); // Find previous '\n'
 			if (p > input_start)
-			{	
+			{
 				while (*--p == ' ' || *p == '\t');	// Bypass whitespace.
 				if (*p == '\n') blankline = 1;		// Blank line
 			}
@@ -190,14 +190,14 @@ int   LG_TermActions::first (int &t) // New version
 //                                                                           //
 //    arrow                                                                  //
 
-int   LG_TermActions::arrow (int &t) // New version                                   
+int   LG_TermActions::arrow (int &t) // New version
 {
 		if (line_pos == 1) return (t);
 		if (line_pos == 2) return (t);
 		prt_error ("'%s' seems to be out of place on this line.", token.start, token.end, token.line);
 		Quit();
 		return 0;
-}										 
+}
 
 /*--- End of Actions2.CPP ------------------------------------------------------*/
 

@@ -1,25 +1,25 @@
 
-/* DFA Lexical-Grammar Tokens. */	 
+/* DFA Lexical-Grammar Tokens. */
 
   	<eof>					-> \z
 
 	<alpha>        	->         alpha
 							->         alpha '_'
-							->     '_' alpha 
+							->     '_' alpha
 							->     '_' alpha '_'
-							->         alpha '_' '_'			
-							-> '_' '_' alpha 						
-							-> '_' '_' alpha '_' '_'			
+							->         alpha '_' '_'
+							-> '_' '_' alpha
+							-> '_' '_' alpha '_' '_'
 
-	<lexical>      	-> '<' <alpha> '>' 
+	<lexical>      	-> '<' <alpha> '>'
 
 	<ignore>   			-> '{' <alpha> '}'
 
 	<escape>				-> '\' <alpha>
 
-	alpha          	->       letter 
+	alpha          	->       letter
 							-> alpha letter
-							-> alpha digit 
+							-> alpha digit
 							-> alpha '_' letter
 							-> alpha '_' digit
 
@@ -38,13 +38,13 @@
 
 	{whitespace}		-> ( \t | \n | \r | ' ' )+
 	{commentline}		-> '/' '/' neol*
-	{commentblock}		-> '/' '*' na* '*'+ (nans na* '*'+)* '/'												
+	{commentblock}		-> '/' '*' na* '*'+ (nans na* '*'+)* '/'
 
 /* Character Sets */
 
-	lany					=  33..254 - ''' - '"' - '\' 
+	lany					=  33..254 - ''' - '"' - '\'
 
-	letter      		= 'a'..'z' | 'A'..'Z' 
+	letter      		= 'a'..'z' | 'A'..'Z'
 	digit       		= '0'..'9'
 
 	na             	= any - '*'				// not asterisk

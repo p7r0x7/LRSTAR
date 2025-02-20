@@ -1,90 +1,90 @@
 
 /* C11 grammar originally written for Yacc/Bison.
-	Modified to work with LRSTAR by Paul Mann. 
-   
-	This grammar is the kind of stuff you find on the internet. 
-	No disambiguating rules are specified.  Arithmetic operators are 
-	defined incorrectly as a nonterminal.  The typedef situation is 
-	not specified correctly (it will not work).  But it's here to 
-	show that a Yacc-style grammar can be read by LRSTAR, after making 
+	Modified to work with LRSTAR by Paul Mann.
+
+	This grammar is the kind of stuff you find on the internet.
+	No disambiguating rules are specified.  Arithmetic operators are
+	defined incorrectly as a nonterminal.  The typedef situation is
+	not specified correctly (it will not work).  But it's here to
+	show that a Yacc-style grammar can be read by LRSTAR, after making
 	a few changes.
 */
 
 	ERROR						<error>				=> error();
-   F_CONSTANT           <f_constant>		=> lookup();     
-   IDENTIFIER           <identifier>		=> lookup();     
-   I_CONSTANT           <t_constant>		=> lookup();     
-   STRING_LITERAL       <string_literal>	=> lookup();     
+   F_CONSTANT           <f_constant>		=> lookup();
+   IDENTIFIER           <identifier>		=> lookup();
+   I_CONSTANT           <t_constant>		=> lookup();
+   STRING_LITERAL       <string_literal>	=> lookup();
 
-   ADD_ASSIGN           '+=';      
-   ALIGNAS              'alignas';     
-   ALIGNOF              'alignof';     
-   AND_ASSIGN           '&=';     
-   AND_OP               '&&';     
-   ATOMIC               'atomic';     
-   AUTO                 'auto';     
-   BOOL                 'bool';     
-   BREAK                'break';     
-   CASE                 'case';     
-   CHAR                 'char';     
-   COMPLEX              'complex';     
-   CONST                'const';     
-   CONTINUE             'continue';     
-   DEC_OP               '--';     
-   DEFAULT              'default';     
-   DIV_ASSIGN           '/=';     
-   DO                   'do';     
-   DOUBLE               'double';     
-   ELLIPSIS             '...';     
-   ELSE                 'else';     
-   ENUM                 'enum';     
-   ENUM_CONSTANT        {enum_constant};     
-   EQ_OP                '==';     
-   EXTERN               'extern';     
-   FLOAT                'float';     
-   FOR                  'for';     
-   FUNC_NAME            {func_name};     
-   GENERIC              'generic';     
-   GE_OP                '>=';     
-   GOTO                 'goto';     
-   IF                   'if';    
-   IMAGINARY            'imaginary';     
-   INC_OP               '++';     
-   INLINE               'inline';     
-   INT                  'int';     
-   LEFT_ASSIGN          '<<=';     
-   LEFT_OP              '<<';     
-   LE_OP                '<=';     
-   LONG                 'long';     
-   MOD_ASSIGN           '%=';     
-   MUL_ASSIGN           '*=';     
-   NE_OP                '!=';     
-   NORETURN             'noreturn';     
-   OR_ASSIGN            '|=';     
-   OR_OP                '||';     
-   PTR_OP               '->';     
-   REGISTER             'register';     
-   RESTRICT             'restrict';     
-   RETURN               'return';     
-   RIGHT_ASSIGN         '>>=';     
-   RIGHT_OP             '>>';     
-   SHORT                'short';     
-   SIGNED               'signed';     
-   SIZEOF               'sizeof';     
-   STATIC               'static';     
-   STATIC_ASSERT        'staticassert';     
-   STRUCT               'struct';     
-   SUB_ASSIGN           '-=';     
-   SWITCH               'switch';     
-   THREAD_LOCAL         'threadlocal';     
-   TYPEDEF              'typedef';     
-   TYPEDEF_NAME         {typedef_name};     
-   UNION                'union';     
-   UNSIGNED             'unsigned';     
-   VOID                 'void';     
-   VOLATILE             'volatile';     
-   WHILE                'while';     
-   XOR_ASSIGN           '^=';     
+   ADD_ASSIGN           '+=';
+   ALIGNAS              'alignas';
+   ALIGNOF              'alignof';
+   AND_ASSIGN           '&=';
+   AND_OP               '&&';
+   ATOMIC               'atomic';
+   AUTO                 'auto';
+   BOOL                 'bool';
+   BREAK                'break';
+   CASE                 'case';
+   CHAR                 'char';
+   COMPLEX              'complex';
+   CONST                'const';
+   CONTINUE             'continue';
+   DEC_OP               '--';
+   DEFAULT              'default';
+   DIV_ASSIGN           '/=';
+   DO                   'do';
+   DOUBLE               'double';
+   ELLIPSIS             '...';
+   ELSE                 'else';
+   ENUM                 'enum';
+   ENUM_CONSTANT        {enum_constant};
+   EQ_OP                '==';
+   EXTERN               'extern';
+   FLOAT                'float';
+   FOR                  'for';
+   FUNC_NAME            {func_name};
+   GENERIC              'generic';
+   GE_OP                '>=';
+   GOTO                 'goto';
+   IF                   'if';
+   IMAGINARY            'imaginary';
+   INC_OP               '++';
+   INLINE               'inline';
+   INT                  'int';
+   LEFT_ASSIGN          '<<=';
+   LEFT_OP              '<<';
+   LE_OP                '<=';
+   LONG                 'long';
+   MOD_ASSIGN           '%=';
+   MUL_ASSIGN           '*=';
+   NE_OP                '!=';
+   NORETURN             'noreturn';
+   OR_ASSIGN            '|=';
+   OR_OP                '||';
+   PTR_OP               '->';
+   REGISTER             'register';
+   RESTRICT             'restrict';
+   RETURN               'return';
+   RIGHT_ASSIGN         '>>=';
+   RIGHT_OP             '>>';
+   SHORT                'short';
+   SIGNED               'signed';
+   SIZEOF               'sizeof';
+   STATIC               'static';
+   STATIC_ASSERT        'staticassert';
+   STRUCT               'struct';
+   SUB_ASSIGN           '-=';
+   SWITCH               'switch';
+   THREAD_LOCAL         'threadlocal';
+   TYPEDEF              'typedef';
+   TYPEDEF_NAME         {typedef_name};
+   UNION                'union';
+   UNSIGNED             'unsigned';
+   VOID                 'void';
+   VOLATILE             'volatile';
+   WHILE                'while';
+   XOR_ASSIGN           '^=';
 
 Goal -> translation_unit <eof>
 
