@@ -10,7 +10,7 @@
       #include "time.h"
 		#include "main.h"
 
-		#ifdef LINUX
+		#ifndef WINDOWS
       #include <unistd.h>
 		long	_filelength (int fd)
 		{
@@ -159,7 +159,7 @@ void 	quit (int rc)
 {
 		Input.term();
 		Output.term();
-		#ifndef LINUX
+		#ifdef WINDOWS
 	  	printf ("\nPress any key to close ...\n");
 	  	while (!_kbhit());
 		#endif

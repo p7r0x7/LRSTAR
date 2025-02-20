@@ -6,7 +6,8 @@
 
       char* program = "LRSTAR";
       char* version = "24.0.025";
-		#ifdef x64
+      #include <cstdint>
+      #if INTPTR_MAX == INT64_MAX
       char* bits    = "64b";
 		#else
       char* bits    = "32b";

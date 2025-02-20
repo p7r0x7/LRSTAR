@@ -3,7 +3,7 @@
 
 		#define MAIN
 		#include "CM_Global.h"
-		#ifndef LINUX
+		#ifdef WINDOWS
 		#include "conio.h"
       #include <windows.h>
       #include "direct.h"
@@ -151,7 +151,7 @@ int   main (int na, char *arg[])
       fprintf (fp, "%d\n", n_errors);
       fclose (fp);
 
-		#ifndef LINUX
+		#ifdef WINDOWS
 		#ifdef _DEBUG
 		printf ("Waiting for a key to be pressed ...\n");
 		while (!_kbhit());
@@ -282,7 +282,7 @@ void  MemCrash (char* value, int n)
 
 void  Wait ()
 {
-		#ifndef LINUX
+		#ifdef WINDOWS
 		double dsec;
 		int    time1, time2, sec, limit;
 		limit = 3; // Seconds.
@@ -314,7 +314,7 @@ int   GetMaxValues (char* dn)
 		int   filedesc = -1;
 		int   filesize;
 
-		#ifndef LINUX
+		#ifdef WINDOWS
       strcpy (exefid, getenv ("USERPROFILE"));
       strcat (exefid, "\\AppData\\Local\\LRSTAR");
       strcat (exefid, "\\memory.txt");
@@ -2475,7 +2475,7 @@ char  oper_char (Node* np)
 		return oper;
 }
 
-#ifdef LINUX
+#ifndef WINDOWS
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
 //		_filelength function supplied by Vasko Mitanov, Feb 2012.               //

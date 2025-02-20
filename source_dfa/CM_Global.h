@@ -33,7 +33,7 @@
       #include "malloc.h"
       #endif
 
-      #ifdef LINUX
+      #ifndef WINDOWS
       #include <unistd.h>
       #endif
 
@@ -469,7 +469,7 @@
 		extern int    close_sta ();
 		extern int    close_warn ();
 
-      #ifdef LINUX
+      #ifndef WINDOWS
 		extern long   _filelength (int fd);
       #endif
 

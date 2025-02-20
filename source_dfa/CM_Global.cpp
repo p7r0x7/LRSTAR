@@ -180,7 +180,7 @@ char* mystrupr (char* s)
 		return s;
 }
 
-#ifdef LINUX
+#ifndef WINDOWS
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
 //		_filelength function supplied by Vasko Mitanov, Feb 2012.               //
@@ -322,7 +322,7 @@ int   GetMaxValues (char* dn)
 		int   filedesc = -1;
 		int   filesize;
 
-		#ifndef LINUX
+		#ifdef WINDOWS
       strcpy (exefid, getenv ("USERPROFILE"));
       strcat (exefid, "\\AppData\\Local\\LRSTAR");
       strcat (exefid, "\\memory.txt");

@@ -27,13 +27,13 @@
       #include <time.h>
       #include <stdarg.h>
 
-      #ifndef LINUX
+      #ifdef WINDOWS
       #include "wtypes.h"
       #include <io.h>
       #include "malloc.h"
       #endif
 
-      #ifdef LINUX
+      #ifndef WINDOWS
       #include <unistd.h>
       #endif
 
@@ -111,7 +111,7 @@
 			N_OPTIONS
 		};
 
-		#ifndef LINUX
+		#ifdef WINDOWS
       #define read   _read
       #define write  _write
       #define open   _open
@@ -427,7 +427,7 @@
 		extern int    close_sta ();
 		extern int    close_warn ();
 
-      #ifdef LINUX
+      #ifndef WINDOWS
 		extern long   _filelength (int fd);
       #endif
 

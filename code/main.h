@@ -6,7 +6,7 @@
 		#pragma once
 		#include "stdio.h"
 
-		#ifdef LINUX
+		#ifndef WINDOWS
       #define _read		read
       #define _write		write
       #define _open		open

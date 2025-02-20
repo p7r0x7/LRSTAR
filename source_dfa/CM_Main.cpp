@@ -3,14 +3,15 @@
 
       char* program = "DFA";
       char* version = "24.0.025";
-		#ifdef x64
+      #include <cstdint>
+      #if INTPTR_MAX == INT64_MAX
       char* bits = "64b";
 		#else
       char* bits = "32b";
 		#endif
       char* copywrt = "Copyright Paul B Mann";
 
-		#ifndef LINUX
+		#ifdef WINDOWS
 		#include "conio.h"
       #include <windows.h>
 		#endif
@@ -194,7 +195,7 @@ Halt:			goto Halt;
 
 void  Quit (int rc)
 {
-  		#ifndef LINUX
+  		#ifdef WINDOWS
 		#ifdef _DEBUG
       {
 			printf("Waiting for a key to be pressed ...\n");
