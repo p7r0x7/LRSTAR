@@ -1,2 +1,2 @@
-*.grm linguist-language=Antlr
-*.lgr linguist-language=Antlr
+*.grm linguist-language=Bison
+*.lgr linguist-language=Flex
