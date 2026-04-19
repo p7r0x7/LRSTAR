@@ -71,54 +71,54 @@
    <identifier>     => lookup;
    <literal>        => lookup;
 
-	BOOLEAN			'boolean';
-	CHAR				'char';
-	BYTE				'byte';
-	SHORT				'short';
-	INT				'int';
-	LONG				'long';
-	FLOAT				'float';
-	DOUBLE			'double';
-	VOID				'void';
-	ENUM           'enum';
-	PACKAGE			'package';
-	IMPORT			'import';
-	ABSTRACT			'abstract';
-	FINAL				'final';
-	PUBLIC			'public';
-	PROTECTED		'protected';
-	PRIVATE			'private';
-	STATIC			'static';
-	TRANSIENT		'transient';
-	VOLATILE			'volatile';
-	NATIVE			'native';
-	SYNCHRONIZED	'synchronized';
-	CLASS          'class';
-	INTERFACE      'interface';
-	IMPLEMENTS     'implements';
-	OP_DIM         'op_dim';
-	THROWS         'throws';
-	EXTENDS        'extends';
-	CASE           'case';
-	DEFAULT        'default';
-	IF             'if';
-	ELSE           'else';
-	SWITCH         'switch';
-	WHILE          'while';
-	DO             'do';
-	FOR            'for';
-	BREAK          'break';
-	CONTINUE       'continue';
-	RETURN         'return';
-	THROW          'throw';
-	TRY            'try';
-	CATCH          'catch';
-	FINALLY        'finally';
-	THIS           'this';
-	SUPER          'super';
-	JNULL          'jnull';
-	NEW            'new';
-	INSTANCEOF     'instanceof';
+   BOOLEAN        'boolean';
+   CHAR           'char';
+   BYTE           'byte';
+   SHORT          'short';
+   INT            'int';
+   LONG           'long';
+   FLOAT          'float';
+   DOUBLE         'double';
+   VOID           'void';
+   ENUM           'enum';
+   PACKAGE        'package';
+   IMPORT         'import';
+   ABSTRACT       'abstract';
+   FINAL          'final';
+   PUBLIC         'public';
+   PROTECTED      'protected';
+   PRIVATE        'private';
+   STATIC         'static';
+   TRANSIENT      'transient';
+   VOLATILE       'volatile';
+   NATIVE         'native';
+   SYNCHRONIZED   'synchronized';
+   CLASS          'class';
+   INTERFACE      'interface';
+   IMPLEMENTS     'implements';
+   OP_DIM         'op_dim';
+   THROWS         'throws';
+   EXTENDS        'extends';
+   CASE           'case';
+   DEFAULT        'default';
+   IF             'if';
+   ELSE           'else';
+   SWITCH         'switch';
+   WHILE          'while';
+   DO             'do';
+   FOR            'for';
+   BREAK          'break';
+   CONTINUE       'continue';
+   RETURN         'return';
+   THROW          'throw';
+   TRY            'try';
+   CATCH          'catch';
+   FINALLY        'finally';
+   THIS           'this';
+   SUPER          'super';
+   JNULL          'jnull';
+   NEW            'new';
+   INSTANCEOF     'instanceof';
 
 /* Grammar Rules. */
 
@@ -209,7 +209,7 @@
    -> VOLATILE
    -> NATIVE
    -> SYNCHRONIZED
-	-> ENUM
+   -> ENUM
 
    ClassWord
    -> CLASS

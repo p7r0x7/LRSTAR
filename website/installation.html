@@ -1,0 +1,163 @@
+
+<!-- Copyright LRTEC 2020.  All rights reserved. -->
+
+<html>
+<head>
+   <!-- Google tag (gtag.js) -->
+   <script async src="https://www.googletagmanager.com/gtag/js?id=G-99CM9T22YL"></script>
+   <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+
+      gtag('config', 'G-99CM9T22YL');
+   </script>
+
+   <title>LRSTAR Parser Generator - Downloads</title>
+   <!--   123456789 123456789 123456789 123456789 123456789 123456789 123456789
+                   1         2         3         4         5         6         7 -->
+   <META name="description" content="LRSTAR Parser Generators for C++ includes DFA Lexer Generator">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" type="text/css" href="style.css">
+   <link rel="icon" href="favicon.ico" type="image/x-icon">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body class="background" topmargin="0" rightmargin="0" bottommargin="0" leftmargin="0">
+
+   <CENTER>
+
+      <table class="toptable" border="0" cellspacing="0" cellpadding="0">
+         <tr>
+
+            <td class="logobox"><a class="title" href="index.html"><img src="img/LRGen50.bmp"></a></td>
+            <TD class="titlebox">
+               <A class="title" href="index.html">LRSTAR <font class="title2">- Parser Generator for C++</font></A>
+               <font class="subtitle"></font>
+            </TD>
+            <td class="amdgbox">
+               <a title="Ad majorem Dei gloriam" class="amdg" href="#">A.M.D.G.</a>
+            </td>
+
+         </tr>
+      </table>
+
+      <TABLE class="topnavtable" border="0" cellspacing="0" cellpadding="0">
+         <TBODY>
+            <TR>
+
+               <TD class="topnavbox1">
+                  <a class="topnav1" href="index.html">About</a>
+                  <a class="topnav1" href="feedback.html">Feedback</a>
+                  <font class="topnav1">Installation<br>and Setup</font>
+                  <a class="topnav1" href="lrstar_doc_basic.html">LRSTAR</a>
+                  <a class="topnav1" href="dfa_doc_basic.html">DFA</a>
+                  <a class="topnav1" href="papers.html">Papers</a>
+                  <a class="topnav1" href="releases.html">Release<br>Notes</a>
+                  <a class="topnav1" href="contact.html">Contact,<br>Support</a>
+               </TD>
+
+            </TR>
+         </TBODY>
+      </TABLE>
+
+      <TABLE class="texttable" border="0" cellspacing="0" cellpadding="0">
+         <TBODY>
+            <TR>
+
+               <TD class="textbox">
+
+                  <P class="pagehead">Installation</P>
+
+                  To install LRSTAR, create a folder called:<br><br>
+                  <font class=code3>SOFTWARE / LRSTAR</font><br><br>
+                  Put LRSTAR.24.0.000.zip in there and unzip it.
+
+                  <hr size=1>
+
+                  <P class="pagehead">Set "grm" file extension to C/C++
+
+                  <p>
+                     This allows easy access to your Token-Action and Node-Action function names.
+                     Double click on the name, then right-click and select "Go To Definition".
+
+                     The Visual Studio "File Extension" setting is found at:<br><br>
+
+                     <font class=code3>TOOLS / OPTIONS / TEXT EDITOR / FILE EXTENSION</font>
+
+                     <hr size=1>
+
+                  <P class="pagehead">Set Tab To 3</P>
+
+                  <p>
+                     LRSTAR source code and grammars were written with tabs set to 3, indent 3, and keep tabs.
+                     Grammars should work if your tab setting is 4, but the source code wiil look strange.
+                     The Visual Studio tab setting is found at:<br><br>
+
+                     <font class=code3>TOOLS / OPTIONS / TEXT EDITOR / ALL LANGUAGES / TABS</font>
+
+                     <hr size=1>
+
+                  <P class="pagehead">Read-Only Files</P>
+
+                  <p>
+                     Make sure you are not able to modify read-only files, as LRSTAR generates two of them,
+                     and DFA generates two of them.  The VS setting is found at <br><br>
+
+                     <font class=code3>TOOLS / OPTIONS / ENVIRONMENT / DOCUMENTS</font> <br><br>
+
+                     On the right side, the second [ ] box down from the top.  This may already be set properly.
+
+                     <hr size=1>
+
+                  <P class="pagehead">Enable Virtual Space</P>
+
+                  <p>
+                     My personal preference. This is the way it always was in the IBM mainframe days.
+                     Can't find it outside of Visual Studio.  Poor new generation nerds.  There was a book written about them,
+                     "The Inmates Are Running The Asylum".
+                     The Visual Studio setting is here:<br><br>
+
+                     <font class=code3>TOOLS / OPTIONS / TEXT EDITOR / ALL LANGUAGES / GENERAL </font> <br><br>
+
+                     "Settings" is on right.  Click the box [  ] next to "Enable Virtual Space".
+
+                     <hr size=1>
+
+                  <P class="pagehead">Try LRSTAR</P>
+
+                  <p>
+                     Go into the folder:<br><br>
+
+                     <font class=code3>SOFTWARE / LRSTAR / LRSTAR.24.0.000 / examples / Calc</font><br><br>
+
+                     Double-click <font class=code3>workspace.sln</font> <br><br>
+
+                     In Visual Studio, do a <font class=code3>Build / Build Solution</font>, <br>
+                     and click <font class=code3>Local Windows Debugger</font>.  <br><br>
+
+                     Look at file <font class=code3>test.output.txt</font>,  <br>
+                     then look at file <font class=code3>Calc.grm</font>. <br><br>
+
+               </TD>
+
+            </TR>
+         </TBODY>
+      </TABLE>
+
+      <TABLE class="bottable" border="0" cellspacing="0" cellpadding="0">
+         <TBODY>
+            <TR>
+
+               <TD class="bottombox">(c) Copyright Paul B Mann 2023.&nbsp; All rights reserved.</TD>
+
+            </TR>
+         </TBODY>
+      </TABLE>
+
+   </CENTER>
+
+</body>
+</html>
+
+<!-- Copyright LRTEC 2020.  All rights reserved. -->

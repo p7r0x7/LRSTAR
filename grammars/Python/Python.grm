@@ -47,8 +47,8 @@
  */
 
  Goal
-	: (single_input | file_input | eval_input) <eof>
-	;
+   : (single_input | file_input | eval_input) <eof>
+   ;
 
 /// single_input: <newline> | simple_stmt | compound_stmt <newline>
 single_input
@@ -240,14 +240,14 @@ import_name
 /// import_from: ('from' (('.' | '...')* dotted_name | ('.' | '...')+)
 ///               'import' ('*' | '(' import_as_names ')' | import_as_names))
 import_from
-	: FROM  ( ( '.' | '...' )* dotted_name
-	   	  | ('.' | '...')+
-			  )
+   : FROM  ( ( '.' | '...' )* dotted_name
+           | ('.' | '...')+
+           )
      IMPORT  ( '*'
-				 | '(' import_as_names ')'
-				 | import_as_names
-				 )
-	;
+             | '(' import_as_names ')'
+             | import_as_names
+             )
+   ;
 
 /// import_as_name: NAME ['as' NAME]
 import_as_name

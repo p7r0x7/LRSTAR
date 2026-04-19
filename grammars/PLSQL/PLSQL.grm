@@ -18,16 +18,16 @@
  * limitations under the License.
  */
 /*
-	parser grammar PlSqlParser;
+   parser grammar PlSqlParser;
 
-	options {
-		 tokenVocabPlSqlLexer;
-		 superClassPlSqlParserBase;
-	}
+   options {
+       tokenVocabPlSqlLexer;
+       superClassPlSqlParserBase;
+   }
 
-	@parser::postinclude {
-	=>include <PlSqlParserBase.h>
-	}
+   @parser::postinclude {
+   =>include <PlSqlParserBase.h>
+   }
 */
 /*
    I did not have to change much to get it to work with LRSTAR 24.
@@ -1504,12 +1504,12 @@ tablespace_retention_clause
 // to find diskgroup...
 datafile_specification
     : DATAFILE
-	  (','? datafile_tempfile_spec)
+     (','? datafile_tempfile_spec)
     ;
 
 tempfile_specification
     : TEMPFILE
-	  (','? datafile_tempfile_spec)
+     (','? datafile_tempfile_spec)
     ;
 
 datafile_tempfile_spec
@@ -1758,7 +1758,7 @@ xmltype_table
          physical_properties? column_properties? table_partitioning_clauses?
          (CACHE | NOCACHE)? (RESULT_CACHE '(' MODE (DEFAULT | FORCE) ')')?
          parallel_clause? (ROWDEPENDENCIES | NOROWDEPENDENCIES)?
-	 (enable_disable_clause+)? row_movement_clause?
+    (enable_disable_clause+)? row_movement_clause?
          flashback_archive_clause?
     ;
 
@@ -3152,7 +3152,7 @@ procedure_call
 
 pipe_row_statement
     : PIPE ROW '(' expression ')'
-	 ;
+    ;
 
 body
     : BEGIN seq_of_statements (EXCEPTION exception_handler+)? END label_name?

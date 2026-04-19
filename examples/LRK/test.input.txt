@@ -3,7 +3,7 @@ int   main (int na, char** arg);
 
 int   main (int na, char** arg)
 {
-   /* function body goes here	*/
+   /* function body goes here */
 }
 
 typedef unsigned char uchar;
@@ -17,6 +17,6 @@ uchar* name,
 uchar* addr,
 uchar* city)
 {
-   ... /* function body goes here	*/
+   ... /* function body goes here   */
 }
 

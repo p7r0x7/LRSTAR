@@ -6,4 +6,4 @@ rem  the file name, and clicking on the error messages will not work.
 @echo off
 prompt $g$s
 
-..\..\bin\lrstar Python	/k=3 /st
+..\..\bin\lrstar Python /k=3 /st

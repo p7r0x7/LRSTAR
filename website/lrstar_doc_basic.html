@@ -1,0 +1,431 @@
+
+<!-- Copyright LRTEC 2020.  All rights reserved. -->
+
+<html>
+<head>
+   <!-- Google tag (gtag.js) -->
+   <script async src="https://www.googletagmanager.com/gtag/js?id=G-99CM9T22YL"></script>
+   <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+
+      gtag('config', 'G-99CM9T22YL');
+   </script>
+
+   <title>LRSTAR Parser Generator - LRSTAR </title>
+   <!--   123456789 123456789 123456789 123456789 123456789 123456789 123456789
+                   1         2         3         4         5         6         7 -->
+   <META name="description" content="LRSTAR Parser Generators for C++ includes DFA Lexer Generator">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" type="text/css" href="style.css">
+   <link rel="icon" href="favicon.ico" type="image/x-icon">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body class="background" topmargin="0" rightmargin="0" bottommargin="0" leftmargin="0">
+
+   <CENTER>
+
+      <table class="toptable" border="0" cellspacing="0" cellpadding="0">
+         <tr>
+
+            <td class="logobox"><a class="title" href="index.html"><img src="img/LRGen50.bmp"></a></td>
+            <TD class="titlebox">
+               <A class="title" href="index.html">LRSTAR <font class="title2">- Parser Generator for C++</A>
+               <font class="subtitle"></font>
+            </TD>
+            <td class="amdgbox">
+               <a title="Ad majorem Dei gloriam" class="amdg" href="#">A.M.D.G.</a>
+            </td>
+
+         </tr>
+      </table>
+
+      <TABLE class="topnavtable" border="0" cellspacing="0" cellpadding="0">
+         <TBODY>
+            <TR>
+
+               <TD class="topnavbox1">
+                  <a class="topnav1" href="index.html">About</a>
+                  <a class="topnav1" href="feedback.html">Feedback</a>
+                  <a class="topnav1" href="installation.html">Installation<br>and Setup</a>
+                  <font class="topnav1">LRSTAR</font>
+                  <a class="topnav1" href="dfa_doc_basic.html">DFA</a>
+                  <a class="topnav1" href="papers.html">Papers</a>
+                  <a class="topnav1" href="releases.html">Release<br>Notes</a>
+                  <a class="topnav1" href="contact.html">Contact,<br>Support</a>
+               </TD>
+
+            </TR>
+         </TBODY>
+      </TABLE>
+
+      <TABLE class="texttable" border="0" cellspacing="0" cellpadding="0">
+         <TBODY>
+            <TR>
+
+               <TD class="textbox">
+
+                  <TABLE class=topnavtable2 border="0" cellspacing="0" cellpadding="0">
+                     <TR>
+                        <TD class="topnavbox2">
+                           <font class="topnav2">BASIC</font>
+                           <a class="topnav2" href="lrstar_doc_advanced.html">ADVANCED</a>
+                           <a class="topnav2" href="lrstar_doc_expert.html">EXPERT</a>
+                        </TD>
+                     </TR>
+                  </TABLE>
+
+                  <P class="pagehead">LRSTAR Options</P>
+
+                  <p>
+                     Type "lrstar" and you get this:
+
+                     <pre>
+LRSTAR 24.0.000 64b Copyright Paul B Mann.
+|
+|   LR(*) PARSER GENERATOR
+|                                               
+|   lrstar &lt;grammar&gt; [/&lt;option&gt;...]
+|
+|   OPTION  DEFAULT  DESCRIPTION
+|
+|   crr        0     Conflict report for Reduce-Reduce
+|   csr        0     Conflict report for Shift-Reduce
+|   fsa        0     Force shift actions in conflicts
+|
+|   g          1     Grammar listing
+|   gh         0     Grammar HTML format output
+|
+|   st         0     States listing
+|   ci         0     Case-insensitive input
+|
+|   pt         1     Parser-table creation
+|   o          0     Optimize parser-tables
+|   m          0     Minimize parser-tables
+|
+|   k          1     k-lookaheads for LR(*) parsing
+|
+|   ast        1     AST activated in parser
+|   exp        1     Expecting-list activated
+|   ta         1     Terminal-actions activated
+|   na         1     Node-actions activated
+|
+|   d          0     Debug parser activated.
+|   dt         0     Debug trace activated.
+|
+|   v          2     Verbose listing (0,1,2)
+|   w          0     Warnings listed on screen
+|
+|   wa         0     Warning, arguments -> nonterminals
+|   wc         0     Warning, constants not used
+|   wk         0     Warning, keywords not declared
+|   wm         0     Warning, mixed case keywords
+|   wu         0     Warning, upper case keywords
+|_
+</pre>
+
+                  <hr size=1>
+
+                  <P class="pagehead">LRSTAR Grammars</P>
+
+                  <p>
+                     LRSTAR reads a grammar.  A grammar is a "list of rules" specifying
+                     (1) the pattern of an input file, or (2) the syntax of a language.
+                     LRSTAR reads pure grammar notation, mostly rules, action operators and
+                     function names.  By using AST operators, LRSTAR parsers can construct an
+                     abstract-syntax tree (AST).  Simple, concise and powerful.
+
+                     <hr size=1>
+
+                  <P class="pagehead">Lexical Tokens</P>
+
+                  <p>
+                     <font class=code3>&lt;identifier></font>,
+                     <font class=code3>&lt;integer></font>,
+                     <font class=code3>&lt;string></font>,
+                     <font class=code3>&lt;eof></font>.<br>
+                     These are the variable symbols of your language. Tokens are provided by the lexer.
+                     Here is a simple grammar:
+
+<pre>
+<font class=code3>&lt;error></font>       => error();
+<font class=code3>&lt;identifier></font>  => lookup();  // Call symbol-table function.
+<font class=code3>&lt;integer></font>     => lookup();  // Call symbol-table function.
+
+{ '+'  '-' }  &lt;&lt;  // Left associative, lowest priority.     
+{ '*'  '/' }  &lt;&lt;  // Left associative, highest priority.
+
+Start   -> Program+ <font class=code3>&lt;eof></font>                        *> goal_     
+
+Program -> 'program' <font class=code3>&lt;identifier></font> '{' Stmt* '}'  *> program_(2)
+            
+Stmt    -> Target '=' Exp ';'                    *> store_~       
+           
+Target  -> <font class=code3>&lt;identifier></font>                          *> target_(1)      
+            
+Exp     -> <font class=code3>&lt;integer></font>                             *> integer_(1)        
+        -> <font class=code3>&lt;identifier></font>                          *> identifier_(1)     
+        -> Exp '+' Exp                           *> add_          
+        -> Exp '-' Exp                           *> sub_          
+        -> Exp '*' Exp                           *> mul_          
+        -> Exp '/' Exp                           *> div_          
+        -> '(' Exp ')'  
+</pre>
+
+                     <hr size=1>
+
+                  <P class="pagehead">Lexical Tokens As Defined Constants</P>
+
+                  <p>
+                     <font class=blue>IDENTIFIER</font>,
+                     <font class=blue>INTEGER</font>,
+                     <font class=blue>STRING</font>,
+                     <font class=blue>EOF</font>.<br>
+                     Some people are in the habit of using defined constants for lexical symbols.
+                     It originated with "lex" and "flex" which both do a "return(<font class=blue>IDENTIFIER</font>)" to the
+                     parser.  DFA returns the actual token number to the LRSTAR parser, so there's no
+                     need for using defined constants in LRSTAR grammars, in most cases.
+
+                  <p>
+                     However, you may have a YACC grammar which uses defined constants in the rules.
+                     In this case, you will need to put the defined constants at the top of your grammar
+                     (easier than changing the rules).  These defined constants will also be available
+                     to use in your source code.  Here is an example:
+
+<pre>
+<font class=blue>ERROR</font>       &lt;error>        => error();
+<font class=blue>IDENTIFIER</font>  &lt;identifier>   => lookup();  // Call symbol table function.
+<font class=blue>INTEGER</font>     &lt;integer>      => lookup();  // Call symbol table function.
+<font class=blue>EOF</font>         &lt;eof>;     
+<font class=blue>PLUS</font>        '+';
+<font class=blue>MINUS</font>       '-';
+<font class=blue>MUL</font>         '*';
+<font class=blue>DIV</font>         '/';
+<font class=blue>LBRACE</font>      '{';
+<font class=blue>RBRACE</font>      '}';
+<font class=blue>EQUALS</font>      '=';
+<font class=blue>SEMICOLON</font>   ';';
+<font class=blue>LPAREN</font>      '(';
+<font class=blue>RPAREN</font>      ')';
+<font class=blue>PROGRAM</font>     'program';
+</pre>
+
+                     <hr size=1>
+
+                  <P class="pagehead">Parser-Defined Terminals</P>
+
+                  <p>
+                     <font class=orange>{typename}</font>,
+                     <font class=orange>{headsymbol}</font>,
+                     <font class=orange>{function_name}</font>,
+                     <font class=orange>{array_name}</font>.<br>
+                     These are also variable symbols of your language, called "semantic symbols". These are
+                     usually provided by the lexer as <font class=code3>&lt;identifier></font>s, but changed
+                     to the more meaningful semantic symbols, when appropriate.  A special action is necessary
+                     to "upgrade" the input by using the "^" operator.  Here is an example.  Notice that LRSTAR 
+                     accepts the YACC style notation (: | ;) as well as the arrow (->).
+
+<pre>
+<font class=code3>&lt;identifier></font>  => lookup();  // Call symbol-table function.
+
+Goal        : Declaration* &lt;eof>
+            ;
+Declaration :         TypeSpec+ Identifier ';'              
+            | typedef TypeSpec+ Typename   ';'   
+            ;
+Identifier  : <font class=code3>&lt;identifier></font>            
+            ;
+Typename    : <font class=code3>&lt;identifier></font>^<font class=orange>{typename}</font> 
+            ;
+TypeSpec    : char                     
+            | int                                  
+            | short                    
+            | <font class=orange>{typename}</font>
+            ;
+</pre>
+
+                  <hr size=1>
+
+                  <p class="pagehead">Two Special Symbols</p>
+
+                  <p>
+                     <font class=code3>&lt;eof></font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;End-of-file symbol.<br>
+                     <font class=code3>&lt;error></font> &nbsp;&nbsp;&nbsp;Error symbol.<br>
+
+
+<p>
+                     <font class=code3>&lt;eof></font> <br>
+                     This can only be used in one place in the rules of the grammar,
+                     at the end of the start rule, for example:
+
+<pre>
+Goal -> CompilationUnit <font class=code3>&lt;eof></font>
+</pre>
+
+                  <p>
+                     <font class=code3>&lt;error></font> <br>
+                     This symbol is here for completeness.  It can be used for custom parsing algorithms,
+                     but none are provided, yet.  If one needs LR(*) parsing, the usage of the
+                     <font class=code3>&lt;error></font> symbol becomes more complicated.  It's here in
+                     case you want to write your own custom parser.
+
+                  <hr size=1>
+
+                  <p class="pagehead">EBNF Notation</p>
+
+                  <p>
+                     Basic operators: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Extended operators:<br>
+                     <font class=code>+</font> One or more.    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class=code>/</font> Separator. <br>
+                     <font class=code>*</font> Zero or more.<br>
+                     <font class=code>?</font> Optional. <br>
+                     <font class=code>(</font> Group start.    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class=code>[</font> Optional start. <br>
+                     <font class=code>)</font> Group end.      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class=code>]</font> Optional end.
+
+                  <p>
+                     Here are some useful examples:
+
+<pre>
+Goal -> ExternalDef<font class=code2>*</font> &lt;eof>         // Zero or more ExternalDef                                    
+      
+PrimaryExp
+   -> &lt;string><font class=code2>+</font>                     // One or more &lt;string>
+   -> &lt;identifier>                                           
+
+Default -> <font class=code2>(</font>default ':' Stmt*<font class=code2>)?</font>     // Optional group
+
+PostfixExp
+      -> PrimaryExp
+      -> {function} '(' <font class=code2>[</font>Args<font class=code2>]</font> ')'  // Optional Args
+
+Args  -> &lt;identifier><font class=code2>/</font>','<font class=code2>+</font>          // One or more separated by ','s
+</pre>
+
+
+                  <hr size=1>
+
+                  <P class="pagehead">Three Action Operators</P>
+
+                  <p>
+                     <font class=code>=></font> Call a Token Action.<br>
+                     <font class=code>+></font> Make a Node in the AST.<br>
+                     <font class=code>*></font> Make a Node and call a Node Action.<br>
+
+                  <p>
+                     Here is a simple grammar, with action operators:
+
+<pre>
+&lt;error>       <font class=code3>=></font> error();
+&lt;identifier>  <font class=code3>=></font> lookup();  // Call symbol table function.
+&lt;integer>     <font class=code3>=></font> lookup();  // Call symbol table function.
+
+{ '+'  '-' }  &lt;&lt;  // Left associative, lowest priority.     
+{ '*'  '/' }  &lt;&lt;  // Left associative, highest priority.
+
+Goal    -> Program+ &lt;eof>                        <font class=code3>*></font> goal_     
+
+Program -> 'program' &lt;identifier> '{' Stmt* '}'  <font class=code3>*></font> program_(2)
+            
+Stmt    -> Target '=' Exp ';'                    <font class=code3>*></font> store_~         
+           
+Target  -> &lt;identifier>                          <font class=code3>*></font> target_(1)      
+            
+Exp     -> &lt;integer>                             <font class=code3>*></font> integer_(1)        
+        -> &lt;identifier>                          <font class=code3>*></font> identifier_(1)     
+        -> Exp '+' Exp                           <font class=code3>*></font> add_            
+        -> Exp '-' Exp                           <font class=code3>*></font> sub_            
+        -> Exp '*' Exp                           <font class=code3>*></font> mul_            
+        -> Exp '/' Exp                           <font class=code3>*></font> div_            
+        -> '(' Exp ')'  
+</pre>
+
+
+                  <hr size=1>
+
+                  <p class="pagehead">Reverse Operator</p>
+
+                  <p>
+                     <font class=code>~</font> &nbsp;Reverse the child nodes.
+
+                  <p>
+                     In the AST, some subtrees work much better when the order is "reversed" from the
+                     original input order.  In the following case, we want to evaluate the Exp before
+                     we store the result in the Target, so we use the <font class=code>~</font> after
+                     the Node Action name.  See the Calc project.
+
+<pre>
+Stmt  -> Target '=' Exp ';'        <font class=code3>*></font> store_<font class=code>~</font>        
+</pre>
+
+                     <!--              <hr size=1>
+
+                     <p class="pagehead">Three Argument Arrays</p>
+
+                     <p>
+                        <font class=orange>arga</font>[], <font class=orange>argx</font>[], <font class=orange>argy</font>[].<br>
+                        These are available as follows:
+
+                     <p>
+                        Token Actions: <font class=orange>arga</font>[]
+
+   <pre>
+   Grammar:
+      &lt;alpha>  => headsym (<font class=orange>{headsymbol}</font>);
+
+   Function:
+   int   LRGen_TokenActions::headsym (int& t)
+   {
+         int original_t = t;
+         char* p = token.start-1;
+         while (*p == ' ' || *p == '\t') p--;
+         if (*p == '\n') // First symbol on this line?
+         {
+            t = <font class=orange>arga</font>[t]; // Set to <font class=orange>{headsymbol}</font>
+         }
+         return lookup (original_t);
+   }
+   </pre>
+
+                     <p>
+                        Parse Actions: 1st argument = <font class=orange>argx</font>[], 2nd argument = <font class=orange>argy</font>[]
+
+   <pre>
+   Grammar:
+      TypedefIdentifier -> &lt;identifier>  => typedef_ (<font class=orange>1</font>,<font class=orange>{typename}</font>)
+
+   Function:
+   int   Typedef_ParseActions::typedef_ (int p)
+   {
+         int <font class=orange>x</font> = <font class=orange>argx</font>[p];
+         int sti = PS[<font class=orange>x</font>].sti;        // Get sti from parse stack.
+         symbol[sti].term = <font class=orange>argy</font>[p]; // Set term to <font class=orange>{typename}</font>.
+         return 1;
+   }
+   </pre>
+
+                  <hr size=1>
+                  -->
+
+</TD>
+
+            </TR>
+         </TBODY>
+      </TABLE>
+
+      <TABLE class="bottable" border="0" cellspacing="0" cellpadding="0">
+         <TBODY>
+            <TR>
+
+               <TD class="bottombox">(c) Copyright Paul B Mann 2023.&nbsp; All rights reserved.</TD>
+
+            </TR>
+         </TBODY>
+      </TABLE>
+
+   </CENTER>
+
+</body>
+</html>
+
+<!-- Copyright LRTEC 2020.  All rights reserved. -->

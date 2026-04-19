@@ -1,8 +1,8 @@
 
 /* LALR style PL/M grammar
    by
-	Bill Spees
-	Legendary Systems, Inc
+   Bill Spees
+   Legendary Systems, Inc
 */
 
 /* Input tokens. */

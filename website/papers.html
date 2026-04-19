@@ -1,0 +1,151 @@
+<!-- Copyright LRTEC 2020.  All rights reserved. -->
+
+<html>
+<head>
+   <!-- Google tag (gtag.js) -->
+   <script async src="https://www.googletagmanager.com/gtag/js?id=G-99CM9T22YL"></script>
+   <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+
+      gtag('config', 'G-99CM9T22YL');
+   </script>
+
+   <title>LRSTAR Parser Generator - Papers</title>
+   <!--   123456789 123456789 123456789 123456789 123456789 123456789 123456789
+                   1         2         3         4         5         6         7 -->
+   <META name="description" content="LRSTAR parser generator for C++ programmers+ ">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" type="text/css" href="style.css">
+   <link rel="icon" href="favicon.ico" type="image/x-icon">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <style>
+      u {
+         color: red;
+         text-decoration: none;
+         font-size: 18px;
+      }
+
+      i {
+         color: yellow;
+         font-style: normal;
+         font-size: 18px;
+      }
+   </style>
+</head>
+
+<body class="background" topmargin="0" rightmargin="0" bottommargin="0" leftmargin="0">
+
+   <CENTER>
+
+      <table class="toptable" border="0" cellspacing="0" cellpadding="0">
+         <tr>
+
+            <td class="logobox"><a class="title" href="index.html"><img src="img/LRGen50.bmp"></a></td>
+            <TD class="titlebox">
+               <A class="title" href="index.html">LRSTAR <font class="title2">- Parser Generator for C++</A>
+               <font class="subtitle"></font>
+            </TD>
+            <td class="amdgbox">
+               <a title="Ad majorem Dei gloriam" class="amdg" href="#">A.M.D.G.</a>
+            </td>
+
+         </tr>
+      </table>
+
+      <TABLE class="topnavtable" border="0" cellspacing="0" cellpadding="0">
+         <TBODY>
+            <TR>
+
+               <TD class="topnavbox1">
+                  <a class="topnav1" href="index.html">About</a>
+                  <a class="topnav1" href="feedback.html">Feedback</a>
+                  <a class="topnav1" href="installation.html">Installation<br>and Setup</a>
+                  <a class="topnav1" href="lrstar_doc_basic.html">LRSTAR</a>
+                  <a class="topnav1" href="dfa_doc_basic.html">DFA</a>
+                  <font class="topnav1">Papers</font>
+                  <a class="topnav1" href="releases.html">Release<br>Notes</a>
+                  <a class="topnav1" href="contact.html">Contact,<br>Support</a>
+               </TD>
+
+            </TR>
+         </TBODY>
+      </TABLE>
+
+      <TABLE class="texttable" border="0" cellspacing="0" cellpadding="0">
+         <TBODY>
+            <TR>
+               <TD class="textbox">
+
+                  <P class="pagehead">Papers Implemented In LRSTAR</P>
+
+                  <P>
+                     <font class="parhead">
+                        <A href="http://dl.acm.org/citation.cfm?id=357187"
+                           target="_blank">
+                           Efficient Computation Of LALR(1) Look-Ahead
+                           Sets
+                        </A>
+                     </font><BR>       [by DeRemer and Pennello, 1982, TOPLAS]<BR>
+                     In 1979, this paper
+                     was first published in SIGPlan Notices.  It presents an elegant algorithm
+                     for computing the the look-ahead sets     for an LR(0) state machine or
+                     minimal LR(1) state machine, which enables the creation of LALR(1) or
+                     minimal LR(1) parsers.  The paper
+                     also contains an algorithm, called DiGraph, for computing transitive
+                     closure of directed graphs which performs about 3 times the       speed of
+                     Warshall's algorithm, for sparsely populated graphs.&nbsp;<BR>
+
+                  <P>
+                     <font class="parhead">
+                        <A href="http://dl.acm.org/citation.cfm?id=1780.1802"
+                           target="_blank">
+                           Optimization Of Parser Tables For Portable
+                           Compilers
+                        </A>
+                     </font><BR>       [by Dencker, Durre, Heuft, 1984,
+                     TOPLAS]<BR>       This paper
+                     presents a matrix type of structure for parser tables.  Making of a
+                     boolean matrix allows one to use graph coloring on       both the
+                     terminal-transition matrix and the nonterminal-transition matrix.  This
+                     provides small parser tables which still offer     excellent parsing speed,
+                     which is linear in relation to the size of the input stream.  Note: the
+                     size of the grammar has no effect      on parsing speed, which is the same
+                     for all grammars (large or small).
+
+                  <P>
+                     <font class="parhead">
+                        <A href="https://dl.acm.org/citation.cfm?id=1147218"
+                           target="_blank">
+                           A Translational BNF Grammar Notation (TBNF)
+                        </A>
+                     </font><BR>
+                     [by Paul B Mann, 2006, SIGPLAN Notices]<BR>
+                     Some new BNF grammar notations are
+                     presented which allows one to specify the structure, content and
+                     processing of an abstract-syntax tree (AST), thereby offering improved
+                     productivity and reliability in the development of computer-language
+                     software products.&nbsp;      An example is given which shows how to define
+                     the complete translation process from source language to intermediate
+                     code.
+
+               </TD>
+            </TR>
+         </TBODY>
+      </TABLE>
+
+      <TABLE class="bottable" border="0" cellspacing="0" cellpadding="0">
+         <TBODY>
+            <TR>
+
+               <TD class="bottombox">(c) Copyright Paul B Mann 2023.&nbsp; All rights reserved.</TD>
+
+            </TR>
+         </TBODY>
+      </TABLE>
+
+</body>
+</html>
+
+<!-- Copyright Paul B Mann 2020.  All rights reserved. -->

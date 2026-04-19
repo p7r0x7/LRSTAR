@@ -18,7 +18,7 @@
  * along with NASE A60; see the file COPYING.  If not, write to the Free
  * Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- * a60-parse.y:						aug '90
+ * a60-parse.y:                  aug '90
  *
  * Erik Schoenfelder (schoenfr@ibr.cs.tu-bs.de)
  *
@@ -28,7 +28,7 @@
  * error recovery).
  *
  * The unary '-' usage is still wrong. It's possible to write (and use)
- * 	a := 33 + - 7;
+ *    a := 33 + - 7;
  * but that's not allowed in RRA60.
  *
  * The scanner should resolove real values like 1.44 '10' +7. But this
@@ -37,59 +37,59 @@
 
 /* Operator Precedence */
 
-{ '+' '-' }	<<
-{ '*' '/' }	<<
+{ '+' '-' } <<
+{ '*' '/' } <<
 
 /* Rules */
 
 start -> a60program <eof>
 
 a60program
-	: /* empty */
-	| program
-	;
+   : /* empty */
+   | program
+   ;
 
 /* Logical values */
 
 logical_val
-	: TTRUE
-	| TFALSE
-	;
+   : TTRUE
+   | TFALSE
+   ;
 
 /* Identifiers */
 
 identifier
-	: NAME
-	;
+   : NAME
+   ;
 
 
 /* Strings */
 
 string
-	: STRING
-	;
+   : STRING
+   ;
 
 
 /* Variables : */
 
 variable
-	: identifier
+   : identifier
 
-	| identifier '[' subscr_list ']'
+   | identifier '[' subscr_list ']'
 
-	;
+   ;
 
 subscr_list
-	: subscr_expr
+   : subscr_expr
 
-	| subscr_list ',' subscr_expr
+   | subscr_list ',' subscr_expr
 
-	;
+   ;
 
 subscr_expr
-	: arith_expr
+   : arith_expr
 
-	;
+   ;
 
 
 /* function designators : */
@@ -99,85 +99,85 @@ subscr_expr
  */
 
 func_desig
-	: identifier '(' act_parmlist ')'
-	;
+   : identifier '(' act_parmlist ')'
+   ;
 
 /* arithmetik expressions : */
 
 arith_expr
-	: simple_expr
+   : simple_expr
 
-	| if_clause simple_expr TELSE arith_expr
+   | if_clause simple_expr TELSE arith_expr
 
-	;
+   ;
 
 simple_expr
-	: '+' mix_expr
+   : '+' mix_expr
 
-	| mix_expr
+   | mix_expr
 
-	;
+   ;
 
 mix_expr
-	: mix_expr '*' mix_expr
+   : mix_expr '*' mix_expr
 
-	| mix_expr '/' mix_expr
+   | mix_expr '/' mix_expr
 
-	| mix_expr '+' mix_expr
+   | mix_expr '+' mix_expr
 
-	| mix_expr '-' mix_expr
+   | mix_expr '-' mix_expr
 
-	| mix_expr TPOW mix_expr
+   | mix_expr TPOW mix_expr
 
-	| mix_expr TDIV mix_expr
+   | mix_expr TDIV mix_expr
 
-	| mix_expr TEQUIV mix_expr
+   | mix_expr TEQUIV mix_expr
 
-	| mix_expr TIMPL mix_expr
+   | mix_expr TIMPL mix_expr
 
-	| mix_expr TOR mix_expr
+   | mix_expr TOR mix_expr
 
-	| mix_expr TAND mix_expr
+   | mix_expr TAND mix_expr
 
-	| TNOT mix_expr
+   | TNOT mix_expr
 
-	| relation
+   | relation
 
-	| mix_prim
+   | mix_prim
 
-	| '-' mix_prim
+   | '-' mix_prim
 
-	;
+   ;
 
 relation
-	: mix_expr TLESS mix_expr
+   : mix_expr TLESS mix_expr
 
-	| mix_expr TNOTGREATER mix_expr
+   | mix_expr TNOTGREATER mix_expr
 
-	| mix_expr TEQUAL mix_expr
+   | mix_expr TEQUAL mix_expr
 
-	| mix_expr TNOTLESS mix_expr
+   | mix_expr TNOTLESS mix_expr
 
-	| mix_expr TGREATER mix_expr
+   | mix_expr TGREATER mix_expr
 
-	| mix_expr TNOTEQUAL mix_expr
+   | mix_expr TNOTEQUAL mix_expr
 
-	;
+   ;
 
 mix_prim
-	: INUM
+   : INUM
 
-	| real_value
+   | real_value
 
-	| func_desig
+   | func_desig
 
-	| variable
+   | variable
 
-	| logical_val
+   | logical_val
 
-	| '(' simple_expr ')'
+   | '(' simple_expr ')'
 
-	;
+   ;
 
 bool_expr : arith_expr
           ;
@@ -186,481 +186,481 @@ bool_expr : arith_expr
 /* designational expr : */
 
 design_expr
-	: simp_dexpr
-	| if_clause simp_dexpr TELSE design_expr
-	;
+   : simp_dexpr
+   | if_clause simp_dexpr TELSE design_expr
+   ;
 
 simp_dexpr
-	: label
+   : label
 
-	| switch_des
+   | switch_des
 
-	| '(' design_expr ')'
+   | '(' design_expr ')'
 
-	;
+   ;
 
 switch_des
-	: identifier '[' subscr_expr ']'
+   : identifier '[' subscr_expr ']'
 
-	;
+   ;
 
 
 /* compound statements and blocks : */
 
 program
-	: block
+   : block
 
-	| comp_stmt
+   | comp_stmt
 
-	;
+   ;
 
 block
-	: unlab_block
+   : unlab_block
 
-	| tlabel block
+   | tlabel block
 
-	;
+   ;
 
 comp_stmt
-	: unlab_comp
+   : unlab_comp
 
-	| tlabel comp_stmt
+   | tlabel comp_stmt
 
-	;
+   ;
 
 unlab_block
-	: block_head ';' comp_tail
+   : block_head ';' comp_tail
 
-	;
+   ;
 
 unlab_comp
-	: TBEGIN
+   : TBEGIN
 
-	  comp_tail
+     comp_tail
 
-	;
+   ;
 
 block_head
-	: TBEGIN
+   : TBEGIN
 
-	  decl
+     decl
 
-	| block_head ';' decl
+   | block_head ';' decl
 
-	| error
+   | error
 
-	;
+   ;
 
 comp_tail
-	: stmt TEND
+   : stmt TEND
 
-	| stmt ';' comp_tail
+   | stmt ';' comp_tail
 
-	;
+   ;
 
 stmt
-	: uncond_stmt
+   : uncond_stmt
 
-	| cond_stmt
+   | cond_stmt
 
-	| for_stmt
+   | for_stmt
 
-	;
+   ;
 
 uncond_stmt
-	: basic_stmt
+   : basic_stmt
 
-	| comp_stmt
+   | comp_stmt
 
-	| block
+   | block
 
-	;
+   ;
 
 basic_stmt
-	: unlab_basic_stmt
+   : unlab_basic_stmt
 
-	| tlabel basic_stmt
+   | tlabel basic_stmt
 
-	;
+   ;
 
 unlab_basic_stmt
-	: assign_stmt
+   : assign_stmt
 
-	| goto_stmt
+   | goto_stmt
 
-	| dummy_stmt
+   | dummy_stmt
 
-	| proc_stmt
+   | proc_stmt
 
-	| error
+   | error
 
-	;
+   ;
 
 
 /* assignment statements : */
 
 assign_stmt
-	: left_part_list right_part
+   : left_part_list right_part
 
-	;
+   ;
 
 right_part
-	: arith_expr
+   : arith_expr
 
-	;
+   ;
 
 left_part_list
-	: left_part
+   : left_part
 
-	| left_part_list left_part
+   | left_part_list left_part
 
-	;
+   ;
 
 left_part
-	: variable TASSIGN
+   : variable TASSIGN
 
-	;
+   ;
 
 
 /* goto statements : */
 
 goto_stmt
-	: TGOTO design_expr
+   : TGOTO design_expr
 
-	;
+   ;
 
 
 /* dummy statements : */
 
 dummy_stmt
-	: /* empty */
+   : /* empty */
 
-	;
+   ;
 
 
 /* conditional statements : */
 
 cond_stmt
-	: if_stmt
+   : if_stmt
 
-	| if_stmt TELSE stmt
+   | if_stmt TELSE stmt
 
-	| if_clause for_stmt
+   | if_clause for_stmt
 
-	| tlabel cond_stmt
+   | tlabel cond_stmt
 
-	;
+   ;
 
 if_stmt
-	: if_clause uncond_stmt
+   : if_clause uncond_stmt
 
-	;
+   ;
 
 if_clause
-	: TIF bool_expr TTHEN
+   : TIF bool_expr TTHEN
 
-	;
+   ;
 
 
 /* for statements : */
 
 for_stmt
-	: for_clause stmt
+   : for_clause stmt
 
-	| tlabel for_stmt
+   | tlabel for_stmt
 
-	;
+   ;
 
 for_clause
-	: TFOR variable TASSIGN for_list TDO
+   : TFOR variable TASSIGN for_list TDO
 
-	;
+   ;
 
 for_list
-	: for_lelm
+   : for_lelm
 
-	| for_list ',' for_lelm
+   | for_list ',' for_lelm
 
-	;
+   ;
 
 for_lelm
-	: arith_expr
+   : arith_expr
 
-	| arith_expr TSTEP arith_expr TUNTIL arith_expr
+   | arith_expr TSTEP arith_expr TUNTIL arith_expr
 
-	| arith_expr TWHILE bool_expr
+   | arith_expr TWHILE bool_expr
 
-	;
+   ;
 
 
 /* Procedure statements : */
 
 proc_stmt
-	: identifier act_parmpart
+   : identifier act_parmpart
 
-	;
+   ;
 
 act_parmpart
-	: /* empty */
+   : /* empty */
 
-	| '(' act_parmlist ')'
+   | '(' act_parmlist ')'
 
-	;
+   ;
 
 act_parmlist
-	: act_parm
+   : act_parm
 
-	| act_parmlist parm_delim act_parm
+   | act_parmlist parm_delim act_parm
 
-	;
+   ;
 
 parm_delim
-	: ','
+   : ','
 
-	| ')' letter_string ':' '('
+   | ')' letter_string ':' '('
 
-	;
+   ;
 
 letter_string
-	: NAME
+   : NAME
 
-	;
+   ;
 
 act_parm
-	: string
+   : string
 
-	| arith_expr
+   | arith_expr
 
-	;
+   ;
 
 
 /* Declarations : */
 
 decl
-	: type_decl
+   : type_decl
 
-	| array_decl
+   | array_decl
 
-	| switch_decl
+   | switch_decl
 
-	| proc_decl
+   | proc_decl
 
-	;
+   ;
 
 /* Type declarations : */
 
 type_decl
-	: loc_or_own type_list
+   : loc_or_own type_list
 
-	;
+   ;
 
 loc_or_own
-	: type
+   : type
 
-	| TOWN type
+   | TOWN type
 
-	;
+   ;
 
 type_list
-	: identifier
+   : identifier
 
-	| type_list ',' identifier
-	;
+   | type_list ',' identifier
+   ;
 
 type
-	: TINTEGER
+   : TINTEGER
 
-	| TREAL
+   | TREAL
 
-	| TBOOL
+   | TBOOL
 
-	;
+   ;
 
 
 /* Array declarations : */
 
 array_decl
-	: TARRAY array_list
+   : TARRAY array_list
 
-	| loc_or_own TARRAY array_list
+   | loc_or_own TARRAY array_list
 
-	;
+   ;
 
 array_list
-	: array_seg
+   : array_seg
 
-	| array_list ',' array_seg
+   | array_list ',' array_seg
 
-	;
+   ;
 
 array_seg
-	: identifier '[' bound_pair_list ']'
+   : identifier '[' bound_pair_list ']'
 
-	| identifier ',' array_seg
+   | identifier ',' array_seg
 
-	;
+   ;
 
 bound_pair_list
-	: bound_pair
+   : bound_pair
 
-	| bound_pair_list ',' bound_pair
+   | bound_pair_list ',' bound_pair
 
-	;
+   ;
 
 bound_pair
-	: arith_expr ':' arith_expr
+   : arith_expr ':' arith_expr
 
-	;
+   ;
 
 
 /* Switch declarations : */
 
 switch_decl
-	: TSWITCH identifier TASSIGN switch_list
+   : TSWITCH identifier TASSIGN switch_list
 
-	;
+   ;
 
 switch_list
-	: design_expr
+   : design_expr
 
-	| switch_list ',' design_expr
+   | switch_list ',' design_expr
 
-	;
+   ;
 
 
 /* Procedure declarations : */
 
 proc_decl
-	: pd_proc_head pd_proc_body
+   : pd_proc_head pd_proc_body
 
-	;
+   ;
 
 pd_proc_type
-	: /* empty */
+   : /* empty */
 
-	| type
+   | type
 
-	;
+   ;
 
 pd_proc_body
-	: stmt
+   : stmt
 
-	| TCODE
+   | TCODE
 
-	;
+   ;
 
 
 pd_proc_hhead
-	: pd_proc_type TPROC identifier
+   : pd_proc_type TPROC identifier
 
-	;
+   ;
 
 pd_proc_head
-	: pd_proc_hhead pd_form_parmpart ';' pd_val_part pd_spec_part
+   : pd_proc_hhead pd_form_parmpart ';' pd_val_part pd_spec_part
 
-	;
+   ;
 
 pd_spec_part
-	: /* empty */
+   : /* empty */
 
-	| pd_spec_idlist
+   | pd_spec_idlist
 
-	;
+   ;
 
 pd_spec_idlist
-	: pd_spec pd_ident_list ';'
+   : pd_spec pd_ident_list ';'
 
-	| pd_spec_idlist pd_spec pd_ident_list ';'
+   | pd_spec_idlist pd_spec pd_ident_list ';'
 
-	;
+   ;
 
 pd_spec
-	: TSTRING
+   : TSTRING
 
-	| type
+   | type
 
-	| TARRAY
+   | TARRAY
 
-	| type TARRAY
+   | type TARRAY
 
-	| TLABEL
+   | TLABEL
 
-	| TSWITCH
+   | TSWITCH
 
-	| TPROC
+   | TPROC
 
-	| type TPROC
+   | type TPROC
 
-	;
+   ;
 
 pd_val_part
-	: /* empty */
+   : /* empty */
 
-	| TVALUE pd_ident_list ';'
+   | TVALUE pd_ident_list ';'
 
-	;
+   ;
 
 pd_ident_list
-	: identifier
+   : identifier
 
-	| pd_ident_list ',' identifier
+   | pd_ident_list ',' identifier
 
-	;
+   ;
 
 pd_form_parmpart
-	: /* empty */
+   : /* empty */
 
-	| '(' pd_form_parmlist ')'
+   | '(' pd_form_parmlist ')'
 
-	;
+   ;
 
 pd_form_parmlist
-	: pd_form_parm
+   : pd_form_parm
 
-	| pd_form_parmlist parm_delim pd_form_parm
+   | pd_form_parmlist parm_delim pd_form_parm
 
-	;
+   ;
 
 pd_form_parm
-	: identifier
+   : identifier
 
-	;
+   ;
 
 
 /* Label parsing: */
 
 tlabel
-	: label ':'
+   : label ':'
 
-	;
+   ;
 
 label
-	: identifier
+   : identifier
 
-	| INUM
+   | INUM
 
-	;
+   ;
 
 /* real value: */
 
 signed_inum
-	: INUM
+   : INUM
 
-	| '+' INUM
+   | '+' INUM
 
-	| '-' INUM
+   | '-' INUM
 
-	;
+   ;
 
 real_value
-	: RNUM
+   : RNUM
 
-	| RNUM TTEN signed_inum
+   | RNUM TTEN signed_inum
 
-	| INUM TTEN signed_inum
+   | INUM TTEN signed_inum
 
-	| TTEN signed_inum
+   | TTEN signed_inum
 
-	;
+   ;
 
 /* end */

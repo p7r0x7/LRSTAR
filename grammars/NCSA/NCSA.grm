@@ -41,7 +41,7 @@
    Date       -> '[' Date_  ':'
               -> '[' {Date} ':'
 
-	Date_			-> <date>^{Date}
+   Date_       -> <date>^{Date}
 
    Time       -> <time> '-' <numb> ']'     +> Time
               -> <time> '+' <numb> ']'     +> Time
@@ -52,7 +52,7 @@
               -> <word> {Path} <file>      +> File
               -> <word> {Path} <error>...  +> File
 
-	Path_			-> <path>^{Path}
+   Path_       -> <path>^{Path}
 
    Code       -> <numb>                    +> Code
 

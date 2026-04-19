@@ -21,8 +21,8 @@
       class TERM_ACTIONS : public ACTIONS 
       {
          public:
-         static int  error		(int& t);
-         static int  lookup	(int& t);
+         static int  error    (int& t);
+         static int  lookup   (int& t);
       };
 
 #endif

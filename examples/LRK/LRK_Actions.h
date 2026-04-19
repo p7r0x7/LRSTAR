@@ -2,30 +2,30 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
 
-		#pragma once
+      #pragma once
 
-		#include "LRK_Parser.h"
+      #include "LRK_Parser.h"
 
-		#ifdef ACTIONS
+      #ifdef ACTIONS
 
       class ACTIONS : public PARSER
       {
-			public:
+         public:
          static void init_actions ();
          static void term_actions ();
-		};
+      };
 
-		#endif
-		#ifdef TERM_ACTIONS
+      #endif
+      #ifdef TERM_ACTIONS
 
-		class TERM_ACTIONS : public ACTIONS
-		{
-			public:
-         static int  error		(int& t);
-			static int  lookup	(int& t);
-		};
+      class TERM_ACTIONS : public ACTIONS
+      {
+         public:
+         static int  error    (int& t);
+         static int  lookup   (int& t);
+      };
 
-		#endif
+      #endif
 
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////

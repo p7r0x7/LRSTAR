@@ -13,15 +13,15 @@
 
 /* Rules */
 
-   Goal           -> (FunctionDecl | FunctionDef | TypedefDecl)+ <eof>		   +> goal_
+   Goal           -> (FunctionDecl | FunctionDef | TypedefDecl)+ <eof>        +> goal_
 
-	TypedefDecl		-> typedef TypeSpec+ TypeIdent ';'
+   TypedefDecl    -> typedef TypeSpec+ TypeIdent ';'
 
-	TypeIdent		-> <identifier>^{typename}
+   TypeIdent      -> <identifier>^{typename}
 
-   FunctionDecl   -> TypeSpec FuncDecl '(' [Arg/','+] ')' ';'   	            +> function_decl_
+   FunctionDecl   -> TypeSpec FuncDecl '(' [Arg/','+] ')' ';'                 +> function_decl_
 
-   FunctionDef    -> TypeSpec FuncDef  '(' [Arg/','+] ')' '{' FuncBody '}'	   +> function_def_
+   FunctionDef    -> TypeSpec FuncDef  '(' [Arg/','+] ')' '{' FuncBody '}'    +> function_def_
 
    TypeSpec       -> int                    +> type_spec_
                   -> char                   +> type_spec_
@@ -31,17 +31,17 @@
                   -> {typename}             +> type_spec_
                   -> TypeSpec '*'           +> type_spec_
 
-   FuncDecl       -> FunctionName	        +> function_
+   FuncDecl       -> FunctionName           +> function_
                   -> {function_name}        +> function_
 
-   FuncDef        -> FunctionName	        +> function_
+   FuncDef        -> FunctionName           +> function_
                   -> {function_name}        +> function_
 
-   Arg            -> TypeSpec ArgName		  +> arg_
+   Arg            -> TypeSpec ArgName       +> arg_
 
    ArgName        -> <identifier>           +> arg_name_
 
-	FunctionName	-> <identifier>^{function_name}
+   FunctionName   -> <identifier>^{function_name}
 
    FuncBody       ->
                   -> '...'                  +> function_body_

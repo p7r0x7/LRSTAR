@@ -22,7 +22,7 @@
       {
          public:
          static int  error  (int& t);
-         static int  lookup	(int& t);
+         static int  lookup   (int& t);
       };
 
       #endif

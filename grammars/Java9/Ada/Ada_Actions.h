@@ -15,7 +15,7 @@
          static void term_actions ();
 
          static int  error  (int& t);
-         static int  lookup	(int& t);
+         static int  lookup   (int& t);
 
       };
 

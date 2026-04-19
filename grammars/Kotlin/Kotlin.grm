@@ -129,8 +129,8 @@
 // Goal rule for input to LRSTAR ...
 
 Goal
-	 : (kotlinFile | script) <eof>
-	 ;
+    : (kotlinFile | script) <eof>
+    ;
 
 // SECTION: general
 

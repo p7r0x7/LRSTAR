@@ -106,111 +106,111 @@ start : grammar <eof>
       ;
 
 grammar : defs pp
-		    rules
-		    aux_procs
-		  ;
+          rules
+          aux_procs
+        ;
 
 aux_procs
-		: /* empty: aux_procs is optional */
-		| pp
-		;
+      : /* empty: aux_procs is optional */
+      | pp
+      ;
 
 
 defs
-		: /* empty */
+      : /* empty */
       | defs def
-		| defs error
-		;
+      | defs error
+      ;
 
 def
-		: pstart id
-		| pstart error
-		| lcurl  rcurl
-		| ptoken	tag token_list
-		| pleft  tag token_list
-		| pright	tag token_list
-		| pnonassoc	tag token_list
-		| ptype tag nonterm_list
+      : pstart id
+      | pstart error
+      | lcurl  rcurl
+      | ptoken tag token_list
+      | pleft  tag token_list
+      | pright tag token_list
+      | pnonassoc tag token_list
+      | ptype tag nonterm_list
       | ptype tag
-		;
+      ;
 
 tag
-		: /* empty: type tag is optional */
-		| langle id rangle
-		;
+      : /* empty: type tag is optional */
+      | langle id rangle
+      ;
 
 token_list
-		: token_num
-		| token_list token_num
-		| token_list comma token_num
-		| error
-		| token_list error
-		| token_list comma error
-		;
+      : token_num
+      | token_list token_num
+      | token_list comma token_num
+      | error
+      | token_list error
+      | token_list comma error
+      ;
 
-token_num	: literal
-           	| litid
-           	| id
-          	| litid number
-          	| id number
-       		;
+token_num   : literal
+            | litid
+            | id
+            | litid number
+            | id number
+            ;
 
 nonterm_list
       : nonterm
-		| nonterm_list nonterm
-		| nonterm_list comma nonterm
-		| error
-		| nonterm_list error
-		| nonterm_list comma error
-		;
+      | nonterm_list nonterm
+      | nonterm_list comma nonterm
+      | error
+      | nonterm_list error
+      | nonterm_list comma error
+      ;
 
 nonterm
       : id
-		;
+      ;
 
 
 rules
          :
-		   | lcurl rcurl rule1
-		   | rules rule
-	    	| error
-	    	| rules error
-   		;
+         | lcurl rcurl rule1
+         | rules rule
+         | error
+         | rules error
+         ;
 
-rule1		: c_id
-		     colon
-		     body prec
-		   ;
+rule1    : c_id
+           colon
+           body prec
+         ;
 
-rule		: rule1
-		   | bar	body prec
-	    	;
+rule     : rule1
+         | bar body prec
+         ;
 
 body
       : /* empty */
-		| body literal
-		| body litid
-		| body id
+      | body literal
+      | body litid
+      | body id
       | body action
-		| body error
-		;
+      | body error
+      ;
 
 action
       : lbrace rbrace
-		| eq
-		;
+      | eq
+      ;
 
 prec
       : /* empty */
-		| pprec literal opt_action
-		| pprec litid   opt_action
-		| pprec id      opt_action
-		| prec semicolon
-		;
+      | pprec literal opt_action
+      | pprec litid   opt_action
+      | pprec id      opt_action
+      | prec semicolon
+      ;
 
 opt_action
       : /* empty */
-		| action
-		;
+      | action
+      ;
 
 /* End of yacc.y */

@@ -1,0 +1,550 @@
+﻿
+<!-- Copyright LRTEC 2020.  All rights reserved. -->
+
+<html>
+<head>
+   <title>LRGEN parser generator </title>
+   <!--   123456789 123456789 123456789 123456789 123456789 123456789 123456789
+                   1         2         3         4         5         6         7 -->
+   <META name="description" content="LRGEN parser generator for C++ programmers+ ">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" type="text/css" href="style.css">
+   <link rel="icon" href="favicon.ico" type="image/x-icon">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <style>
+   u { color: red;  text-decoration: none; font-size: 18px; }
+   i { color: yellow; font-style: normal; font-size: 18px; }
+   </style>
+</head>
+
+<body class="background" topmargin="0" rightmargin="0" bottommargin="0" leftmargin="0">
+
+   <CENTER>
+
+      <table class="toptable" border="0" cellspacing="0" cellpadding="0">
+         <tr>
+
+            <td class="logobox"><a class="title" href="index.html"><img src="img/LRGEN45.bmp"></a></td>
+            <TD class="titlebox">
+               <A class="title" href="index.html"><font class="title">LRGEN Parser Generator</font></A>
+               <font class="subtitle"></font>
+            </TD>
+            <td class="amdgbox">
+               <a title="Ad majorem Dei gloriam" class="amdg" href="#">A.M.D.G.</a>
+            </td>
+
+         </tr>
+      </table>
+
+      <TABLE class="topnavtable" border="0" cellspacing="0" cellpadding="0">
+         <TBODY>
+            <TR>
+
+               <TD class="topnavbox1">
+                  <a class="topnav1" href="index.html">About</a>
+                  
+                  <a class="topnav1" href="downloads.html">Download<br>and Setup</a>
+                  
+                  <a class="topnav1" href="lrgen_doc_basic.html">LRGEN</a>
+                  <a class="topnav1" href="dfa_doc_basic.html">DFA</a>
+                  <font class="topnav1" >Glossary</font>
+                  
+                  <a class="topnav1" href="contact.html">Contact,<br>Support</a>
+               </TD>
+
+            </TR>
+         </TBODY>
+      </TABLE>
+
+      <table class="texttable" border="0" cellspacing="0" cellpadding="0">
+         <tr>
+
+
+            <TD class="textbox">
+
+               <p class="pagehead">Glossary Of Terms</p>
+
+               <p class="parhead">abstract-syntax tree</p>
+               <p>
+                  An abstract-syntax tree is a tree structure which contains only the meaningful elements
+                  from the input language. Punctuation that is not meaningful, such as comma's and parentheses,
+                  are not part of an abstract-syntax tree. The structure of the tree is defined by the placement
+                  of node names in the grammar. Here is a grammar, an input statement and its corresponding AST.
+
+<pre>
+{ '+' } &lt;&lt;
+{ '*' } &lt;&lt;
+
+Goal     -&gt; [Stmt]... &lt;eof&gt;
+
+Stmt     -&gt; Exp ';'               +&gt; eval
+         -&gt; Target '=' Exp ';'    +&gt; assign 
+
+Target   -&gt; &lt;identifier&gt;          +&gt; address
+
+Exp      -&gt; Exp '+' Exp           +&gt; add
+         -&gt; Exp '*' Exp           +&gt; mul 
+         -&gt; &lt;number&gt;              +&gt; number
+         -&gt; &lt;identifier&gt;          +&gt; ident
+         -&gt; '(' Exp ')'
+      
+y = 2 * (x + 1);
+
+assign
++ address (y)
++ mul
+  + number (2)
+  + add
+    + ident (x)
+    + number (1)
+</pre>
+
+               <p class="parhead">AST.
+               <p>Abstract-syntax-tree.
+
+               <p class="parhead">accessor symbol.
+               <p>
+                  An accessor symbol is the token which permits entry into a state.  Each state only has one accessor
+                  symbol, unless the 'o' option is used. Several states may have the same accessor, but each state only
+                  has one accessor. The terminal accessor numbers are positive and the nonterminal accessor numbers are
+                  negative.
+
+               <p class="parhead">back substitution.
+               <p>
+                  The process of replacing every occurrence of a nonterminal symbol in a grammar with its associated
+                  productions. This may increase the number of productions. It can be used to remove all null productions
+                  from a grammar. It can also be used for eliminating conflicts in a grammar. See the following.
+
+<pre>
+Goal      -&gt; Statement &lt;eof&gt; 
+
+Statement -&gt; Var '=' Exp ; 
+
+Exp       -&gt; Var
+          -&gt; Var '+' Var
+          -&gt; Var '-' Var
+</pre>
+
+               <p>
+                  Grammar after backsubstituting Exp:
+
+<pre>
+Goal      -&gt; Statement &lt;eof&gt; 
+
+Statement -&gt; Var '=' Var ';'
+          -&gt; Var '=' Var '+' Var ';'
+          -&gt; Var '=' Var '-' Var ';'
+</pre>
+
+               <p class="parhead">backtracking.
+               <p>
+                  Backtracking is the process of undoing parsing actions.
+                  A nondeterministic parsing algorithm uses backtracking when a wrong choice is made in a state that
+                  has more than one transition choice for a token. GLR parsers avoid backtracking by creating more than
+                  one parse stack (a parse tree instead of a parse stack) and keep these in memory until later when
+                  analyzing the AST.  Eventually the wrong parse tree branches will be deleted.
+
+               <p class="parhead">binary.
+               <p>Binary refers to data in machine readable format rather than human readable format.
+
+               <p class="parhead">binary search.
+               <p>
+                  A process of searching a table for a particular value by repeatedly partitioning the remaining
+                  search area into two halves by looking at the center value and determining if it is less or greater
+                  than the search value. The table of values must be sorted for this to work.
+
+               <p class="parhead">chain reductions.
+               <p>
+                  Chain reductions are those consecutive unit reductions of the form (<font class="code">a &lt;= b</font>)
+                  that the parser makes, but have no associated action with them and cause a waste of time. Languages that
+                  have a large number of expression operators that are defined without using operator precedence notation have
+                  a lot of chain reductions. These can be eliminated by specifying operator precedence at the top of a grammar
+                  and using ambiguous expressions of the form:
+
+<pre>
+Exp    -&gt; Exp '+' Exp
+       -&gt; Exp '-' Exp
+       -&gt; Exp '*' Exp
+       -&gt; Exp '/' Exp
+</pre>
+
+               <p>
+                  Here is a grammar that will generate a parser that has useless chain reductions:
+
+<pre>
+Stmt   -&gt; LeftSide '=' Exp ';' 
+
+Exp    -&gt; Term
+       -&gt; Exp '+' Term
+       -&gt; Exp '-' Term
+
+Term   -&gt; Factor
+       -&gt; Term '*' Factor
+       -&gt; Term '/' Factor
+
+Factor -&gt; &lt;number&gt;
+       -&gt; &lt;identifier&gt;
+       -&gt; '(' Exp ')'
+</pre>
+
+               <p>
+                  If the input line is, <font class="code">"y = 100;"</font>, the parser makes 3 reductions:
+
+<pre>
+Factor &lt;= &lt;number&gt; 
+Term   &lt;= Factor 
+Exp    &lt;= Term
+</pre>
+
+               <p>
+                  If the parser generator does chain-reduction elimination, the generated parser only does one reduction as
+                  follows:
+
+<pre>
+Exp    &lt;= &lt;number&gt;
+</pre>
+
+               <p class="parhead">closure.
+               <p>
+                  The process of generating from the kernel set of items (in a state), all possible items that may exist in that
+                  state. This is part of the state building process done by a parser generator.
+
+               <p class="parhead">command language.
+               <p>A language used to "talk to" a computer or command one. A language used in an interactive way with a machine.
+
+               <p class="parhead">compiler.
+               <p>
+                  A program which translates source code written in a high level language (C, Pascal, BASIC, etc.) into an
+                  executable file suitable for execution on a particular machine.
+
+               <p class="parhead">conflict.
+               <p>
+                  An ambiguity in a grammar. If, starting from the goal symbol, there are two or more ways to derive a pattern,
+                  and it is not clear how to distinguish one from another by using one symbol of lookahead, then there is a conflict.
+                  The parser generator must resolve this problem if the parsing algorithm is to be deterministic (without choices).
+                  There two types of conflicts: shift-reduce and reduce-reduce. In the case of the shift-reduce, precedence is given
+                  to the shift operation (choosing the longer rule) instead of the reduce operation. In the case of a reduce-reduce
+                  conflict, precedence is given to the earlier production (rule) in the grammar.
+
+               <p class="parhead">default reduction.
+               <p>
+                  A default reduction in a state is the reduction to be taken if there is no transition (of shift action) for the
+                  current input token . Most states have only one reduction, the default reduction. Those states that have multiple reductions,
+                  may also have a default reduction. Those states that don't have any reductions are called error states.
+
+               <p class="parhead">derived.
+               <p>
+                  A derived attribute is one that is passed up from a lower node in a tree. A number such as 10 may have a derived
+                  attribute of integer, whereas 10L has a derived attribute of long. This is the opposite of an inherited attribute.
+                  Inherited attributes are passed from higher nodes down to lower nodes. If 10 were an argument to a function that
+                  required a char type then 10 would inherit a char attribute.
+
+               <p class="parhead">disambiguating rules.
+               <p>
+                  Those rules placed at the top of the grammar that specify operator precedence. It is easier to
+                  specify expressions using the ambiguous grammar notation shown below, than it is to use the unambiguous
+                  notation also shown below.
+
+<pre>
+{ '+' '-' } &lt;&lt; /* disambiguating */
+{ '*' '/' } &lt;&lt; /* rules.   */
+
+Exp    -&gt; Exp '+' Exp
+       -&gt; Exp '-' Exp
+       -&gt; Exp '*' Exp
+       -&gt; Exp '/' Exp
+       -&gt; &lt;number&gt;
+       -&gt; &lt;identifier&gt;
+       -&gt; '(' Exp ')'
+</pre>
+
+               <p>
+                  Unambiguous grammar:
+
+<pre>
+Exp    -&gt; Term
+       -&gt; Exp '+' Term
+       -&gt; Exp '-' Term
+
+Term   -&gt; Factor
+       -&gt; Term '*' Factor
+       -&gt; Term '/' Factor
+
+Factor -&gt; &lt;number&gt;
+       -&gt; &lt;identifier&gt;
+       -&gt; '(' Exp ')'
+</pre>
+
+               <p class="parhead">error recovery.
+               <p>
+                  Error recovery is the process of recovering from a syntax error. When the parser encounters an error in the input,
+                  control is given to an error recovery function whose job is to fix the error or skip over it and find a way to resume
+                  parsing without creating erroneous error messages.
+
+               <p class="parhead">error state.
+               <p>
+                  An error state is a state that has no default reduction. When the parser arrives at this state, if there is no matching
+                  transition for the input token, it must declare an error.
+
+               <p class="parhead">grammar.
+               <p>
+                  A list of rules that specify a pattern or acceptable sequence of input symbols. A definition of the form (syntax) of
+                  a language.
+
+               <p class="parhead">head symbol.
+               <p>The symbol being defined. A nonterminal on the left of an arrow. The left side of a production.
+
+               <p class="parhead">inherited.
+               <p>
+                  An inherited attribute is one that comes from a higher node. In LR parsing, which is bottom-up parsing, inherited
+                  attributes cannot be assigned in the first pass. That is why people build an abstract syntax tree. So that after the
+                  parsing is finished, one can traverse the tree (AST) and assign attributes. (See derived).
+
+               <p class="parhead">interpreter.
+               <p>
+                  A program which executes source code written in a high level language (C, Pascal, Ada). An interpreter does not produce
+                  object code or an executable file. It may generate intermediate code and execute that. Interpreters are desirable because
+                  they can offer debugging techniques superior to compilers. They have the source code readily available in memory. The
+                  translation time is less because they usually don't do much optimization on the code.
+
+               <p class="parhead">keyword.
+               <p>
+                  Those words in a language that have special meaning in the language and cannot be used as variable names.
+                  FORTRAN and PL/I are exceptions, and allow keywords to be used as variable names. In the C language, some keywords are:
+                  if, else, while, for, switch, continue, break.
+
+               <p class="parhead">LALR.
+               <p>
+                  LALR is a term taken from computer science parsing theory which means Look Ahead Left Right. It refers to a class of
+                  grammars that belongs in the LALR(1) category of descriptive power, greater than SLR(1) but not quite as powerful as LR(1).
+
+               <p class="parhead">leaf node.
+               <p>An element in a tree that has no connections to lower elements. A node without children. See node.
+
+               <p class="parhead">left recursion.
+               <p>
+                  Left recursion is defined in a grammar by a rule that contains the head symbol as the first tail symbol. Left recursion
+                  is the desired way to specify repetition in an LR grammar. For example:
+
+<pre>
+IdentifierList -&gt; &lt;identifier&gt;
+               -&gt; IdentifierList ',' &lt;identifier&gt;
+</pre>
+
+               <p class="parhead">lexer.
+               <p>
+                  A pattern recognizer, that recognizes character patterns instead of symbol patterns. A lexer recognizes the tokens of a
+                  language and defines the starting point and end of each token. It usually skips over blanks, newlines, and comments.
+
+               <p class="parhead">lexical.
+               <p>
+                  Pertaining to characters. A lexical analyzer is the same thing as a lexer. A lexical grammar is a grammar that defines
+                  the character patterns for the tokens of a language, such as numbers, identifiers, strings, etc.
+
+               <p class="parhead">lookahead.
+               <p>
+                  A symbol used by the parser to determine whether to shift (goto a new state) or reduce (make a reduction and goto a new state).
+                  A lookahead set for each state is created by the parser generator.
+
+               <p class="parhead">node.
+               <p>
+                  A element in a tree that has connections to zero or more child elements and a connection to one parent node.  The root node
+                  has no parent node.
+
+               <p class="parhead">nonterminal.
+               <p>
+                  A symbol of a grammar that represents other symbols of the grammar.  A nonterminal is a symbol that is defined in a grammar.
+                  It may be defined to be zero or more terminals or nonterminals.
+
+               <p class="parhead">null.
+               <p>
+                  A null production is a rule that has an empty right part. For example:
+
+<pre>
+OptionalList -&gt;
+</pre>
+
+               <p class="parhead">parser.
+               <p>
+                  A parser is a pattern recognizer. A program capable of accepting input that conforms to acceptable patterns as defined
+                  by a set of rules (grammar).
+
+               <p class="parhead">production.
+               <p>
+                  A rule in a grammar.  A production contains an optional head symbol, an arrow (-&gt;) and zero or more tail symbols.
+                  For example:
+
+<pre>
+ForStmt -&gt; for '(' [Exp] ';' [Exp] ';' [Exp] ')' Stmt
+</pre>
+
+               <p class="parhead">recursion.
+               <p>
+                  Repetition of itself.  In reference to grammars, recursion means that a sequence of symbols is repeatable for an
+                  indefinite number of times. See left recursion, right recursion.
+
+               <p class="parhead">reduce action.
+               <p>
+                  A reduce action in a parser is the act of recognizing that a rule has been recognized and then reducing the list of symbols
+                  that make up the right side of the rule (on the parse stack) to one symbol, the head symbol for that rule.
+
+               <p class="parhead">reduce-reduce.
+               <p>
+                  A type of conflict in which two or more rules have identical right sides but different head symbols.  The parser
+                  generator cannot decide which head symbol to choose based on one symbol of lookahead.
+
+               <p class="parhead">reduction.
+               <p>A reduce action. See reduce.
+
+               <p class="parhead">right recursion.
+               <p>
+                  Right recursion is defined in a grammar by a rule in which the head symbol is used as the last tail symbol. This
+                  specifies repetition of itself in a way that postpones all of the reductions until the last one is seen. Then all of
+                  the reductions for this rule are done in a reverse order. Sometimes this is desirable, for example:
+
+<pre>
+Factor   -&gt; Primary
+         -&gt; Primary '**' Factor
+</pre>
+
+               <p>
+               <p>
+                  This operator precedence notation and ambiguous rule accomplishes the same thing:
+
+<pre>
+{ '**' } &gt;&gt;
+
+Exp -&gt; Exp '**' Exp
+</pre>
+
+               <p class="parhead">root.
+               <p>
+                  The top or highest node in a tree.  The origin.  All the elements in a tree can be visited by traversing downward
+                  from the root.
+
+               <p class="parhead">shift action.
+               <p>
+                  A shift action in a parser is one that accepts the input symbol read by the lexer, puts it on the parse stack,
+                  and does a transition to a new state.
+
+               <p class="parhead">shift-reduce action.
+               <p>
+                  A shift-reduce action is a parsing action that combines a shift action and a reduce action into one. This is
+                  possible when the symbol being accepted is the last one of a rule. The use of shift-reduce actions permits the
+                  elimination of reduce-only states, which usually make up about 35% of the total number. This also provides faster
+                  parsing.  LRGEN generated parsers have shift-reduce actions.
+
+               <p class="parhead">shift-reduce conflict.
+               <p>
+                  A shift-reduce conflict is a conflict between a shift action and a reduce action. The parser generator cannot
+                  decide whether to pursue the recognition of an incompleted rule or accept another rule that has been completed.
+                  If, based on one symbol of lookahead, the situation is undecidable, the shift action will be given priority and
+                  a shift-reduce conflict will be reported (unless the 'rr' option was specified).
+
+               <p class="parhead">skeleton.
+               <p>
+                  LRGEN does NOT use skeleton files anymore.  They were a source of frustration.  Instead, LRGEN generates
+                  only the two header files for the parser (e.g. c_parserdefines.h and c_parsertables.h).  The parser.cpp file
+                  is the same file for all parsing projects, much easier to work with now, for debugging and modifying.
+
+               <p class="parhead">SLR.
+               <p>
+                  Simple LR. A class of grammars with less descriptive power than LALR grammars. A SLR parser generator 
+                  resolves inconsistencies by looking at the FIRST and FOLLOW sets, rather than looking at the the LALR(1)
+                  lookahead sets. See books on compiler theory for more information.
+
+               <p class="parhead">state.
+               <p>
+                  A situation which has a set of valid inputs and certain actions associated with them, either shift and make a
+                  transition to a new state or reduce and fall back to a previous state. A number of states make up a finite-state
+                  machine.
+
+               <p class="parhead">syntax.
+               <p>
+                  Syntax refers to the form of a language. It refers to the correct order of symbols or correct sequence.
+                  Syntax does not pertain to meaning. See semantics.
+
+               <p class="parhead">tail.
+               <p>A terminal or nonterminal symbol that appears on the right side of a rule.
+
+               <p class="parhead">terminal.
+               <p>
+                  The terminal symbols are all those symbols that are undefined in a grammar. They represent themselves. They are
+                  the primitive elements of the language. The leaf nodes of the abstract syntax tree. The input tokens coming from
+                  the lexer which are valid symbols of the language.
+
+               <p class="parhead">token.
+               <p>
+                  A symbol coming from the lexer and given to the parser. Usually a terminal symbol. 
+                  For example, &lt;identifier&gt;, &lt;integer&gt;, &lt;string&gt;, 'if', 'else', 'while', '=', '+', '*' and ';' are all
+                  terminals of the C language.
+
+               <p class="parhead">token action
+               <p>
+                  An action or function that does special processing for a token before it gets seen by the parser, such as storing of the
+                  token in a symbol table.  A token action such as a symbol-table lookup may change the terminal number of the token
+                  (change it from an &lt;identifier&gt; to a {typedef}).
+
+               <p class="parhead">transition.
+               <p>
+                  A transition is an action of the parser to go to the next state, based in the input token. The next state is determined
+                  by looking at the transition matrix.  The current state indicates which row of the matrix and the input token indicates
+                  which column in the row.  The number found at that location is either the next state (if positive) or the reduce action
+                  (if negative).  This is the simple textbook answer.  LRGEN uses 4 matrix tables instead of one.  This gives the best
+                  solution: fast parsers and small tables.
+
+               <p class="parhead">tree.
+               <p>
+                  A tree is a data structure which facilitates visiting all the elements in the tree in several different orders.
+                  It facilitates restructuring or removing parts of the tree (optimizations). It is a very desirable structure when
+                  dealing with language processing.
+
+               </p>
+
+
+            </TD>
+
+
+         </tr>
+         </TBODY>
+      </table>
+
+      <TABLE class="bottable" border="0" cellspacing="0" cellpadding="0">
+         <TBODY>
+            <TR>
+
+               <TD class="bottombox">(c) Copyright LRTEC 2020.&nbsp; All rights reserved.</TD>
+
+            </TR>
+         </TBODY>
+      </TABLE>
+
+   </CENTER>
+
+   <!-- Default Statcounter code for LRXPG.ORG http://lrxpg.org -->
+   <script type="text/javascript">
+      var sc_project = 12726658;
+      var sc_invisible = 1;
+      var sc_security = "b98f3aba";
+   </script>
+   <script type="text/javascript"
+           src="https://www.statcounter.com/counter/counter.js"
+           async></script>
+   <noscript>
+      <div class="statcounter">
+         <a title="Web Analytics"
+            href="https://statcounter.com/" target="_blank">
+            <img class="statcounter"
+                 src="https://c.statcounter.com/12726658/0/b98f3aba/1/"
+                 alt="Web Analytics"
+                 referrerPolicy="no-referrer-when-downgrade">
+         </a>
+      </div>
+   </noscript>
+   <!-- End of Statcounter Code --><!-- Default Statcounter code for LRTEC.COM http://lrtec.com -->
+
+</body>
+</html>
+
+<!-- Copyright LRTEC 2020.  All rights reserved. -->
+
